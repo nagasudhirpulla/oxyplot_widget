@@ -1,4 +1,5 @@
 ﻿using OxyPlot;
+using OxyPlot.Axes;
 using OxyPlot.Series;
 using OxyplotWidget.PlotWidget;
 using System;
@@ -31,16 +32,45 @@ namespace OxyplotWidget
             {
                 Title = "First"
             });
-            PlotWidget.PlotViewModel.AddNewSeries(new FunctionSeries(Math.Cos, 0, 50, 0.1, "cos(x)"));
             DoPlotWidgetTests();
         }
 
         public async void DoPlotWidgetTests()
         {
-            await TestPlotExtraPoints();
-            await TestPlotColorFeatures();
+            await TestDateTimeSeriesPlot();
+            //TestSineFunctionPlot();
+            //await TestPlotExtraPoints();
+            //await TestPlotColorFeatures();
             //await TestPlotDelayedPoints();
             //await TestPlotMillionPoints();
+        }
+
+        public void TestSineFunctionPlot()
+        {
+            PlotWidget.PlotViewModel.AddNewSeries(new FunctionSeries(Math.Cos, 0, 50, 0.1, "cos(x)"));
+        }
+
+        public async Task TestDateTimeSeriesPlot()
+        {
+            PlotWidget.PlotViewModel.AddNewSeries(new LineSeries
+            {
+                Title = "TimeSeries"
+            });
+            int waitTime = 300;
+            List<DataPoint> points = new List<DataPoint> {
+                new DataPoint(DateTimeAxis.ToDouble(DateTime.Now.AddHours(-1)), 5),
+                new DataPoint(DateTimeAxis.ToDouble(DateTime.Now.AddHours(-2)), 10),
+                new DataPoint(DateTimeAxis.ToDouble(DateTime.Now.AddHours(-3)), 64),
+                };
+            int seriesIndex = PlotWidget.PlotViewModel.LinePlotModel.Series.Count - 1;
+            for (int iter = 0; iter < points.Count; iter++)
+            {
+                await Task.Delay(waitTime);
+                // Add point in series
+                PlotWidget.PlotViewModel.AddPointInLineSeries(seriesIndex, points[iter]);
+            }
+            PlotWidget.PlotViewModel.MakeXAxisDateTime();
+            PlotWidget.PlotViewModel.SetXAxisStringFormat("dd-MMM-yyyy");
         }
 
         public async Task TestPlotExtraPoints()

@@ -1,4 +1,5 @@
 ﻿using OxyPlot;
+using OxyPlot.Axes;
 using OxyPlot.Series;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,6 @@ namespace OxyplotWidget.PlotWidget
         public PlotViewModel()
         {
             _linePlotModel = new PlotModel();
-
             //_linePlotModel.Series.Add(new FunctionSeries(Math.Cos, 0, 10, 0.1, "cos(x)"));
 
         }
@@ -191,7 +191,7 @@ namespace OxyplotWidget.PlotWidget
                 if (_linePlotModel.Axes[iter].MinorGridlineStyle == LineStyle.None)
                 {
                     _linePlotModel.Axes[iter].MinorGridlineStyle = LineStyle.Solid;
-                }                
+                }
                 _linePlotModel.Axes[iter].MinorGridlineColor = oxyColor;
             }
             RefreshPlot();
@@ -211,6 +211,30 @@ namespace OxyplotWidget.PlotWidget
             for (int iter = 0; iter < _linePlotModel.Axes.Count; iter++)
             {
                 _linePlotModel.Axes[iter].MinorGridlineStyle = lineStyle;
+            }
+            RefreshPlot();
+        }
+
+        public void MakeXAxisDateTime()
+        {
+            for (int iter = 0; iter < _linePlotModel.Axes.Count; iter++)
+            {
+                if (_linePlotModel.Axes[iter].Position == OxyPlot.Axes.AxisPosition.Bottom)
+                {
+                    _linePlotModel.Axes[iter] = new DateTimeAxis() { StringFormat = "M/d" };
+                }
+            }
+            RefreshPlot();
+        }
+
+        public void SetXAxisStringFormat(string stringFormat)
+        {
+            for (int iter = 0; iter < _linePlotModel.Axes.Count; iter++)
+            {
+                if (_linePlotModel.Axes[iter].Position == OxyPlot.Axes.AxisPosition.Bottom)
+                {
+                    _linePlotModel.Axes[iter].StringFormat = stringFormat;
+                }
             }
             RefreshPlot();
         }

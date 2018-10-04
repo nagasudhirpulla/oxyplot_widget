@@ -1,0 +1,8 @@
+{
+  "host": "host",
+  "port": 24721,
+  "path": "/eterra-ws/HistoricalTrendProvider",
+  "username": "user",
+  "password": "pass",
+  "latencytime": 1
+}
