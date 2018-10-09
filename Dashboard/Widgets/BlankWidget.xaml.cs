@@ -1,6 +1,7 @@
 ﻿using Dashboard.Interfaces;
 using Dashboard.WidgetLayout;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace Dashboard.Widgets
@@ -64,7 +65,7 @@ namespace Dashboard.Widgets
             }
         }
 
-        public void UpdateData()
+        public async Task UpdateData()
         {
             // do nothing
         }

@@ -9,7 +9,7 @@ namespace Dashboard.Interfaces
 {
     public interface IWidget
     {
-        void UpdateData();
+        Task UpdateData();
 
         WidgetPosition Position { get; set; }
         WidgetDimension Dimension { get; set; }

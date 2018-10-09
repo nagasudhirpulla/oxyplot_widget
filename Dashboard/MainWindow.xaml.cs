@@ -29,5 +29,10 @@ namespace Dashboard
         {
             DashboardUC.AddNewBlankWidget();
         }
+
+        private void AddPlotWidget_Click(object sender, RoutedEventArgs e)
+        {
+            DashboardUC.AddNewPlotWidget();
+        }
     }
 }

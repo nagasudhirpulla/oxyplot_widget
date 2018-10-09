@@ -4,6 +4,7 @@ using Dashboard.Widgets;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Controls;
+using Dashboard.Widgets.Oxyplot;
 
 namespace Dashboard.UserControls.Dashboard
 {
@@ -22,7 +23,7 @@ namespace Dashboard.UserControls.Dashboard
 
         private void DoInitialStuff()
         {
-           
+
         }
 
         private List<IWidget> Widgets { get; set; }
@@ -42,6 +43,15 @@ namespace Dashboard.UserControls.Dashboard
         public void AddNewBlankWidget()
         {
             BlankWidget widget = new BlankWidget
+            {
+                Position = LayoutManager.GetNewWidgetPositon(CellsContainer)
+            };
+            LayoutManager.AddDashboardWidgetToContainer(CellsContainer, widget);
+        }
+
+        public void AddNewPlotWidget()
+        {
+            PlotWidget widget = new PlotWidget
             {
                 Position = LayoutManager.GetNewWidgetPositon(CellsContainer)
             };
