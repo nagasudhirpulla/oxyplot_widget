@@ -21,20 +21,20 @@
         </Grid.ColumnDefinitions>
         <Label Content="Edit Widget Position" Grid.ColumnSpan="2"></Label>
         <Label Content="Row" Grid.Row="1"></Label>
-        <TextBox Grid.Row="1" Grid.Column="1"></TextBox>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding RowString}"></TextBox>
         <Label Content="Column" Grid.Row="2"></Label>
-        <TextBox Grid.Row="2" Grid.Column="1"></TextBox>
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ColumnString}"></TextBox>
         <Label Content="Column Span" Grid.Row="3"></Label>
-        <TextBox Grid.Row="3" Grid.Column="1"></TextBox>
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding ColSpanString}"></TextBox>
         <Label Content="Row Span" Grid.Row="4"></Label>
-        <TextBox Grid.Row="4" Grid.Column="1"></TextBox>
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding RowSpanString}"></TextBox>
         <Grid Grid.Row="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Content="Cancel" Margin="10" Padding="10"></Button>
-            <Button Content="OK" Margin="10" Padding="10" Grid.Column="1"></Button>
+            <Button Content="Cancel" Margin="10" Padding="10" Click="Cancel_Click"></Button>
+            <Button Content="OK" Margin="10" Padding="10" Grid.Column="1" Click="OK_Click"></Button>
         </Grid>
     </Grid>
 </Window>

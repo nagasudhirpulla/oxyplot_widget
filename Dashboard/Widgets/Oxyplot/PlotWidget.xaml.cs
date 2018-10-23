@@ -1,4 +1,5 @@
-﻿using Dashboard.Interfaces;
+﻿using Dashboard.EditorWindows;
+using Dashboard.Interfaces;
 using Dashboard.WidgetLayout;
 using OxyPlot;
 using OxyPlot.Axes;
@@ -112,7 +113,14 @@ namespace Dashboard.Widgets.Oxyplot
 
         private void EditPositionBtn_Click(object sender, RoutedEventArgs e)
         {
-            // todo create a new widget position editor window
+            WidgetPositionEditorWindow positionEditor = new WidgetPositionEditorWindow();
+            positionEditor.ShowDialog();
+            if (positionEditor.DialogResult == true)
+            {
+                WidgetPosition newWidgetPosition = positionEditor.WidgetPosition;
+                // todo update the position of the widget
+                MessageBox.Show("Setting New position");
+            }
         }
     }
 }
