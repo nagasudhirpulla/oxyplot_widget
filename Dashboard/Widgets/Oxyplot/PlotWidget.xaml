@@ -19,7 +19,8 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Grid.Row="0">
-                <Button Content="Update" Click="UpdateDataBtn_Click" HorizontalAlignment="Right"/>
+                <Button Content="Refresh" Click="RefreshDataBtn_Click" HorizontalAlignment="Right"/>
+                <Button Content="Edit Position" Click="EditPositionBtn_Click" HorizontalAlignment="Right"/>
             </StackPanel>
             <oxy:PlotView Name="OxyplotView" Model="{Binding PlotViewModel.LinePlotModel}" Grid.Row="1"/>
         </Grid>

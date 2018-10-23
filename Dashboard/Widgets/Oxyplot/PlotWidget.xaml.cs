@@ -81,7 +81,7 @@ namespace Dashboard.Widgets.Oxyplot
 
         public PlotViewModel PlotViewModel { get; set; } = new PlotViewModel();
 
-        public async Task UpdateData()
+        public async Task RefreshData()
         {
             PlotViewModel.AddNewSeries(new LineSeries
             {
@@ -105,9 +105,14 @@ namespace Dashboard.Widgets.Oxyplot
             PlotViewModel.SetXAxisStringFormat("dd-MMM-yyyy");
         }
 
-        private async void UpdateDataBtn_Click(object sender, RoutedEventArgs e)
+        private async void RefreshDataBtn_Click(object sender, RoutedEventArgs e)
         {
-            await UpdateData();
+            await RefreshData();
+        }
+
+        private void EditPositionBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // todo create a new widget position editor window
         }
     }
 }

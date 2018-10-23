@@ -65,7 +65,7 @@ namespace Dashboard.Widgets
             }
         }
 
-        public async Task UpdateData()
+        public async Task RefreshData()
         {
             // do nothing
         }

@@ -1,0 +1,40 @@
+﻿<Window x:Class="Dashboard.EditorWindows.WidgetPositionEditorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Dashboard.EditorWindows"
+        mc:Ignorable="d"
+        Title="WidgetPositionEditorWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Label Content="Edit Widget Position" Grid.ColumnSpan="2"></Label>
+        <Label Content="Row" Grid.Row="1"></Label>
+        <TextBox Grid.Row="1" Grid.Column="1"></TextBox>
+        <Label Content="Column" Grid.Row="2"></Label>
+        <TextBox Grid.Row="2" Grid.Column="1"></TextBox>
+        <Label Content="Column Span" Grid.Row="3"></Label>
+        <TextBox Grid.Row="3" Grid.Column="1"></TextBox>
+        <Label Content="Row Span" Grid.Row="4"></Label>
+        <TextBox Grid.Row="4" Grid.Column="1"></TextBox>
+        <Grid Grid.Row="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Content="Cancel" Margin="10" Padding="10"></Button>
+            <Button Content="OK" Margin="10" Padding="10" Grid.Column="1"></Button>
+        </Grid>
+    </Grid>
+</Window>
