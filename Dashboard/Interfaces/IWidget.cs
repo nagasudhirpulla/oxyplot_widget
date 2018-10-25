@@ -14,5 +14,8 @@ namespace Dashboard.Interfaces
         WidgetPosition Position { get; set; }
         WidgetDimension Dimension { get; set; }
         WidgetAppearance WidgetAppearance { get; set; }
+
+        // Send Messages to Dashboard using this event handler
+        event EventHandler<EventArgs> Changed;
     }
 }

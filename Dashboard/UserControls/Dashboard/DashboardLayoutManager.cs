@@ -17,6 +17,12 @@ namespace Dashboard.UserControls.Dashboard
             container.Children.Add(widget as UserControl);
         }
 
+        public void ChangeWidgetPosition(Grid container, IWidget widget, WidgetPosition newPosition)
+        {
+            EnsureWidgetPositon(container, newPosition);
+            widget.Position = newPosition;
+        }
+
         private WidgetPosition FindMaxContainerPoisition(Grid container)
         {
             // find max rows and columns in the container

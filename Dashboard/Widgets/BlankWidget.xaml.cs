@@ -1,5 +1,6 @@
 ﻿using Dashboard.Interfaces;
 using Dashboard.WidgetLayout;
+using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -23,6 +24,14 @@ namespace Dashboard.Widgets
         protected void OnPropertyChanged(string name)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        // Send Messages to Dashboard using this event handler
+        public event EventHandler<EventArgs> Changed;
+
+        protected virtual void OnChanged(EventArgs e)
+        {
+            Changed?.Invoke(this, e);
         }
 
         private WidgetPosition mPosition = new WidgetPosition();

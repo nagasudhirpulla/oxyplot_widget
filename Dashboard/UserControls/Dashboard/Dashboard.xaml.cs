@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Controls;
 using Dashboard.Widgets.Oxyplot;
+using Dashboard.WidgetLayout;
+using System;
 
 namespace Dashboard.UserControls.Dashboard
 {
@@ -40,12 +42,22 @@ namespace Dashboard.UserControls.Dashboard
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
+        public void ChangeWidgetPosition(IWidget widget, WidgetPosition newPosition)
+        {            
+            LayoutManager.ChangeWidgetPosition(CellsContainer, widget, newPosition);
+        }
+
+        //todo hnadle widget position change window in the dashoard itself instead of the cell
+
+
         public void AddNewBlankWidget()
         {
             BlankWidget widget = new BlankWidget
             {
                 Position = LayoutManager.GetNewWidgetPositon(CellsContainer)
             };
+            //todo wire up the event creation handler to the cell so that it can send messages to this dashboard
+
             LayoutManager.AddDashboardWidgetToContainer(CellsContainer, widget);
         }
 
@@ -56,6 +68,11 @@ namespace Dashboard.UserControls.Dashboard
                 Position = LayoutManager.GetNewWidgetPositon(CellsContainer)
             };
             LayoutManager.AddDashboardWidgetToContainer(CellsContainer, widget);
+        }
+
+        private void Changed(object sender, EventArgs eArgs)
+        {
+            //todo complete seeing https://github.com/nagasudhirpulla/wpf_scada_dashboard/blob/master/WPFScadaDashboard/DashboardUserControls/DashboardUC.xaml.cs
         }
     }
 }

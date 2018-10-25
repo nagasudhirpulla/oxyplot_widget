@@ -42,6 +42,14 @@ namespace Dashboard.Widgets.Oxyplot
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
+        // Send Messages to Dashboard using this event handler
+        public event EventHandler<EventArgs> Changed;
+
+        protected virtual void OnChanged(EventArgs e)
+        {
+            Changed?.Invoke(this, e);
+        }
+
         private WidgetPosition mPosition = new WidgetPosition();
         public WidgetPosition Position
         {
