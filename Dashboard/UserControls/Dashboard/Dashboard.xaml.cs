@@ -7,6 +7,8 @@ using System.Windows.Controls;
 using Dashboard.Widgets.Oxyplot;
 using Dashboard.WidgetLayout;
 using System;
+using Dashboard.EditorWindows;
+using System.Windows;
 
 namespace Dashboard.UserControls.Dashboard
 {
@@ -43,7 +45,7 @@ namespace Dashboard.UserControls.Dashboard
         }
 
         public void ChangeWidgetPosition(IWidget widget, WidgetPosition newPosition)
-        {            
+        {
             LayoutManager.ChangeWidgetPosition(CellsContainer, widget, newPosition);
         }
 
@@ -58,7 +60,7 @@ namespace Dashboard.UserControls.Dashboard
             };
             //todo wire up the event creation handler to the cell so that it can send messages to this dashboard
 
-            LayoutManager.AddDashboardWidgetToContainer(CellsContainer, widget);
+            LayoutManager.AddDashboardWidgetToContainer(CellsContainer, widget, Changed);
         }
 
         public void AddNewPlotWidget()
@@ -67,12 +69,29 @@ namespace Dashboard.UserControls.Dashboard
             {
                 Position = LayoutManager.GetNewWidgetPositon(CellsContainer)
             };
-            LayoutManager.AddDashboardWidgetToContainer(CellsContainer, widget);
+            LayoutManager.AddDashboardWidgetToContainer(CellsContainer, widget, Changed);
         }
 
         private void Changed(object sender, EventArgs eArgs)
         {
             //todo complete seeing https://github.com/nagasudhirpulla/wpf_scada_dashboard/blob/master/WPFScadaDashboard/DashboardUserControls/DashboardUC.xaml.cs
+            if (sender is IWidget widget)
+            {
+                if (eArgs is CellPosChangeReqArgs cellPosChangeArgs)
+                {
+                    if (cellPosChangeArgs != null && widget != null)
+                    {
+                        WidgetPositionEditorWindow positionEditor = new WidgetPositionEditorWindow(widget.Position);
+                        positionEditor.ShowDialog();
+                        if (positionEditor.DialogResult == true)
+                        {
+                            WidgetPosition newWidgetPosition = positionEditor.WidgetPosition;
+                            Console.WriteLine($"Setting New position to {newWidgetPosition.Row}, {newWidgetPosition.Column}, {newWidgetPosition.RowSpan}, {newWidgetPosition.ColSpan}");
+                            ChangeWidgetPosition(widget, newWidgetPosition);
+                        }
+                    }
+                }
+            }
         }
     }
 }

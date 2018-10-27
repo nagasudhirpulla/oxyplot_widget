@@ -73,6 +73,7 @@
       <DependentUpon>Dashboard.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Dashboard\DashboardLayoutManager.cs" />
+    <Compile Include="WidgetLayout\CellPosChangeReqArgs.cs" />
     <Compile Include="WidgetLayout\DimensionEnum.cs" />
     <Compile Include="WidgetLayout\WidgetAppearance.cs" />
     <Compile Include="WidgetLayout\WidgetDimension.cs" />

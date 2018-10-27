@@ -11,21 +11,29 @@ namespace Dashboard.UserControls.Dashboard
 {
     public class DashboardLayoutManager
     {
-        public void AddDashboardWidgetToContainer(Grid container, IWidget widget)
+        public void AddDashboardWidgetToContainer(Grid container, IWidget widget, Action<object, EventArgs> changed)
         {
             EnsureWidgetPositon(container, widget.Position);
             container.Children.Add(widget as UserControl);
+            widget.Changed += new EventHandler<EventArgs>(changed);
         }
 
         public void ChangeWidgetPosition(Grid container, IWidget widget, WidgetPosition newPosition)
         {
             EnsureWidgetPositon(container, newPosition);
             widget.Position = newPosition;
+            RemoveEmptyRowsAndColumns(container);
         }
 
-        private WidgetPosition FindMaxContainerPoisition(Grid container)
+        private WidgetPosition FindMaxContainerRowColumnDefinitions(Grid container)
         {
-            // find max rows and columns in the container
+            // find max row and column definitions in the container
+            return new WidgetPosition { Row = container.RowDefinitions.Count - 1, Column = container.ColumnDefinitions.Count - 1 };
+        }
+
+        private WidgetPosition FindMaxContainerChildPoisition(Grid container)
+        {
+            // find the maximum child position in a container
             int maxRows = 0;
             int maxCols = 0;
             for (int iter = 0; iter < container.Children.Count; iter++)
@@ -51,7 +59,7 @@ namespace Dashboard.UserControls.Dashboard
 
         public WidgetPosition GetNewWidgetPositon(Grid container)
         {
-            WidgetPosition newPosition = FindMaxContainerPoisition(container);
+            WidgetPosition newPosition = FindMaxContainerChildPoisition(container);
             newPosition.Row += 1;
             if (newPosition.Column == -1)
             {
@@ -62,7 +70,7 @@ namespace Dashboard.UserControls.Dashboard
 
         private void EnsureWidgetPositon(Grid container, WidgetPosition position)
         {
-            WidgetPosition maxPosition = FindMaxContainerPoisition(container);
+            WidgetPosition maxPosition = FindMaxContainerRowColumnDefinitions(container);
             // find max rows and columns in the container
             int maxRows = maxPosition.Row + 1;
             int maxCols = maxPosition.Column + 1;
@@ -97,7 +105,6 @@ namespace Dashboard.UserControls.Dashboard
                 {
                     container.RowDefinitions.Add(GetNewRowDefinition());
                 }
-
             }
 
             if (colDeficit > 0)
@@ -107,8 +114,27 @@ namespace Dashboard.UserControls.Dashboard
                 {
                     container.ColumnDefinitions.Add(GetNewColDefinition());
                 }
-
             }
+        }
+
+        public void RemoveEmptyRowsAndColumns(Grid container)
+        {
+            // Deleting the rows and column at the end that are empty
+            WidgetPosition maxChildPosition = FindMaxContainerChildPoisition(container);
+            WidgetPosition maxChildDefinitions = FindMaxContainerRowColumnDefinitions(container);
+            // finding the row surplus
+            int rowSurplus = maxChildDefinitions.Row - maxChildPosition.Row;
+            for (int iter = 0; iter < rowSurplus; iter++)
+            {
+                container.RowDefinitions.RemoveAt(0);
+            }
+            // finding the column surplus
+            int columnSurplus = maxChildDefinitions.Column - maxChildPosition.Column;
+            for (int iter = 0; iter < columnSurplus; iter++)
+            {
+                container.ColumnDefinitions.RemoveAt(0);
+            }
+            //todo add feature to remove empty rows and columns in between also
         }
 
         private RowDefinition GetNewRowDefinition()

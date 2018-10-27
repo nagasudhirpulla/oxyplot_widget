@@ -20,10 +20,10 @@ namespace Dashboard.EditorWindows
     /// </summary>
     public partial class WidgetPositionEditorWindow : Window
     {
-        public WidgetPositionEditorWindow()
+        public WidgetPositionEditorWindow(WidgetPosition position)
         {
             InitializeComponent();
-            mWidgetPositionVM = new WidgetPositionEditorVM();
+            mWidgetPositionVM = new WidgetPositionEditorVM(position);
             DataContext = mWidgetPositionVM;
         }
 
@@ -56,6 +56,11 @@ namespace Dashboard.EditorWindows
         public WidgetPositionEditorVM()
         {
             mWidgetPosition = new WidgetPosition();
+        }
+
+        public WidgetPositionEditorVM(WidgetPosition position)
+        {
+            mWidgetPosition = new WidgetPosition(position);
         }
 
         private WidgetPosition mWidgetPosition;

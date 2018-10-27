@@ -57,10 +57,7 @@ namespace Dashboard.Widgets.Oxyplot
             set
             {
                 mPosition = value;
-                OnPropertyChanged("Position.Row");
-                OnPropertyChanged("Position.RowSapan");
-                OnPropertyChanged("Position.Column");
-                OnPropertyChanged("Position.ColSapan");
+                OnPropertyChanged("Position");                
             }
         }
 
@@ -83,8 +80,9 @@ namespace Dashboard.Widgets.Oxyplot
             set
             {
                 mWidgetAppearance = value;
-                OnPropertyChanged("WidgetAppearance.BorderColor");
-                OnPropertyChanged("WidgetAppearance.BackgroundColor");
+                OnPropertyChanged("WidgetAppearance");
+                //OnPropertyChanged("WidgetAppearance.BorderColor");
+                //OnPropertyChanged("WidgetAppearance.BackgroundColor");
             }
         }
 
@@ -121,14 +119,7 @@ namespace Dashboard.Widgets.Oxyplot
 
         private void EditPositionBtn_Click(object sender, RoutedEventArgs e)
         {
-            WidgetPositionEditorWindow positionEditor = new WidgetPositionEditorWindow();
-            positionEditor.ShowDialog();
-            if (positionEditor.DialogResult == true)
-            {
-                WidgetPosition newWidgetPosition = positionEditor.WidgetPosition;
-                // todo update the position of the widget
-                MessageBox.Show("Setting New position");
-            }
+            OnChanged(new CellPosChangeReqArgs());            
         }
     }
 }
