@@ -1,10 +1,5 @@
-﻿using Dashboard.EditorWindows;
-using Dashboard.Interfaces;
+﻿using Dashboard.Interfaces;
 using Dashboard.WidgetLayout;
-using OxyPlot;
-using OxyPlot.Axes;
-using OxyPlot.Series;
-using OxyplotWidget.PlotWidget;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,23 +11,42 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Dashboard.Widgets.Oxyplot
+namespace Dashboard.Widgets
 {
     /// <summary>
-    /// Interaction logic for OxyplotWidget.xaml
+    /// Interaction logic for BaseWidget.xaml
+    /// https://stackoverflow.com/questions/9094486/adding-children-to-usercontrol
+    /// Creating floating widgets in grid using the panel.zindex property - https://stackoverflow.com/questions/5450985/how-to-make-overlay-control-above-all-other-controls
     /// </summary>
-    public partial class PlotWidget : UserControl, IWidgetContainer, INotifyPropertyChanged
+    [ContentProperty(nameof(Children))]
+    public partial class WidgetFrame : UserControl, IWidgetContainer, INotifyPropertyChanged
     {
-        public PlotWidget()
+        public static readonly DependencyPropertyKey ChildrenProperty = DependencyProperty.RegisterReadOnly(
+            nameof(Children),
+            typeof(UIElementCollection),
+            typeof(WidgetFrame),
+            new PropertyMetadata());
+
+        public UIElementCollection Children
+        {
+            get { return (UIElementCollection)GetValue(ChildrenProperty.DependencyProperty); }
+            private set { SetValue(ChildrenProperty, value); }
+        }
+
+        public WidgetFrame()
         {
             InitializeComponent();
+            Children = PART_Host.Children;
             DataContext = this;
         }
+
+        private IWidget mWidget = null;
 
         // Declare the event
         public event PropertyChangedEventHandler PropertyChanged;
@@ -50,6 +64,11 @@ namespace Dashboard.Widgets.Oxyplot
             Changed?.Invoke(this, e);
         }
 
+        private void OnChanged(object sender, EventArgs e)
+        {
+            Changed?.Invoke(sender, e);
+        }
+
         private WidgetPosition mPosition = new WidgetPosition();
         public WidgetPosition Position
         {
@@ -57,7 +76,7 @@ namespace Dashboard.Widgets.Oxyplot
             set
             {
                 mPosition = value;
-                OnPropertyChanged("Position");                
+                OnPropertyChanged("Position");
             }
         }
 
@@ -68,7 +87,7 @@ namespace Dashboard.Widgets.Oxyplot
             set
             {
                 mDimension = value;
-                //OnPropertyChanged("Dimension");
+                OnPropertyChanged("Dimension");
             }
         }
 
@@ -86,30 +105,33 @@ namespace Dashboard.Widgets.Oxyplot
             }
         }
 
-        public PlotViewModel PlotViewModel { get; set; } = new PlotViewModel();
-
         public async Task RefreshData()
         {
-            PlotViewModel.AddNewSeries(new LineSeries
+            // call child widget to refresh data
+            await mWidget?.RefreshData();
+        }
+
+        public void SetWidget(IWidget widget)
+        {
+            // check if widget is valid
+            if (widget != null && widget is UserControl)
             {
-                Title = "TimeSeries"
-            });
-            int waitTime = 300;
-            Random rnd = new Random();
-            List<DataPoint> points = new List<DataPoint> {
-                new DataPoint(DateTimeAxis.ToDouble(DateTime.Now.AddHours(rnd.Next(-13, -1))), 5),
-                new DataPoint(DateTimeAxis.ToDouble(DateTime.Now.AddHours(rnd.Next(-13, -1))), 10),
-                new DataPoint(DateTimeAxis.ToDouble(DateTime.Now.AddHours(rnd.Next(-13, -1))), 64),
-                };
-            int seriesIndex = PlotViewModel.LinePlotModel.Series.Count - 1;
-            for (int iter = 0; iter < points.Count; iter++)
-            {
-                await Task.Delay(waitTime);
-                // Add point in series
-                PlotViewModel.AddPointInLineSeries(seriesIndex, points[iter]);
+                //check if already child is present
+                int widgetCount = Children.Count;
+                // remove widget children if present using the widget child count
+                for (int childIter = 0; childIter < widgetCount; childIter++)
+                {
+                    if (Children[0] is IWidget)
+                    {
+                        ((IWidget)Children[0]).DoCleanUpForDeletion();
+                    }
+                    Children.RemoveAt(0);
+                }
+                // add the widget to the container
+                Children.Add((UserControl)widget);
+                widget.Changed = (EventArgs e) => Changed?.Invoke(widget, e);
+                mWidget = widget;
             }
-            PlotViewModel.MakeXAxisDateTime();
-            PlotViewModel.SetXAxisStringFormat("dd-MMM-yyyy");
         }
 
         private async void RefreshDataBtn_Click(object sender, RoutedEventArgs e)
@@ -119,7 +141,7 @@ namespace Dashboard.Widgets.Oxyplot
 
         private void EditPositionBtn_Click(object sender, RoutedEventArgs e)
         {
-            OnChanged(new CellPosChangeReqArgs());            
+            OnChanged(new CellPosChangeReqArgs());
         }
     }
 }

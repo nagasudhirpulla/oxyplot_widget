@@ -67,6 +67,7 @@
       <DependentUpon>WidgetPositionEditorWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IWidget.cs" />
+    <Compile Include="Interfaces\IWidgetContainer.cs" />
     <Compile Include="States\DashboardState.cs" />
     <Compile Include="UserControls\Converters\ColorBrushConverter.cs" />
     <Compile Include="UserControls\Dashboard\Dashboard.xaml.cs">
@@ -83,6 +84,9 @@
     </Compile>
     <Compile Include="Widgets\Oxyplot\PlotWidget.xaml.cs">
       <DependentUpon>PlotWidget.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Widgets\WidgetFrame.xaml.cs">
+      <DependentUpon>WidgetFrame.xaml</DependentUpon>
     </Compile>
     <Page Include="EditorWindows\WidgetPositionEditorWindow.xaml">
       <SubType>Designer</SubType>
@@ -109,6 +113,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Widgets\Oxyplot\PlotWidget.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Widgets\WidgetFrame.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

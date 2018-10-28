@@ -11,17 +11,17 @@ namespace Dashboard.UserControls.Dashboard
 {
     public class DashboardLayoutManager
     {
-        public void AddDashboardWidgetToContainer(Grid container, IWidget widget, Action<object, EventArgs> changed)
+        public void AddDashboardWidgetToContainer(Grid container, IWidgetContainer widgetContainer, Action<object, EventArgs> changed)
         {
-            EnsureWidgetPositon(container, widget.Position);
-            container.Children.Add(widget as UserControl);
-            widget.Changed += new EventHandler<EventArgs>(changed);
+            EnsureWidgetPositon(container, widgetContainer.Position);
+            container.Children.Add(widgetContainer as UserControl);
+            widgetContainer.Changed += new EventHandler<EventArgs>(changed);
         }
 
-        public void ChangeWidgetPosition(Grid container, IWidget widget, WidgetPosition newPosition)
+        public void ChangeWidgetPosition(Grid container, IWidgetContainer widgetContainer, WidgetPosition newPosition)
         {
             EnsureWidgetPositon(container, newPosition);
-            widget.Position = newPosition;
+            widgetContainer.Position = newPosition;
             RemoveEmptyRowsAndColumns(container);
         }
 
@@ -38,11 +38,11 @@ namespace Dashboard.UserControls.Dashboard
             int maxCols = 0;
             for (int iter = 0; iter < container.Children.Count; iter++)
             {
-                if (container.Children[iter] is IWidget)
+                if (container.Children[iter] is IWidgetContainer)
                 {
-                    IWidget widget = container.Children[iter] as IWidget;
-                    int rowCountReq = widget.Position.Row + widget.Position.RowSpan;
-                    int colCountReq = widget.Position.Column + widget.Position.ColSpan;
+                    IWidgetContainer widgetContainer = container.Children[iter] as IWidgetContainer;
+                    int rowCountReq = widgetContainer.Position.Row + widgetContainer.Position.RowSpan;
+                    int colCountReq = widgetContainer.Position.Column + widgetContainer.Position.ColSpan;
                     if (rowCountReq > maxRows)
                     {
                         maxRows = rowCountReq;
@@ -77,11 +77,11 @@ namespace Dashboard.UserControls.Dashboard
 
             for (int iter = 0; iter < container.Children.Count; iter++)
             {
-                if (container.Children[iter] is IWidget)
+                if (container.Children[iter] is IWidgetContainer)
                 {
-                    IWidget widget = container.Children[iter] as IWidget;
-                    int rowCountReq = widget.Position.Row + widget.Position.RowSpan;
-                    int colCountReq = widget.Position.Column + widget.Position.ColSpan;
+                    IWidgetContainer widgetContainer = container.Children[iter] as IWidgetContainer;
+                    int rowCountReq = widgetContainer.Position.Row + widgetContainer.Position.RowSpan;
+                    int colCountReq = widgetContainer.Position.Column + widgetContainer.Position.ColSpan;
                     if (rowCountReq > maxRows)
                     {
                         maxRows = rowCountReq;

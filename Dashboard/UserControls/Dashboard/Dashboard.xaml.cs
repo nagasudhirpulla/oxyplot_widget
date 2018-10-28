@@ -30,7 +30,7 @@ namespace Dashboard.UserControls.Dashboard
 
         }
 
-        private List<IWidget> Widgets { get; set; }
+        private List<IWidgetContainer> Widgets { get; set; }
 
         public DashboardState DashboardState { get; set; }
 
@@ -44,7 +44,7 @@ namespace Dashboard.UserControls.Dashboard
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        public void ChangeWidgetPosition(IWidget widget, WidgetPosition newPosition)
+        public void ChangeWidgetPosition(IWidgetContainer widget, WidgetPosition newPosition)
         {
             LayoutManager.ChangeWidgetPosition(CellsContainer, widget, newPosition);
         }
@@ -54,13 +54,13 @@ namespace Dashboard.UserControls.Dashboard
 
         public void AddNewBlankWidget()
         {
-            BlankWidget widget = new BlankWidget
+            WidgetFrame widgetFrame = new WidgetFrame
             {
                 Position = LayoutManager.GetNewWidgetPositon(CellsContainer)
             };
-            //todo wire up the event creation handler to the cell so that it can send messages to this dashboard
+            widgetFrame.SetWidget(new BlankWidget());
 
-            LayoutManager.AddDashboardWidgetToContainer(CellsContainer, widget, Changed);
+            LayoutManager.AddDashboardWidgetToContainer(CellsContainer, widgetFrame, Changed);
         }
 
         public void AddNewPlotWidget()
@@ -75,7 +75,7 @@ namespace Dashboard.UserControls.Dashboard
         private void Changed(object sender, EventArgs eArgs)
         {
             //todo complete seeing https://github.com/nagasudhirpulla/wpf_scada_dashboard/blob/master/WPFScadaDashboard/DashboardUserControls/DashboardUC.xaml.cs
-            if (sender is IWidget widget)
+            if (sender is IWidgetContainer widget)
             {
                 if (eArgs is CellPosChangeReqArgs cellPosChangeArgs)
                 {
