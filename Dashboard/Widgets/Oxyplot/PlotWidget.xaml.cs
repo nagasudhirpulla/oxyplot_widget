@@ -20,6 +20,7 @@ namespace Dashboard.Widgets.Oxyplot
         {
             InitializeComponent();
             DataContext = this;
+            SetupPlotView();
         }
 
         // Declare the event
@@ -39,29 +40,40 @@ namespace Dashboard.Widgets.Oxyplot
         }
 
         public PlotViewModel PlotViewModel { get; set; } = new PlotViewModel();
+        private IPlotFetcher mPlotFetcher = new RandomPlotDataFetcher();
+
+        private void SetupPlotView()
+        {
+            List<LineSeries> seriesList = mPlotFetcher.GetSeriesForSetup();
+            for (int seriesIter = 0; seriesIter < seriesList.Count; seriesIter++)
+            {
+                PlotViewModel.AddNewSeries(seriesList[seriesIter]);
+            }
+        }
 
         public async Task RefreshData()
         {
-            PlotViewModel.AddNewSeries(new LineSeries
+            //int waitTime = 300;
+            //Random rnd = new Random();
+            //List<DataPoint> points = new List<DataPoint> {
+            //    new DataPoint(DateTimeAxis.ToDouble(DateTime.Now.AddHours(rnd.Next(-13, -1))), 5),
+            //    new DataPoint(DateTimeAxis.ToDouble(DateTime.Now.AddHours(rnd.Next(-13, -1))), 10),
+            //    new DataPoint(DateTimeAxis.ToDouble(DateTime.Now.AddHours(rnd.Next(-13, -1))), 64),
+            //    };
+            //int seriesIndex = PlotViewModel.LinePlotModel.Series.Count - 1;
+            //for (int iter = 0; iter < points.Count; iter++)
+            //{
+            //    await Task.Delay(waitTime);
+            //    // Add point in series
+            //    PlotViewModel.AddPointInLineSeries(seriesIndex, points[iter]);
+            //}
+            //PlotViewModel.MakeXAxisDateTime();
+            //PlotViewModel.SetXAxisStringFormat("dd-MMM-yyyy");
+            for (int seriesIter = 0; seriesIter < PlotViewModel.GetSeriesCount(); seriesIter++)
             {
-                Title = "TimeSeries"
-            });
-            int waitTime = 300;
-            Random rnd = new Random();
-            List<DataPoint> points = new List<DataPoint> {
-                new DataPoint(DateTimeAxis.ToDouble(DateTime.Now.AddHours(rnd.Next(-13, -1))), 5),
-                new DataPoint(DateTimeAxis.ToDouble(DateTime.Now.AddHours(rnd.Next(-13, -1))), 10),
-                new DataPoint(DateTimeAxis.ToDouble(DateTime.Now.AddHours(rnd.Next(-13, -1))), 64),
-                };
-            int seriesIndex = PlotViewModel.LinePlotModel.Series.Count - 1;
-            for (int iter = 0; iter < points.Count; iter++)
-            {
-                await Task.Delay(waitTime);
-                // Add point in series
-                PlotViewModel.AddPointInLineSeries(seriesIndex, points[iter]);
+                List<DataPoint> points = mPlotFetcher.FetchData(seriesIter);
+                PlotViewModel.ReplacePointsInLineSeries(seriesIter, points);
             }
-            PlotViewModel.MakeXAxisDateTime();
-            PlotViewModel.SetXAxisStringFormat("dd-MMM-yyyy");
         }
 
         public async Task DoCleanUpForDeletion()

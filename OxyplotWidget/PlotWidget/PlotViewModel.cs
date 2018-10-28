@@ -72,6 +72,11 @@ namespace OxyplotWidget.PlotWidget
             RefreshPlot();
         }
 
+        public int GetSeriesCount()
+        {
+            return _linePlotModel.Series.Count;
+        }
+
         /// <summary>
         /// Add a new point to an existing line series
         /// </summary>

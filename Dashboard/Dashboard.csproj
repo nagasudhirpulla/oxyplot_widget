@@ -82,9 +82,12 @@
     <Compile Include="Widgets\BlankWidget.xaml.cs">
       <DependentUpon>BlankWidget.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Widgets\Oxyplot\IPlotFetcher.cs" />
     <Compile Include="Widgets\Oxyplot\PlotWidget.xaml.cs">
       <DependentUpon>PlotWidget.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Widgets\Oxyplot\RandomPlotDataFetcher.cs" />
+    <Compile Include="Widgets\Oxyplot\RandomPlotFetchConfig.cs" />
     <Compile Include="Widgets\WidgetFrame.xaml.cs">
       <DependentUpon>WidgetFrame.xaml</DependentUpon>
     </Compile>
