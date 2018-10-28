@@ -1,7 +1,5 @@
 ﻿using Dashboard.Interfaces;
-using Dashboard.WidgetLayout;
 using System;
-using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 

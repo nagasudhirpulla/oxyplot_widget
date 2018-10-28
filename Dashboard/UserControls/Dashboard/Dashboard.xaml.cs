@@ -65,16 +65,17 @@ namespace Dashboard.UserControls.Dashboard
 
         public void AddNewPlotWidget()
         {
-            PlotWidget widget = new PlotWidget
+            WidgetFrame widgetFrame = new WidgetFrame
             {
                 Position = LayoutManager.GetNewWidgetPositon(CellsContainer)
             };
-            LayoutManager.AddDashboardWidgetToContainer(CellsContainer, widget, Changed);
+            widgetFrame.SetWidget(new PlotWidget());
+            LayoutManager.AddDashboardWidgetToContainer(CellsContainer, widgetFrame, Changed);
         }
 
         private void Changed(object sender, EventArgs eArgs)
         {
-            //todo complete seeing https://github.com/nagasudhirpulla/wpf_scada_dashboard/blob/master/WPFScadaDashboard/DashboardUserControls/DashboardUC.xaml.cs
+            // https://github.com/nagasudhirpulla/wpf_scada_dashboard/blob/master/WPFScadaDashboard/DashboardUserControls/DashboardUC.xaml.cs
             if (sender is IWidgetContainer widget)
             {
                 if (eArgs is CellPosChangeReqArgs cellPosChangeArgs)

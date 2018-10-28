@@ -6,23 +6,6 @@
              xmlns:local="clr-namespace:Dashboard.Widgets.Oxyplot"
              xmlns:oxy="http://oxyplot.org/wpf"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Grid.Row="{Binding Position.Row}" 
-             Grid.Column="{Binding Position.Column}" Grid.RowSpan="{Binding Position.RowSpan}" 
-             Grid.ColumnSpan="{Binding Position.ColSpan}">
-    <Border BorderThickness="1">
-        <Border.BorderBrush>
-            <SolidColorBrush Color="{Binding WidgetAppearance.BorderColor}"/>
-        </Border.BorderBrush>
-        <Grid Name="PlotContainer">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Grid.Row="0">
-                <Button Content="Refresh" Click="RefreshDataBtn_Click" HorizontalAlignment="Right"/>
-                <Button Content="Edit Position" Click="EditPositionBtn_Click" HorizontalAlignment="Right"/>
-            </StackPanel>
-            <oxy:PlotView Name="OxyplotView" Model="{Binding PlotViewModel.LinePlotModel}" Grid.Row="1"/>
-        </Grid>
-    </Border>
+             d:DesignHeight="450" d:DesignWidth="800">
+    <oxy:PlotView Name="OxyplotView" Model="{Binding PlotViewModel.LinePlotModel}"/>
 </UserControl>
