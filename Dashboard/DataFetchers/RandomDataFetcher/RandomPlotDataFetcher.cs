@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using OxyPlot;
 using OxyPlot.Series;
+using Dashboard.Widgets.Oxyplot;
 
-namespace Dashboard.Widgets.Oxyplot
+namespace Dashboard.DataFetchers.RandomDataFetcher
 {
     public class RandomPlotDataFetcher : IPlotFetcher
     {
@@ -21,8 +22,9 @@ namespace Dashboard.Widgets.Oxyplot
             }
             int min = Config.Bounds[seriesIndex].Item1;
             int max = Config.Bounds[seriesIndex].Item2;
+            int numPoints = Config.Bounds[seriesIndex].Item3;
             Random random = new Random();
-            for (int pointIter = 0; pointIter < Config.NumPointsInEachSeries; pointIter++)
+            for (int pointIter = 0; pointIter < numPoints; pointIter++)
             {
                 dataPoints.Add(new DataPoint(pointIter, random.Next(min, max)));
             }

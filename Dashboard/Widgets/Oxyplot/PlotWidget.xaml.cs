@@ -1,4 +1,5 @@
-﻿using Dashboard.Interfaces;
+﻿using Dashboard.DataFetchers.RandomDataFetcher;
+using Dashboard.Interfaces;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
