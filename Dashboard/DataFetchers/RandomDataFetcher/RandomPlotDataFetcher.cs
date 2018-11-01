@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using OxyPlot;
 using OxyPlot.Series;
 using Dashboard.Widgets.Oxyplot;
+using Dashboard.EditorWindows;
 
 namespace Dashboard.DataFetchers.RandomDataFetcher
 {
@@ -39,6 +40,16 @@ namespace Dashboard.DataFetchers.RandomDataFetcher
                 seriesList.Add(new LineSeries { Title = $"Series {boundsIter}" });
             }
             return seriesList;
+        }
+
+        public void OpenConfigEditWindow()
+        {
+            RandomPlotFetchConfigWindow configWindow = new RandomPlotFetchConfigWindow(Config.Bounds);
+            configWindow.ShowDialog();
+            if (configWindow.DialogResult == true)
+            {
+                Config.Bounds = configWindow.GetConfigTuples();
+            }
         }
     }
 }

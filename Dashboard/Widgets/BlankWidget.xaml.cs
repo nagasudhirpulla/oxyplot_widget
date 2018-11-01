@@ -34,5 +34,10 @@ namespace Dashboard.Widgets
         {
             // do nothing
         }
+
+        public void OpenConfigWindow()
+        {
+            // do nothing
+        }
     }
 }

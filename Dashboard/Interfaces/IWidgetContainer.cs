@@ -10,6 +10,7 @@ namespace Dashboard.Interfaces
     public interface IWidgetContainer
     {
         Task RefreshData();
+        void OpenConfigWindow();
 
         WidgetPosition Position { get; set; }
         WidgetDimension Dimension { get; set; }

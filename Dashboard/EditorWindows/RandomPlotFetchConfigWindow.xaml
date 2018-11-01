@@ -7,8 +7,16 @@
         mc:Ignorable="d"
         Title="RandomPlotFetchConfigWindow" Height="450" Width="800">
     <Grid>
-        <ListBox Margin="5,10,4.6,0.4" ItemsSource="{Binding}"
-                 HorizontalContentAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Add" Click="AddBtnClick" Padding="5"></Button>
+        </StackPanel>
+        <ListBox ItemsSource="{Binding RandomSeriesConfigItems}"
+                 HorizontalContentAlignment="Stretch" Name="ConfigItemsContainer" Grid.Row="1">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -16,13 +24,19 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox Grid.Column="0" Text="{Binding Item1}"/>
-                        <TextBox Grid.Column="1" Text="{Binding Item2}"/>
-                        <TextBox Grid.Column="2" Text="{Binding Item3}"/>
+                        <TextBox Grid.Column="0" Text="{Binding Low}"/>
+                        <TextBox Grid.Column="1" Text="{Binding High}"/>
+                        <TextBox Grid.Column="2" Text="{Binding NumPnts}"/>
+                        <Button  Grid.Column="3" Click="ListItemDeleteBtnClick" Content="Delete"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <StackPanel Orientation="Horizontal" Grid.Row="2">
+            <Button Content="OK" Click="OkBtnClick" Padding="5"></Button>
+            <Button Content="Cancel" Click="CancelBtnClick" Padding="5"></Button>
+        </StackPanel>
     </Grid>
 </Window>

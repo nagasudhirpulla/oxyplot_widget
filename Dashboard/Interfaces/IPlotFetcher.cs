@@ -12,5 +12,6 @@ namespace Dashboard.Widgets.Oxyplot
     {
         List<LineSeries> GetSeriesForSetup();
         List<DataPoint> FetchData(int seriesIndex);
+        void OpenConfigEditWindow();
     }
 }

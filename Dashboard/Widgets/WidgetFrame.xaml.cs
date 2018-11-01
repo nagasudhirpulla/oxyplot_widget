@@ -111,6 +111,12 @@ namespace Dashboard.Widgets
             await mWidget?.RefreshData();
         }
 
+        public void OpenConfigWindow()
+        {
+            // todo complete this
+            mWidget?.OpenConfigWindow();
+        }
+
         public void SetWidget(IWidget widget)
         {
             // check if widget is valid
@@ -142,6 +148,11 @@ namespace Dashboard.Widgets
         private void EditPositionBtn_Click(object sender, RoutedEventArgs e)
         {
             OnChanged(new CellPosChangeReqArgs());
+        }
+
+        private void EditConfigBtn_Click(object sender, RoutedEventArgs e)
+        {
+            OnChanged(new CellMessageArgs() { Message = CellMessageArgs.ConfigWindowOpenRequest });
         }
     }
 }

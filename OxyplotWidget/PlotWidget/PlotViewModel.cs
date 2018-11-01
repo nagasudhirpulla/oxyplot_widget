@@ -72,6 +72,12 @@ namespace OxyplotWidget.PlotWidget
             RefreshPlot();
         }
 
+        public void ClearSeries()
+        {
+            _linePlotModel.Series.Clear();
+            RefreshPlot();
+        }
+
         public int GetSeriesCount()
         {
             return _linePlotModel.Series.Count;

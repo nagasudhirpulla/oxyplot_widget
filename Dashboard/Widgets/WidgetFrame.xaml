@@ -25,6 +25,7 @@
             <StackPanel Height="20" Name="Overlay" Panel.ZIndex="1000" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="0">
                 <Button Content="Refresh" Click="RefreshDataBtn_Click" HorizontalAlignment="Right" Style="{StaticResource OverlayBtnStyle}"/>
                 <Button Content="Position" Click="EditPositionBtn_Click" HorizontalAlignment="Right" Style="{StaticResource OverlayBtnStyle}"/>
+                <Button Content="Config" Click="EditConfigBtn_Click" HorizontalAlignment="Right" Style="{StaticResource OverlayBtnStyle}"/>
             </StackPanel>            
             <Grid Name="PART_Host"></Grid>
             </Grid>

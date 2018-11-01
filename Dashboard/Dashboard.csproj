@@ -63,9 +63,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="EditorWindows\RandomPlotFetchConfigWindow.xaml.cs">
+      <DependentUpon>RandomPlotFetchConfigWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EditorWindows\WidgetPositionEditorWindow.xaml.cs">
       <DependentUpon>WidgetPositionEditorWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ListUtility.cs" />
     <Compile Include="Interfaces\IWidget.cs" />
     <Compile Include="Interfaces\IWidgetContainer.cs" />
     <Compile Include="States\DashboardState.cs" />
@@ -74,6 +78,7 @@
       <DependentUpon>Dashboard.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Dashboard\DashboardLayoutManager.cs" />
+    <Compile Include="WidgetLayout\CellMessageArgs.cs" />
     <Compile Include="WidgetLayout\CellPosChangeReqArgs.cs" />
     <Compile Include="WidgetLayout\DimensionEnum.cs" />
     <Compile Include="WidgetLayout\WidgetAppearance.cs" />
@@ -82,15 +87,19 @@
     <Compile Include="Widgets\BlankWidget.xaml.cs">
       <DependentUpon>BlankWidget.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Widgets\Oxyplot\IPlotFetcher.cs" />
+    <Compile Include="Interfaces\IPlotFetcher.cs" />
     <Compile Include="Widgets\Oxyplot\PlotWidget.xaml.cs">
       <DependentUpon>PlotWidget.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Widgets\Oxyplot\RandomPlotDataFetcher.cs" />
-    <Compile Include="Widgets\Oxyplot\RandomPlotFetchConfig.cs" />
+    <Compile Include="DataFetchers\RandomDataFetcher\RandomPlotDataFetcher.cs" />
+    <Compile Include="DataFetchers\RandomDataFetcher\RandomPlotFetchConfig.cs" />
     <Compile Include="Widgets\WidgetFrame.xaml.cs">
       <DependentUpon>WidgetFrame.xaml</DependentUpon>
     </Compile>
+    <Page Include="EditorWindows\RandomPlotFetchConfigWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="EditorWindows\WidgetPositionEditorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -45,6 +45,7 @@ namespace Dashboard.Widgets.Oxyplot
 
         private void SetupPlotView()
         {
+            PlotViewModel.ClearSeries();
             List<LineSeries> seriesList = mPlotFetcher.GetSeriesForSetup();
             for (int seriesIter = 0; seriesIter < seriesList.Count; seriesIter++)
             {
@@ -80,6 +81,13 @@ namespace Dashboard.Widgets.Oxyplot
         public async Task DoCleanUpForDeletion()
         {
             // do nothing
+        }
+
+        public void OpenConfigWindow()
+        {
+            mPlotFetcher.OpenConfigEditWindow();
+            SetupPlotView();
+            RefreshData();
         }
     }
 }

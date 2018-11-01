@@ -92,6 +92,17 @@ namespace Dashboard.UserControls.Dashboard
                         }
                     }
                 }
+
+                if (eArgs is CellMessageArgs cellMessageArgs)
+                {
+                    if (cellMessageArgs != null && widget != null && cellMessageArgs.Message != null)
+                    {
+                        if (cellMessageArgs.Message == CellMessageArgs.ConfigWindowOpenRequest)
+                        {
+                            widget.OpenConfigWindow();
+                        }
+                    }
+                }
             }
         }
     }

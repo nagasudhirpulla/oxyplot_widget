@@ -11,6 +11,7 @@ namespace Dashboard.Interfaces
         Action<EventArgs> Changed { get; set; }
 
         Task RefreshData();
+        void OpenConfigWindow();
 
         // do additional freeing up of resources before deletion of this widget
         Task DoCleanUpForDeletion();
