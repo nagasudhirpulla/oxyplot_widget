@@ -1,0 +1,31 @@
+﻿<Window x:Class="Dashboard.Measurements.RandomMeasurement.RandomMeasEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Dashboard.Measurements.RandomMeasurement"
+        mc:Ignorable="d"
+        Title="RandomMeasEditWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Label Content="Low"></Label>
+        <Label Content="High" Grid.Row="1"></Label>
+        <Label Content="Number of Points" Grid.Row="2"></Label>
+        <TextBox Grid.Column="1" Text="{Binding Row}"/>
+        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding High}"/>
+        <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding NumPnts}"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="3">
+            <Button Content="OK" Click="OkBtnClick" Padding="5" Margin="5"/>
+            <Button Content="Cancel" Click="CancelBtnClick" Padding="5" Margin="5"/>
+        </StackPanel>
+    </Grid>
+</Window>
