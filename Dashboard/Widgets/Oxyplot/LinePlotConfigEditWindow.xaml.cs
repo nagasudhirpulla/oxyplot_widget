@@ -62,6 +62,7 @@ namespace Dashboard.Widgets.Oxyplot
             int seriesIndex = GetSeriesConfigListItemIndexFromButton(button);
             if (seriesIndex >= 0 && seriesIndex < editorVM.mLinePlotConfig.SeriesConfigs.Count)
             {
+                /*
                 // this means the mesurement is present in ViewModel series config list items
                 IMeasurement seriesMeas = editorVM.mLinePlotConfig.SeriesConfigs[seriesIndex].Measurement;
 
@@ -78,6 +79,16 @@ namespace Dashboard.Widgets.Oxyplot
                         editorVM.RefreshSeriesConfigListItemAt(seriesIndex);
                     }
                 }
+                */
+                LineSeriesConfigEditWindow lineSeriesConfigEditWindow = new LineSeriesConfigEditWindow(editorVM.mLinePlotConfig.SeriesConfigs[seriesIndex]);
+                lineSeriesConfigEditWindow.ShowDialog();
+                if (lineSeriesConfigEditWindow.DialogResult == true)
+                {
+                    // update the series measurement in the vm
+                    editorVM.mLinePlotConfig.SeriesConfigs[seriesIndex] = lineSeriesConfigEditWindow.EditorVM.mLineSeriesConfig;
+                    // update the view model list items
+                    editorVM.RefreshSeriesConfigListItemAt(seriesIndex);
+                }
             }
         }
 
@@ -87,7 +98,7 @@ namespace Dashboard.Widgets.Oxyplot
             {
                 //do no stuff
                 return;
-            }            
+            }
             // a button on list view has been clicked
             Button button = sender as Button;
             // get the series config list item index
@@ -97,12 +108,21 @@ namespace Dashboard.Widgets.Oxyplot
 
         private void OkBtnClick(object sender, RoutedEventArgs e)
         {
-
+            if (MessageBox.Show("Save Changes ?", "Save Changes", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+            {
+                //do no stuff
+                return;
+            }
+            else
+            {
+                DialogResult = true;
+            }
         }
 
         private void CancelBtnClick(object sender, RoutedEventArgs e)
         {
-
+            DialogResult = false;
+            this.Close();
         }
     }
 
@@ -121,7 +141,7 @@ namespace Dashboard.Widgets.Oxyplot
         // constructor
         public LinePlotConfigEditorVM(LinePlotConfig config)
         {
-            mLinePlotConfig = config;
+            mLinePlotConfig = config.Clone();
             SeriesConfigListItems = new ObservableCollection<SeriesConfigListItem>();
             SyncSeriesConfigListItemsWithConfig();
         }
@@ -174,7 +194,13 @@ namespace Dashboard.Widgets.Oxyplot
         // Line plot series list items section
         public ObservableCollection<SeriesConfigListItem> SeriesConfigListItems;
 
-        // Line plot appearance config section
+        // Line plot appearance and name config section
+        public string Name
+        {
+            get { return mLinePlotConfig.Name; }
+            set { mLinePlotConfig.Name = value; }
+        }
+
         public Color Background
         {
             get { return mLinePlotConfig.Appearance.BackgroundColor; }

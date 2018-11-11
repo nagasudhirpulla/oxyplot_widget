@@ -11,5 +11,6 @@ namespace Dashboard.Interfaces
     {
         Task<List<DataPoint>> FetchData();
         string GetDisplayText();
+        IMeasurement Clone();
     }
 }

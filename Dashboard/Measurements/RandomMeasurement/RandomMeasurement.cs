@@ -14,15 +14,6 @@ namespace Dashboard.Measurements.RandomMeasurement
         public double High { get; set; } = 10;
         public int NumPnts { get; set; } = 30;
 
-        public RandomMeasurement() { }
-
-        public RandomMeasurement(RandomMeasurement meas)
-        {
-            Low = meas.Low;
-            High = meas.High;
-            NumPnts = meas.NumPnts;
-        }
-
         public async Task<List<DataPoint>> FetchData()
         {
             List<DataPoint> dataPoints = new List<DataPoint>();
@@ -39,6 +30,11 @@ namespace Dashboard.Measurements.RandomMeasurement
         public string GetDisplayText()
         {
             return $"{Low} (Low), {High} (High), {NumPnts} (Number of points)";
+        }
+
+        public IMeasurement Clone()
+        {
+            return new RandomMeasurement { Low = Low, High = High, NumPnts = NumPnts };
         }
     }
 }

@@ -10,48 +10,30 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Dashboard.Measurements.RandomMeasurement
 {
     /// <summary>
-    /// Interaction logic for RandomMeasEditWindow.xaml
+    /// Interaction logic for RandomMeasEditUC.xaml
     /// </summary>
-    public partial class RandomMeasEditWindow : Window
+    public partial class RandomMeasEditUC : UserControl
     {
-        public MeasEditorVM editorVM;
-        public RandomMeasEditWindow(RandomMeasurement measurement)
+        public MeasEditUCVM editorVM;
+        public RandomMeasEditUC(RandomMeasurement measurement)
         {
             InitializeComponent();
-            editorVM = new MeasEditorVM(measurement);
+            editorVM = new MeasEditUCVM(measurement);
             DataContext = editorVM;
-        }
-
-        private void OkBtnClick(object sender, RoutedEventArgs e)
-        {
-            if (MessageBox.Show("Save Changes ?", "Save Changes", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
-            {
-                //do no stuff
-                return;
-            }
-            else
-            {
-                DialogResult = true;
-            }
-        }
-
-        private void CancelBtnClick(object sender, RoutedEventArgs e)
-        {
-            DialogResult = false;
-            this.Close();
         }
     }
 
-    public class MeasEditorVM
+    public class MeasEditUCVM
     {
-        public MeasEditorVM(RandomMeasurement measurement)
+        public MeasEditUCVM(RandomMeasurement measurement)
         {
-            mRandomMeasurement = (RandomMeasurement)measurement.Clone();
+            mRandomMeasurement = measurement;
         }
 
         public RandomMeasurement mRandomMeasurement { get; set; }

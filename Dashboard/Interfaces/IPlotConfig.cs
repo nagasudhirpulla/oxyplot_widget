@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OxyPlot.Series;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,10 @@ namespace Dashboard.Interfaces
 {
     public interface IPlotConfig
     {
+        string Name { get; set; }
+
         void OpenConfigEditWindow();
+
+        List<LineSeries> GetSeriesListForPlotSetup();
     }
 }

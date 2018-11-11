@@ -47,11 +47,16 @@ namespace Dashboard.Widgets.Oxyplot
         private void SetupPlotView()
         {
             PlotViewModel.ClearSeries();
-            List<LineSeries> seriesList = mPlotFetcher.GetSeriesForSetup();
+            List<LineSeries> seriesList = mLinePlotConfig.GetSeriesListForPlotSetup();
             for (int seriesIter = 0; seriesIter < seriesList.Count; seriesIter++)
             {
                 PlotViewModel.AddNewSeries(seriesList[seriesIter]);
             }
+            PlotViewModel.SetPlotBackground(Helpers.OxyUtility.ConvertColorToOxyColor(mLinePlotConfig.Appearance.BackgroundColor));
+            PlotViewModel.SetPlotTextColor(Helpers.OxyUtility.ConvertColorToOxyColor(mLinePlotConfig.Appearance.TextColor));
+            PlotViewModel.SetPlotAxesTickColor(Helpers.OxyUtility.ConvertColorToOxyColor(mLinePlotConfig.Appearance.ForegroundColor));
+            //todo incorporate in plotConfig separately
+            //PlotViewModel.SetPlotMajorAxesLineColor(Helpers.OxyUtility.ConvertColorToOxyColor(mLinePlotConfig.Appearance.ForegroundColor));
         }
 
         public async Task RefreshData()
@@ -74,7 +79,7 @@ namespace Dashboard.Widgets.Oxyplot
             //PlotViewModel.SetXAxisStringFormat("dd-MMM-yyyy");
             for (int seriesIter = 0; seriesIter < PlotViewModel.GetSeriesCount(); seriesIter++)
             {
-                List<DataPoint> points = mPlotFetcher.FetchData(seriesIter);
+                List<DataPoint> points = await mLinePlotConfig.SeriesConfigs[seriesIter].Measurement.FetchData();
                 PlotViewModel.ReplacePointsInLineSeries(seriesIter, points);
             }
         }

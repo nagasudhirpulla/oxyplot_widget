@@ -15,9 +15,10 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Label Content="Plot Configuration" Grid.Row="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
-        <!-- Plot Appearance Config Start-->
+        <!-- Plot Appearance and Name Config Start-->
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -28,14 +29,16 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Label Content="Appearance"/>
-            <Label Content="Background" Grid.Row="1" Grid.Column="0"/>
-            <Label Content="Foreground" Grid.Row="2" Grid.Column="0"/>
-            <Label Content="Text Color" Grid.Row="3" Grid.Column="0"/>
-            <xctk:ColorPicker SelectedColor="{Binding Background}" Grid.Row="1" Grid.Column="1"></xctk:ColorPicker>
-            <xctk:ColorPicker SelectedColor="{Binding Foreground}" Grid.Row="2" Grid.Column="1"></xctk:ColorPicker>
-            <xctk:ColorPicker SelectedColor="{Binding TextColor}" Grid.Row="3" Grid.Column="1"></xctk:ColorPicker>
+            <Label Content="Name" Grid.Row="1" Grid.Column="0"/>
+            <Label Content="Background" Grid.Row="2" Grid.Column="0"/>
+            <Label Content="Foreground" Grid.Row="3" Grid.Column="0"/>
+            <Label Content="Text Color" Grid.Row="4" Grid.Column="0"/>
+            <TextBox Text="{Binding Name}" Grid.Row="1" Grid.Column="1"></TextBox>
+            <xctk:ColorPicker SelectedColor="{Binding Background}" Grid.Row="2" Grid.Column="1"></xctk:ColorPicker>
+            <xctk:ColorPicker SelectedColor="{Binding Foreground}" Grid.Row="3" Grid.Column="1"></xctk:ColorPicker>
+            <xctk:ColorPicker SelectedColor="{Binding TextColor}" Grid.Row="4" Grid.Column="1"></xctk:ColorPicker>
         </Grid>
-        <!-- Plot Appearance Config End -->
+        <!-- Plot Appearance and Name Config End -->
         <!-- Plot Series Config Start-->
         <Grid Grid.Row="2">
             <Grid.RowDefinitions>

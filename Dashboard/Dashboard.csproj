@@ -88,10 +88,14 @@
       <DependentUpon>WidgetPositionEditorWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ListUtility.cs" />
+    <Compile Include="Helpers\OxyUtility.cs" />
     <Compile Include="Interfaces\IMeasurement.cs" />
     <Compile Include="Interfaces\IPlotConfig.cs" />
     <Compile Include="Interfaces\IWidget.cs" />
     <Compile Include="Interfaces\IWidgetContainer.cs" />
+    <Compile Include="Measurements\RandomMeasurement\RandomMeasEditUC.xaml.cs">
+      <DependentUpon>RandomMeasEditUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Measurements\RandomMeasurement\RandomMeasEditWindow.xaml.cs">
       <DependentUpon>RandomMeasEditWindow.xaml</DependentUpon>
     </Compile>
@@ -115,6 +119,9 @@
     <Compile Include="Widgets\Oxyplot\LinePlotConfig.cs" />
     <Compile Include="Widgets\Oxyplot\LinePlotConfigEditWindow.xaml.cs">
       <DependentUpon>LinePlotConfigEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Widgets\Oxyplot\LineSeriesConfigEditWindow.xaml.cs">
+      <DependentUpon>LineSeriesConfigEditWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Widgets\Oxyplot\PlotWidget.xaml.cs">
       <DependentUpon>PlotWidget.xaml</DependentUpon>
@@ -144,6 +151,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Measurements\RandomMeasurement\RandomMeasEditUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Measurements\RandomMeasurement\RandomMeasEditWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -157,6 +168,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Widgets\Oxyplot\LinePlotConfigEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Widgets\Oxyplot\LineSeriesConfigEditWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

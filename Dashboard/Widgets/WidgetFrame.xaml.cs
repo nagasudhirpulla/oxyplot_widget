@@ -113,7 +113,6 @@ namespace Dashboard.Widgets
 
         public void OpenConfigWindow()
         {
-            // todo complete this
             mWidget?.OpenConfigWindow();
         }
 
