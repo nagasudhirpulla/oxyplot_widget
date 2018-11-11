@@ -20,7 +20,7 @@
         <Label Content="Low"></Label>
         <Label Content="High" Grid.Row="1"></Label>
         <Label Content="Number of Points" Grid.Row="2"></Label>
-        <TextBox Grid.Column="1" Text="{Binding Row}"/>
+        <TextBox Grid.Column="1" Text="{Binding Low}"/>
         <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding High}"/>
         <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding NumPnts}"/>
         <StackPanel Orientation="Horizontal" Grid.Row="3">

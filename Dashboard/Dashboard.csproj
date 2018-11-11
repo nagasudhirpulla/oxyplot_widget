@@ -57,6 +57,24 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -70,8 +88,14 @@
       <DependentUpon>WidgetPositionEditorWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ListUtility.cs" />
+    <Compile Include="Interfaces\IMeasurement.cs" />
+    <Compile Include="Interfaces\IPlotConfig.cs" />
     <Compile Include="Interfaces\IWidget.cs" />
     <Compile Include="Interfaces\IWidgetContainer.cs" />
+    <Compile Include="Measurements\RandomMeasurement\RandomMeasEditWindow.xaml.cs">
+      <DependentUpon>RandomMeasEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Measurements\RandomMeasurement\RandomMeasurement.cs" />
     <Compile Include="States\DashboardState.cs" />
     <Compile Include="UserControls\Converters\ColorBrushConverter.cs" />
     <Compile Include="UserControls\Dashboard\Dashboard.xaml.cs">
@@ -88,6 +112,10 @@
       <DependentUpon>BlankWidget.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IPlotFetcher.cs" />
+    <Compile Include="Widgets\Oxyplot\LinePlotConfig.cs" />
+    <Compile Include="Widgets\Oxyplot\LinePlotConfigEditWindow.xaml.cs">
+      <DependentUpon>LinePlotConfigEditWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Widgets\Oxyplot\PlotWidget.xaml.cs">
       <DependentUpon>PlotWidget.xaml</DependentUpon>
     </Compile>
@@ -116,11 +144,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Measurements\RandomMeasurement\RandomMeasEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\Dashboard\Dashboard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Widgets\BlankWidget.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Widgets\Oxyplot\LinePlotConfigEditWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

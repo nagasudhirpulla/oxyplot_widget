@@ -42,6 +42,7 @@ namespace Dashboard.Widgets.Oxyplot
 
         public PlotViewModel PlotViewModel { get; set; } = new PlotViewModel();
         private IPlotFetcher mPlotFetcher = new RandomPlotDataFetcher();
+        private LinePlotConfig mLinePlotConfig = new LinePlotConfig();
 
         private void SetupPlotView()
         {
@@ -85,7 +86,8 @@ namespace Dashboard.Widgets.Oxyplot
 
         public void OpenConfigWindow()
         {
-            mPlotFetcher.OpenConfigEditWindow();
+            //mPlotFetcher.OpenConfigEditWindow();
+            mLinePlotConfig.OpenConfigEditWindow();
             SetupPlotView();
             RefreshData();
         }

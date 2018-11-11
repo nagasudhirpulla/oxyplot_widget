@@ -10,5 +10,6 @@ namespace Dashboard.Interfaces
     public interface IMeasurement
     {
         Task<List<DataPoint>> FetchData();
+        string GetDisplayText();
     }
 }

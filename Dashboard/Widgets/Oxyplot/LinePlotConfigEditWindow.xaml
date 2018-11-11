@@ -3,20 +3,70 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:Dashboard.Widgets.Oxyplot"
         mc:Ignorable="d"
         Title="LinePlotConfigEditWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
-        
-        <StackPanel Orientation="Horizontal" Grid.Row="2">
-            <Button Content="OK" Click="OkBtnClick" Padding="5"></Button>
-            <Button Content="Cancel" Click="CancelBtnClick" Padding="5"></Button>
+        <Label Content="Plot Configuration" Grid.Row="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+        <!-- Plot Appearance Config Start-->
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Appearance"/>
+            <Label Content="Background" Grid.Row="1" Grid.Column="0"/>
+            <Label Content="Foreground" Grid.Row="2" Grid.Column="0"/>
+            <Label Content="Text Color" Grid.Row="3" Grid.Column="0"/>
+            <xctk:ColorPicker SelectedColor="{Binding Background}" Grid.Row="1" Grid.Column="1"></xctk:ColorPicker>
+            <xctk:ColorPicker SelectedColor="{Binding Foreground}" Grid.Row="2" Grid.Column="1"></xctk:ColorPicker>
+            <xctk:ColorPicker SelectedColor="{Binding TextColor}" Grid.Row="3" Grid.Column="1"></xctk:ColorPicker>
+        </Grid>
+        <!-- Plot Appearance Config End -->
+        <!-- Plot Series Config Start-->
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Add Series" Click="AddSeriesBtnClick" Padding="5"></Button>
+            </StackPanel>
+            <ListBox ItemsSource="{Binding SeriesConfigListItems}"
+                 HorizontalContentAlignment="Stretch" Name="ConfigItemsContainer" Grid.Row="1">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{Binding SeriesDisplayText}"/>
+                            <Button Grid.Column="1" Content="Edit" Click="EditSeriesBtnClick" Padding="5"></Button>
+                            <Button Grid.Column="2" Content="Delete" Click="DeleteSeriesBtnClick" Padding="5"></Button>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+        <!-- Plot Series Config End-->
+        <StackPanel Orientation="Horizontal" Grid.Row="3">
+            <Button Content="OK" Click="OkBtnClick" Padding="5" Margin="5"></Button>
+            <Button Content="Cancel" Click="CancelBtnClick" Padding="5" Margin="5"></Button>
         </StackPanel>
     </Grid>
 </Window>

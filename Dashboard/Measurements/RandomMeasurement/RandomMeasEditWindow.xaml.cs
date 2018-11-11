@@ -19,10 +19,11 @@ namespace Dashboard.Measurements.RandomMeasurement
     /// </summary>
     public partial class RandomMeasEditWindow : Window
     {
+        public MeasEditorVM editorVM;
         public RandomMeasEditWindow(RandomMeasurement measurement)
         {
             InitializeComponent();
-            MeasEditorVM editorVM = new MeasEditorVM(measurement);
+            editorVM = new MeasEditorVM(measurement);
             DataContext = editorVM;
         }
 
@@ -50,7 +51,7 @@ namespace Dashboard.Measurements.RandomMeasurement
     {
         public MeasEditorVM(RandomMeasurement measurement)
         {
-            mRandomMeasurement = measurement;
+            mRandomMeasurement = new RandomMeasurement(measurement);
         }
 
         public RandomMeasurement mRandomMeasurement { get; set; }

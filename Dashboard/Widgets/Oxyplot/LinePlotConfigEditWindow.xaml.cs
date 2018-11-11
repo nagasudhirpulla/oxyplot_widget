@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Dashboard.Interfaces;
+using Dashboard.Measurements.RandomMeasurement;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,9 +23,192 @@ namespace Dashboard.Widgets.Oxyplot
     /// </summary>
     public partial class LinePlotConfigEditWindow : Window
     {
-        public LinePlotConfigEditWindow()
+        public LinePlotConfigEditorVM editorVM;
+
+        public LinePlotConfigEditWindow(LinePlotConfig config)
         {
             InitializeComponent();
+            editorVM = new LinePlotConfigEditorVM(config);
+            DataContext = editorVM;
+            ConfigItemsContainer.ItemsSource = editorVM.SeriesConfigListItems;
+        }
+
+        private void AddSeriesBtnClick(object sender, RoutedEventArgs e)
+        {
+            editorVM.AddSeries();
+        }
+
+        private int GetSeriesConfigListItemIndexFromButton(Button button)
+        {
+            int seriesIndex = -1;
+            //walk up the tree to find the ListboxItem
+            DependencyObject tvi = Helpers.ListUtility.FindParentTreeItem(button, typeof(ListBoxItem));
+            //if not null cast the Dependancy object to type of Listbox item.
+            if (tvi != null)
+            {
+                ListBoxItem lbi = tvi as ListBoxItem;
+                SeriesConfigListItem seriesConfigListItem = (SeriesConfigListItem)lbi.DataContext;
+                // find the index of this list item in the ViewModel List
+                seriesIndex = editorVM.SeriesConfigListItems.IndexOf(seriesConfigListItem);
+            }
+            return seriesIndex;
+        }
+
+        private void EditSeriesBtnClick(object sender, RoutedEventArgs e)
+        {
+            // a button on list view has been clicked
+            Button button = sender as Button;
+            // get the series config list item index
+            int seriesIndex = GetSeriesConfigListItemIndexFromButton(button);
+            if (seriesIndex >= 0 && seriesIndex < editorVM.mLinePlotConfig.SeriesConfigs.Count)
+            {
+                // this means the mesurement is present in ViewModel series config list items
+                IMeasurement seriesMeas = editorVM.mLinePlotConfig.SeriesConfigs[seriesIndex].Measurement;
+
+                // handle if measurement is a Random Measurement
+                if (seriesMeas is RandomMeasurement randomSeriesMeas)
+                {
+                    RandomMeasEditWindow randomMeasEditWindow = new RandomMeasEditWindow(randomSeriesMeas);
+                    randomMeasEditWindow.ShowDialog();
+                    if (randomMeasEditWindow.DialogResult == true)
+                    {
+                        // update the series measurement in the vm
+                        editorVM.mLinePlotConfig.SeriesConfigs[seriesIndex].Measurement = randomMeasEditWindow.editorVM.mRandomMeasurement;
+                        // update the view model list items
+                        editorVM.RefreshSeriesConfigListItemAt(seriesIndex);
+                    }
+                }
+            }
+        }
+
+        private void DeleteSeriesBtnClick(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Delete Series ?", "Delete Series", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+            {
+                //do no stuff
+                return;
+            }            
+            // a button on list view has been clicked
+            Button button = sender as Button;
+            // get the series config list item index
+            int seriesIndex = GetSeriesConfigListItemIndexFromButton(button);
+            editorVM.DeleteSeriesConfigAt(seriesIndex);
+        }
+
+        private void OkBtnClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CancelBtnClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+    }
+
+    public class LinePlotConfigEditorVM : INotifyPropertyChanged
+    {
+        // Declare the event
+        public event PropertyChangedEventHandler PropertyChanged;
+        // Create the OnPropertyChanged method to raise the event
+        protected void OnPropertyChanged(string name)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        public LinePlotConfig mLinePlotConfig;
+
+        // constructor
+        public LinePlotConfigEditorVM(LinePlotConfig config)
+        {
+            mLinePlotConfig = config;
+            SeriesConfigListItems = new ObservableCollection<SeriesConfigListItem>();
+            SyncSeriesConfigListItemsWithConfig();
+        }
+
+        public void SyncSeriesConfigListItemsWithConfig()
+        {
+            SeriesConfigListItems.Clear();
+            //create a list of config list items based on LineSeriesConfig items
+            for (int configIter = 0; configIter < mLinePlotConfig.SeriesConfigs.Count; configIter++)
+            {
+                SeriesConfigListItems.Add(new SeriesConfigListItem(mLinePlotConfig.SeriesConfigs[configIter]));
+            }
+            OnPropertyChanged("SeriesConfigListItems");
+        }
+
+        public void RefreshSeriesConfigListItemAt(int seriesIndex)
+        {
+            //check if index is in config bounds
+            if (seriesIndex >= 0 && seriesIndex < mLinePlotConfig.SeriesConfigs.Count)
+            {
+                // check if seriesIndex is in the display series List item bounds
+                if (seriesIndex <= SeriesConfigListItems.Count)
+                {
+                    SeriesConfigListItems[seriesIndex].SeriesDisplayText = mLinePlotConfig.SeriesConfigs[seriesIndex].GetDisplayText();
+                }
+                RefreshSeriesListView();
+            }
+        }
+
+        public void DeleteSeriesConfigAt(int seriesIndex)
+        {
+            //check if index is in config bounds
+            if (seriesIndex >= 0 && seriesIndex < mLinePlotConfig.SeriesConfigs.Count)
+            {
+                // check if seriesIndex is in the display series List item bounds
+                if (seriesIndex <= SeriesConfigListItems.Count)
+                {
+                    mLinePlotConfig.SeriesConfigs.RemoveAt(seriesIndex);
+                }
+                SyncSeriesConfigListItemsWithConfig();
+            }
+        }
+
+        private void RefreshSeriesListView()
+        {
+            ICollectionView view = CollectionViewSource.GetDefaultView(SeriesConfigListItems);
+            view.Refresh();
+        }
+
+        // Line plot series list items section
+        public ObservableCollection<SeriesConfigListItem> SeriesConfigListItems;
+
+        // Line plot appearance config section
+        public Color Background
+        {
+            get { return mLinePlotConfig.Appearance.BackgroundColor; }
+            set { mLinePlotConfig.Appearance.BackgroundColor = value; }
+        }
+
+        public Color Foreground
+        {
+            get { return mLinePlotConfig.Appearance.ForegroundColor; }
+            set { mLinePlotConfig.Appearance.ForegroundColor = value; }
+        }
+
+        public Color TextColor
+        {
+            get { return mLinePlotConfig.Appearance.TextColor; }
+            set { mLinePlotConfig.Appearance.TextColor = value; }
+        }
+
+        public void AddSeries()
+        {
+            mLinePlotConfig.SeriesConfigs.Add(new LineSeriesConfig());
+            SyncSeriesConfigListItemsWithConfig();
+        }
+    }
+
+    public class SeriesConfigListItem
+    {
+        public string SeriesDisplayText { get; set; }
+
+        public SeriesConfigListItem() { }
+
+        public SeriesConfigListItem(LineSeriesConfig config)
+        {
+            SeriesDisplayText = config.GetDisplayText();
         }
     }
 }
