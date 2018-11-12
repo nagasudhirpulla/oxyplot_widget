@@ -47,6 +47,8 @@
             </Grid.RowDefinitions>
             <StackPanel Orientation="Horizontal">
                 <Button Content="Add Series" Click="AddSeriesBtnClick" Padding="5"></Button>
+                <ComboBox Name="MeasOptionComboBox" SelectedIndex="0">
+                </ComboBox>
             </StackPanel>
             <ListBox ItemsSource="{Binding SeriesConfigListItems}"
                  HorizontalContentAlignment="Stretch" Name="ConfigItemsContainer" Grid.Row="1">

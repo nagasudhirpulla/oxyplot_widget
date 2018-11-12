@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="Dashboard.Measurements.PMUMeasurement.PMUMeasEditUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:s="clr-namespace:System;assembly=mscorlib"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Dashboard.Measurements.PMUMeasurement"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Label Content="Measurement Id"></Label>
+        <Label Content="Measurement Name" Grid.Row="1"></Label>
+        <Label Content="Start Time" Grid.Row="2"></Label>
+        <Label Content="End Time" Grid.Row="3"></Label>
+        <xctk:IntegerUpDown Grid.Column="1" Value="{Binding MeasId}" Increment="1" Maximum="200000" Minimum="0"/>
+        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding MeasName}"/>
+        <xctk:DateTimePicker Format="Custom" Name="StartTimePicker"
+                FormatString="dd-MM-yy HH:mm:ss" TimeFormat="Custom" TimeFormatString="HH:mm:ss"
+                Grid.Column="1" Grid.Row="2" Value="{Binding StartTime}" />
+        <xctk:DateTimePicker Format="Custom" x:Name="EndTimePicker" 
+                FormatString="dd-MM-yy HH:mm:ss" TimeFormat="Custom" TimeFormatString="HH:mm:ss"
+                Grid.Column="1" Grid.Row="3" Value="{Binding EndTime}" />
+    </Grid>
+</UserControl>

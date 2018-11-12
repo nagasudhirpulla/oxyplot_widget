@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Dashboard.Interfaces;
+using Dashboard.Measurements.PMUMeasurement;
 using Dashboard.Measurements.RandomMeasurement;
 
 namespace Dashboard.Widgets.Oxyplot
@@ -37,8 +38,12 @@ namespace Dashboard.Widgets.Oxyplot
             {
                 MeasEditContainer.Children.Add(new RandomMeasEditUC((RandomMeasurement)measurement));
             }
+            else if(measurement is PMUMeasurement)
+            {
+                MeasEditContainer.Children.Add(new PMUMeasEditUC((PMUMeasurement)measurement));
+            }
         }
-
+        
         private void OkBtnClick(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("Save Changes ?", "Save Changes", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)

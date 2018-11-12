@@ -12,7 +12,7 @@ using OxyPlot.Axes;
 
 namespace Dashboard.Measurements.PMUMeasurement
 {
-    class PMUMeasurement : IMeasurement
+    public class PMUMeasurement : IMeasurement
     {
         public DateTime StartTime { get; set; } = DateTime.Now.AddSeconds(-5);
         public DateTime EndTime { get; set; } = DateTime.Now.AddSeconds(-5);

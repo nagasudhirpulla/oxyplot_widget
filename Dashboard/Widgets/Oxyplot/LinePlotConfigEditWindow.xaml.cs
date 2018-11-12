@@ -1,4 +1,5 @@
 ﻿using Dashboard.Interfaces;
+using Dashboard.Measurements.PMUMeasurement;
 using Dashboard.Measurements.RandomMeasurement;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,9 @@ namespace Dashboard.Widgets.Oxyplot
     /// </summary>
     public partial class LinePlotConfigEditWindow : Window
     {
+        public const string PMUMeasOption = "PMU_Measurement";
+        public const string RandomMeasOption = "Random_Measurement";
+
         public LinePlotConfigEditorVM editorVM;
 
         public LinePlotConfigEditWindow(LinePlotConfig config)
@@ -31,11 +35,16 @@ namespace Dashboard.Widgets.Oxyplot
             editorVM = new LinePlotConfigEditorVM(config);
             DataContext = editorVM;
             ConfigItemsContainer.ItemsSource = editorVM.SeriesConfigListItems;
+            string[] comboItemStrings = new string[] { PMUMeasOption, RandomMeasOption };
+            MeasOptionComboBox.ItemsSource = comboItemStrings;
+            MeasOptionComboBox.SelectedIndex = 0;
         }
 
         private void AddSeriesBtnClick(object sender, RoutedEventArgs e)
         {
-            editorVM.AddSeries();
+            // get the selected value from combobox
+            string measType = MeasOptionComboBox.SelectedValue.ToString();
+            editorVM.AddSeries(measType);
         }
 
         private int GetSeriesConfigListItemIndexFromButton(Button button)
@@ -219,9 +228,18 @@ namespace Dashboard.Widgets.Oxyplot
             set { mLinePlotConfig.Appearance.TextColor = value; }
         }
 
-        public void AddSeries()
+        public void AddSeries(string measType)
         {
-            mLinePlotConfig.SeriesConfigs.Add(new LineSeriesConfig());
+            LineSeriesConfig lineSeriesConfig = new LineSeriesConfig();
+            if (measType == LinePlotConfigEditWindow.RandomMeasOption)
+            {
+                lineSeriesConfig.Measurement = new RandomMeasurement();
+            }
+            else if (measType == LinePlotConfigEditWindow.PMUMeasOption)
+            {
+                lineSeriesConfig.Measurement = new PMUMeasurement();
+            }
+            mLinePlotConfig.SeriesConfigs.Add(lineSeriesConfig);
             SyncSeriesConfigListItemsWithConfig();
         }
     }
