@@ -93,6 +93,7 @@
     <Compile Include="Interfaces\IPlotConfig.cs" />
     <Compile Include="Interfaces\IWidget.cs" />
     <Compile Include="Interfaces\IWidgetContainer.cs" />
+    <Compile Include="Measurements\PMUMeasurement\PMUMeasurement.cs" />
     <Compile Include="Measurements\RandomMeasurement\RandomMeasEditUC.xaml.cs">
       <DependentUpon>RandomMeasEditUC.xaml</DependentUpon>
     </Compile>
@@ -215,6 +216,10 @@
     <ProjectReference Include="..\OxyplotWidget\OxyplotWidget.csproj">
       <Project>{e1fef6b2-8e0a-4c01-ac6a-8e9a8e427d91}</Project>
       <Name>OxyplotWidget</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PMUDataLayer\PMUDataLayer.csproj">
+      <Project>{d3f08b11-f661-4cf6-8ac9-ebe04c68ef75}</Project>
+      <Name>PMUDataLayer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
