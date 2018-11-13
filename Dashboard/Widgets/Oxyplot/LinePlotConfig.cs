@@ -69,6 +69,7 @@ namespace Dashboard.Widgets.Oxyplot
         public Color BackgroundColor { get; set; } = Color.FromRgb(0, 0, 0);
         public Color ForegroundColor { get; set; } = Color.FromRgb(255, 255, 255);
         public Color TextColor { get; set; } = Color.FromRgb(255, 255, 255);
+        public bool IsXAxisDateTime { get; set; } = true;
 
         public LinePlotAppearance Clone()
         {
@@ -76,7 +77,8 @@ namespace Dashboard.Widgets.Oxyplot
             {
                 BackgroundColor = BackgroundColor,
                 ForegroundColor = ForegroundColor,
-                TextColor = TextColor
+                TextColor = TextColor,
+                IsXAxisDateTime = IsXAxisDateTime
             };
         }
     }

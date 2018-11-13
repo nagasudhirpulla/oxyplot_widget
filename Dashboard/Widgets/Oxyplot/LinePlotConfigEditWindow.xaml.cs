@@ -228,6 +228,12 @@ namespace Dashboard.Widgets.Oxyplot
             set { mLinePlotConfig.Appearance.TextColor = value; }
         }
 
+        public bool IsXAxisDateTime
+        {
+            get { return mLinePlotConfig.Appearance.IsXAxisDateTime; }
+            set { mLinePlotConfig.Appearance.IsXAxisDateTime = value; }
+        }
+
         public void AddSeries(string measType)
         {
             LineSeriesConfig lineSeriesConfig = new LineSeriesConfig();
