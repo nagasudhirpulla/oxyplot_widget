@@ -62,6 +62,8 @@ namespace Dashboard.Widgets.Oxyplot
             if (mLinePlotConfig.Appearance.IsXAxisDateTime)
             {
                 PlotViewModel.MakeXAxisDateTime();
+                // settimg the axis time format string
+                PlotViewModel.SetXAxisStringFormat(mLinePlotConfig.Appearance.AxisTimeFormat);
             }
         }
 

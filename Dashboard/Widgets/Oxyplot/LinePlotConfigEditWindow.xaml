@@ -24,6 +24,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -35,11 +36,13 @@
             <Label Content="Foreground" Grid.Row="3" Grid.Column="0"/>
             <Label Content="Text Color" Grid.Row="4" Grid.Column="0"/>
             <Label Content="Timeseries X Axis" Grid.Row="5" Grid.Column="0"/>
+            <Label Content="Time Axis Format" Grid.Row="6" Grid.Column="0"/>
             <TextBox Text="{Binding Name}" Grid.Row="1" Grid.Column="1"></TextBox>
             <xctk:ColorPicker SelectedColor="{Binding Background}" Grid.Row="2" Grid.Column="1"></xctk:ColorPicker>
             <xctk:ColorPicker SelectedColor="{Binding Foreground}" Grid.Row="3" Grid.Column="1"></xctk:ColorPicker>
             <xctk:ColorPicker SelectedColor="{Binding TextColor}" Grid.Row="4" Grid.Column="1"></xctk:ColorPicker>
             <CheckBox IsChecked="{Binding IsXAxisDateTime}" Grid.Row="5" Grid.Column="1"></CheckBox>
+            <TextBox Text="{Binding AxisTimeFormat}" Grid.Row="6" Grid.Column="1"></TextBox>
         </Grid>
         <!-- Plot Appearance and Name Config End -->
         <!-- Plot Series Config Start-->

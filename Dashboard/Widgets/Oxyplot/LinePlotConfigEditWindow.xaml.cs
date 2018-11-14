@@ -234,6 +234,12 @@ namespace Dashboard.Widgets.Oxyplot
             set { mLinePlotConfig.Appearance.IsXAxisDateTime = value; }
         }
 
+        public string AxisTimeFormat
+        {
+            get { return mLinePlotConfig.Appearance.AxisTimeFormat; }
+            set { mLinePlotConfig.Appearance.AxisTimeFormat = value; }
+        }
+
         public void AddSeries(string measType)
         {
             LineSeriesConfig lineSeriesConfig = new LineSeriesConfig();
