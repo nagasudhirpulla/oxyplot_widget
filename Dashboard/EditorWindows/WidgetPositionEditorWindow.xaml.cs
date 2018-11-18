@@ -30,6 +30,7 @@ namespace Dashboard.EditorWindows
         private WidgetPositionEditorVM mWidgetPositionVM;
 
         public WidgetPosition WidgetPosition { get { return mWidgetPositionVM.WidgetPosition; } }
+        public bool IsQueuedForDeletion { get { return mWidgetPositionVM.IsQueuedForDeletion; } }
 
         private void OK_Click(object sender, RoutedEventArgs e)
         {
@@ -49,6 +50,20 @@ namespace Dashboard.EditorWindows
             DialogResult = false;
             this.Close();
         }
+
+        private void Delete_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Delete Widget ?", "Delete Widget", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+            {
+                //do no stuff
+                return;
+            }
+            else
+            {
+                mWidgetPositionVM.IsQueuedForDeletion = true;
+                DialogResult = true;
+            }
+        }
     }
 
     public class WidgetPositionEditorVM
@@ -66,6 +81,8 @@ namespace Dashboard.EditorWindows
         private WidgetPosition mWidgetPosition;
 
         public WidgetPosition WidgetPosition { get { return mWidgetPosition; } }
+
+        public bool IsQueuedForDeletion { get; set; } = false;
 
         public string RowString
         {

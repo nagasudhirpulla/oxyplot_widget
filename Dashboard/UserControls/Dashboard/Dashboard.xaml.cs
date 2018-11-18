@@ -46,12 +46,15 @@ namespace Dashboard.UserControls.Dashboard
 
         public void ChangeWidgetPosition(IWidgetContainer widget, WidgetPosition newPosition)
         {
+            Console.WriteLine($"Setting New position to {newPosition.Row}, {newPosition.Column}, {newPosition.RowSpan}, {newPosition.ColSpan}");
             LayoutManager.ChangeWidgetPosition(CellsContainer, widget, newPosition);
         }
 
-        //todo hnadle widget position change window in the dashoard itself instead of the cell
-
-
+        public void DeleteWidget(IWidgetContainer widget)
+        {
+            LayoutManager.DeleteWidgetFromContainer(CellsContainer, widget);
+        }
+        
         public void AddNewBlankWidget()
         {
             WidgetFrame widgetFrame = new WidgetFrame
@@ -82,13 +85,45 @@ namespace Dashboard.UserControls.Dashboard
                 {
                     if (cellPosChangeArgs != null && widget != null)
                     {
-                        WidgetPositionEditorWindow positionEditor = new WidgetPositionEditorWindow(widget.Position);
-                        positionEditor.ShowDialog();
-                        if (positionEditor.DialogResult == true)
+                        if (cellPosChangeArgs.MessageType == CellPosChangeMsgType.POS_DOWN)
                         {
-                            WidgetPosition newWidgetPosition = positionEditor.WidgetPosition;
-                            Console.WriteLine($"Setting New position to {newWidgetPosition.Row}, {newWidgetPosition.Column}, {newWidgetPosition.RowSpan}, {newWidgetPosition.ColSpan}");
+                            WidgetPosition newWidgetPosition = new WidgetPosition(widget.Position);
+                            newWidgetPosition.Row += 1;
                             ChangeWidgetPosition(widget, newWidgetPosition);
+                        }
+                        if (cellPosChangeArgs.MessageType == CellPosChangeMsgType.POS_UP)
+                        {
+                            WidgetPosition newWidgetPosition = new WidgetPosition(widget.Position);
+                            newWidgetPosition.Row -= 1;
+                            ChangeWidgetPosition(widget, newWidgetPosition);
+                        }
+                        if (cellPosChangeArgs.MessageType == CellPosChangeMsgType.POS_LEFT)
+                        {
+                            WidgetPosition newWidgetPosition = new WidgetPosition(widget.Position);
+                            newWidgetPosition.Column -= 1;
+                            ChangeWidgetPosition(widget, newWidgetPosition);
+                        }
+                        if (cellPosChangeArgs.MessageType == CellPosChangeMsgType.POS_RIGHT)
+                        {
+                            WidgetPosition newWidgetPosition = new WidgetPosition(widget.Position);
+                            newWidgetPosition.Column += 1;
+                            ChangeWidgetPosition(widget, newWidgetPosition);
+                        }
+                        if (cellPosChangeArgs.MessageType == CellPosChangeMsgType.POS_EDIT_WIN)
+                        {
+                            WidgetPositionEditorWindow positionEditor = new WidgetPositionEditorWindow(widget.Position);
+                            positionEditor.ShowDialog();
+                            if (positionEditor.DialogResult == true)
+                            {
+                                if (positionEditor.IsQueuedForDeletion)
+                                {
+                                    // User chose to delete the widget
+                                    DeleteWidget(widget);
+                                    return;
+                                }
+                                WidgetPosition newWidgetPosition = positionEditor.WidgetPosition;
+                                ChangeWidgetPosition(widget, newWidgetPosition);
+                            }
                         }
                     }
                 }

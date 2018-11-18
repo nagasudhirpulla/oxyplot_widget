@@ -41,7 +41,7 @@ namespace Dashboard.Widgets.Oxyplot
         }
 
         public PlotViewModel PlotViewModel { get; set; } = new PlotViewModel();
-        private IPlotFetcher mPlotFetcher = new RandomPlotDataFetcher();
+        //private IPlotFetcher mPlotFetcher = new RandomPlotDataFetcher();
         private LinePlotConfig mLinePlotConfig = new LinePlotConfig();
 
         private void SetupPlotView()
@@ -94,7 +94,7 @@ namespace Dashboard.Widgets.Oxyplot
 
         public async Task DoCleanUpForDeletion()
         {
-            // do nothing
+            // todo ask each measurement to clean up the resources and opened connections
         }
 
         public void OpenConfigWindow()

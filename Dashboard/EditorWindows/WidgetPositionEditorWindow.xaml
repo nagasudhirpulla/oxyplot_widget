@@ -14,6 +14,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -29,6 +30,9 @@
         <Label Content="Row Span" Grid.Row="4"></Label>
         <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding RowSpanString}"></TextBox>
         <Grid Grid.Row="5">
+            <Button Background="Red" Foreground="White" Content="Delete" HorizontalAlignment="Left" Width="100" Margin="10" Padding="10" Click="Delete_Click"></Button>
+        </Grid>
+        <Grid Grid.Row="6">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>

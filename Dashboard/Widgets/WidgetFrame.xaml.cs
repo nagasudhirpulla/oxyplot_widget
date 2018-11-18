@@ -126,11 +126,8 @@ namespace Dashboard.Widgets
                 // remove widget children if present using the widget child count
                 for (int childIter = 0; childIter < widgetCount; childIter++)
                 {
-                    if (Children[0] is IWidget)
-                    {
-                        ((IWidget)Children[0]).DoCleanUpForDeletion();
-                    }
-                    Children.RemoveAt(0);
+                    DoWidgetCleanUp();
+                    RemoveWidget();
                 }
                 // add the widget to the container
                 Children.Add((UserControl)widget);
@@ -152,6 +149,52 @@ namespace Dashboard.Widgets
         private void EditConfigBtn_Click(object sender, RoutedEventArgs e)
         {
             OnChanged(new CellMessageArgs() { Message = CellMessageArgs.ConfigWindowOpenRequest });
+        }
+
+        public void DoWidgetCleanUp()
+        {
+            // free up the wiget resources inorder to prepare for deletion
+            if (Children[0] is IWidget)
+            {
+                ((IWidget)Children[0]).DoCleanUpForDeletion();
+            }
+        }
+
+        public void RemoveWidget()
+        {
+            Children.RemoveAt(0);
+        }
+
+        private void UpBtn_Click(object sender, RoutedEventArgs e)
+        {
+            OnChanged(new CellPosChangeReqArgs(CellPosChangeMsgType.POS_UP));
+        }
+
+        private void DownBtn_Click(object sender, RoutedEventArgs e)
+        {
+            OnChanged(new CellPosChangeReqArgs(CellPosChangeMsgType.POS_DOWN));
+        }
+
+        private void RightBtn_Click(object sender, RoutedEventArgs e)
+        {
+            OnChanged(new CellPosChangeReqArgs(CellPosChangeMsgType.POS_RIGHT));
+        }
+
+        private void LeftBtn_Click(object sender, RoutedEventArgs e)
+        {
+            OnChanged(new CellPosChangeReqArgs(CellPosChangeMsgType.POS_LEFT));
+        }
+
+        private void BarDisplayToggleClick(object sender, RoutedEventArgs e)
+        {
+            if (ToolBar.Visibility == Visibility.Visible)
+            {
+                ToolBar.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                ToolBar.Visibility = Visibility.Visible;
+            }
         }
     }
 }

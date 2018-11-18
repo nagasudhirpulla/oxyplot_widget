@@ -20,8 +20,19 @@ namespace Dashboard.UserControls.Dashboard
 
         public void ChangeWidgetPosition(Grid container, IWidgetContainer widgetContainer, WidgetPosition newPosition)
         {
-            EnsureWidgetPositon(container, newPosition);
-            widgetContainer.Position = newPosition;
+            WidgetPosition legitPosition = newPosition.GetLegitPosition();
+            EnsureWidgetPositon(container, legitPosition);
+            widgetContainer.Position = legitPosition;
+            // todo make user opt for this in the future
+            RemoveEmptyRowsAndColumns(container);
+        }        
+
+        public void DeleteWidgetFromContainer(Grid container, IWidgetContainer widgetContainer)
+        {
+            // tell the widget to do memory free up and connection closing
+            widgetContainer.DoWidgetCleanUp();
+            container.Children.Remove(widgetContainer as UserControl);
+            // todo make user opt for this in the future
             RemoveEmptyRowsAndColumns(container);
         }
 

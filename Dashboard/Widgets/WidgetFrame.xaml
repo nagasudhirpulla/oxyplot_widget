@@ -22,12 +22,19 @@
             <SolidColorBrush Color="{Binding WidgetAppearance.BorderColor}"/>
         </Border.BorderBrush>
         <Grid>
-            <StackPanel Height="20" Name="Overlay" Panel.ZIndex="1000" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="0">
-                <Button Content="Refresh" Click="RefreshDataBtn_Click" HorizontalAlignment="Right" Style="{StaticResource OverlayBtnStyle}"/>
-                <Button Content="Position" Click="EditPositionBtn_Click" HorizontalAlignment="Right" Style="{StaticResource OverlayBtnStyle}"/>
-                <Button Content="Config" Click="EditConfigBtn_Click" HorizontalAlignment="Right" Style="{StaticResource OverlayBtnStyle}"/>
-            </StackPanel>            
+            <StackPanel Panel.ZIndex="1000" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="0" Name="Overlay">
+                <StackPanel Height="20" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Name="ToolBar" >
+                    <Button Content="Up" Click="UpBtn_Click" HorizontalAlignment="Right" Style="{StaticResource OverlayBtnStyle}"/>
+                    <Button Content="Down" Click="DownBtn_Click" HorizontalAlignment="Right" Style="{StaticResource OverlayBtnStyle}"/>
+                    <Button Content="Right" Click="RightBtn_Click" HorizontalAlignment="Right" Style="{StaticResource OverlayBtnStyle}"/>
+                    <Button Content="Left" Click="LeftBtn_Click" HorizontalAlignment="Right" Style="{StaticResource OverlayBtnStyle}"/>
+                    <Button Content="Refresh" Click="RefreshDataBtn_Click" HorizontalAlignment="Right" Style="{StaticResource OverlayBtnStyle}"/>
+                    <Button Content="Position" Click="EditPositionBtn_Click" HorizontalAlignment="Right" Style="{StaticResource OverlayBtnStyle}"/>
+                    <Button Content="Config" Click="EditConfigBtn_Click" HorizontalAlignment="Right" Style="{StaticResource OverlayBtnStyle}"/>
+                </StackPanel>
+                <Button Content="|" Padding="8 2" Click="BarDisplayToggleClick" HorizontalAlignment="Right" Style="{StaticResource OverlayBtnStyle}"></Button>
+            </StackPanel>
             <Grid Name="PART_Host"></Grid>
-            </Grid>
+        </Grid>
     </Border>
 </UserControl>

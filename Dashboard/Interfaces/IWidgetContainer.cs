@@ -11,6 +11,7 @@ namespace Dashboard.Interfaces
     {
         Task RefreshData();
         void OpenConfigWindow();
+        void DoWidgetCleanUp();
 
         WidgetPosition Position { get; set; }
         WidgetDimension Dimension { get; set; }
