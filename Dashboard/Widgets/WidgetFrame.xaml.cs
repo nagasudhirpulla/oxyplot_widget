@@ -196,5 +196,18 @@ namespace Dashboard.Widgets
                 ToolBar.Visibility = Visibility.Visible;
             }
         }
+
+        private void DeleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Delete Widget ?", "Delete Widget", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+            {
+                //do no stuff
+                return;
+            }
+            else
+            {
+                OnChanged(new CellPosChangeReqArgs(CellPosChangeMsgType.POS_DELETE));
+            }            
+        }
     }
 }

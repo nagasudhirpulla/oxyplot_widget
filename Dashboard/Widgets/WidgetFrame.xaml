@@ -31,6 +31,7 @@
                     <Button Content="Refresh" Click="RefreshDataBtn_Click" HorizontalAlignment="Right" Style="{StaticResource OverlayBtnStyle}"/>
                     <Button Content="Position" Click="EditPositionBtn_Click" HorizontalAlignment="Right" Style="{StaticResource OverlayBtnStyle}"/>
                     <Button Content="Config" Click="EditConfigBtn_Click" HorizontalAlignment="Right" Style="{StaticResource OverlayBtnStyle}"/>
+                    <Button Content="Delete" Click="DeleteBtn_Click" HorizontalAlignment="Right" Style="{StaticResource OverlayBtnStyle}"/>
                 </StackPanel>
                 <Button Content="|" Padding="8 2" Click="BarDisplayToggleClick" HorizontalAlignment="Right" Style="{StaticResource OverlayBtnStyle}"></Button>
             </StackPanel>

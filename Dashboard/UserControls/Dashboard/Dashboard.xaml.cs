@@ -109,18 +109,16 @@ namespace Dashboard.UserControls.Dashboard
                             newWidgetPosition.Column += 1;
                             ChangeWidgetPosition(widget, newWidgetPosition);
                         }
+                        if (cellPosChangeArgs.MessageType == CellPosChangeMsgType.POS_DELETE)
+                        {
+                            DeleteWidget(widget);
+                        }
                         if (cellPosChangeArgs.MessageType == CellPosChangeMsgType.POS_EDIT_WIN)
                         {
                             WidgetPositionEditorWindow positionEditor = new WidgetPositionEditorWindow(widget.Position);
                             positionEditor.ShowDialog();
                             if (positionEditor.DialogResult == true)
                             {
-                                if (positionEditor.IsQueuedForDeletion)
-                                {
-                                    // User chose to delete the widget
-                                    DeleteWidget(widget);
-                                    return;
-                                }
                                 WidgetPosition newWidgetPosition = positionEditor.WidgetPosition;
                                 ChangeWidgetPosition(widget, newWidgetPosition);
                             }
