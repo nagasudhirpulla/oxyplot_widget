@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Dashboard.Interfaces;
 using Dashboard.Measurements.PMUMeasurement;
 using Dashboard.Measurements.RandomMeasurement;
+using Dashboard.Measurements.RandomTimeSeriesMeasurement;
 
 namespace Dashboard.Widgets.Oxyplot
 {
@@ -41,6 +42,10 @@ namespace Dashboard.Widgets.Oxyplot
             else if(measurement is PMUMeasurement)
             {
                 MeasEditContainer.Children.Add(new PMUMeasEditUC((PMUMeasurement)measurement));
+            }
+            else if (measurement is RandomTimeSeriesMeasurement)
+            {
+                MeasEditContainer.Children.Add(new RandomTimeMeasEditUC((RandomTimeSeriesMeasurement)measurement));
             }
         }
         

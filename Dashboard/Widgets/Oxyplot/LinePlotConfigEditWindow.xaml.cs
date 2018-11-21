@@ -1,6 +1,7 @@
 ﻿using Dashboard.Interfaces;
 using Dashboard.Measurements.PMUMeasurement;
 using Dashboard.Measurements.RandomMeasurement;
+using Dashboard.Measurements.RandomTimeSeriesMeasurement;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,6 +26,7 @@ namespace Dashboard.Widgets.Oxyplot
     public partial class LinePlotConfigEditWindow : Window
     {
         public const string PMUMeasOption = "PMU_Measurement";
+        public const string RandomTimeSeriesMeasOption = "Random_TimeSeries_Measurement";
         public const string RandomMeasOption = "Random_Measurement";
 
         public LinePlotConfigEditorVM editorVM;
@@ -35,7 +37,7 @@ namespace Dashboard.Widgets.Oxyplot
             editorVM = new LinePlotConfigEditorVM(config);
             DataContext = editorVM;
             ConfigItemsContainer.ItemsSource = editorVM.SeriesConfigListItems;
-            string[] comboItemStrings = new string[] { PMUMeasOption, RandomMeasOption };
+            string[] comboItemStrings = new string[] { PMUMeasOption, RandomTimeSeriesMeasOption, RandomMeasOption };
             MeasOptionComboBox.ItemsSource = comboItemStrings;
             MeasOptionComboBox.SelectedIndex = 0;
         }
@@ -250,6 +252,10 @@ namespace Dashboard.Widgets.Oxyplot
             else if (measType == LinePlotConfigEditWindow.PMUMeasOption)
             {
                 lineSeriesConfig.Measurement = new PMUMeasurement();
+            }
+            else if (measType == LinePlotConfigEditWindow.RandomTimeSeriesMeasOption)
+            {
+                lineSeriesConfig.Measurement = new RandomTimeSeriesMeasurement();
             }
             mLinePlotConfig.SeriesConfigs.Add(lineSeriesConfig);
             SyncSeriesConfigListItemsWithConfig();

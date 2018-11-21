@@ -104,6 +104,10 @@
       <DependentUpon>RandomMeasEditWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Measurements\RandomMeasurement\RandomMeasurement.cs" />
+    <Compile Include="Measurements\RandomTimeSeriesMeasurement\RandomTimeMeasEditUC.xaml.cs">
+      <DependentUpon>RandomTimeMeasEditUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Measurements\RandomTimeSeriesMeasurement\RandomTimeSeriesMeasurement.cs" />
     <Compile Include="States\DashboardState.cs" />
     <Compile Include="UserControls\Converters\ColorBrushConverter.cs" />
     <Compile Include="UserControls\Dashboard\Dashboard.xaml.cs">
@@ -164,6 +168,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Measurements\RandomMeasurement\RandomMeasEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Measurements\RandomTimeSeriesMeasurement\RandomTimeMeasEditUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
