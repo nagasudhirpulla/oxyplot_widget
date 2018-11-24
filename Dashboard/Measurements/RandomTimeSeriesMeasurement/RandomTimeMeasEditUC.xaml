@@ -15,11 +15,10 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Label Content="Low"></Label>
         <Label Content="High" Grid.Row="1"></Label>
@@ -28,13 +27,8 @@
         <Label Content="Time Resolution" Grid.Row="4"></Label>
         <xctk:DoubleUpDown Grid.Column="1" Value="{Binding Low}"/>
         <xctk:DoubleUpDown Grid.Column="1" Grid.Row="1" Value="{Binding High}"/>
-        <xctk:DateTimePicker Format="Custom" Name="StartTimePicker"
-                FormatString="dd-MM-yy HH:mm:ss" TimeFormat="Custom" TimeFormatString="HH:mm:ss"
-                Grid.Column="1" Grid.Row="2" Value="{Binding FromTime}" />
-        <xctk:DateTimePicker Format="Custom" x:Name="EndTimePicker" 
-                FormatString="dd-MM-yy HH:mm:ss" TimeFormat="Custom" TimeFormatString="HH:mm:ss"
-                Grid.Column="1" Grid.Row="3" Value="{Binding ToTime}" />
+        <controls:VariableTimePicker x:Name="StartTimePicker" VariableTimeObj="{Binding FromTime}" Grid.Row="2" Grid.Column="1"/>
+        <controls:VariableTimePicker x:Name="EndTimePicker" VariableTimeObj="{Binding ToTime}" Grid.Row="3" Grid.Column="1"/>
         <xctk:TimeSpanUpDown x:Name="TimespanPicker" Grid.Column="1" Grid.Row="4" Value="{Binding TimeResolution}"/>
-        <controls:VariableTimePicker VariableTimeObj="{Binding VarTime}" Grid.Row="5" Grid.Column="1"/>
     </Grid>
 </UserControl>

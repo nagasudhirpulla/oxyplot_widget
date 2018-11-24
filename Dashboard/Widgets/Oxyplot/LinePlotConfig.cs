@@ -56,25 +56,13 @@ namespace Dashboard.Widgets.Oxyplot
         public IMeasurement Measurement { get; set; } = new RandomMeasurement();
         public async Task<List<DataPoint>> FetchData(bool applyTimeShift)
         {
-            // fetch the data
-            List<DataPoint> dataPoints = await Measurement.FetchData();
-            //check if time shift is zero
-            bool isTimeShiftZero = false;
-            if (DisplayTimeShift.Years == 0 && DisplayTimeShift.Months == 0 && DisplayTimeShift.Days == 0 && DisplayTimeShift.Hours == 0 && DisplayTimeShift.Minutes == 0 && DisplayTimeShift.Seconds == 0)
-            {
-                isTimeShiftZero = true;
-            }
-            // Now do the time shifting
-            if (applyTimeShift && isTimeShiftZero == false)
-            {
-                for (int dataPointIter = 0; dataPointIter < dataPoints.Count; dataPointIter++)
-                {
-                    DataPoint point = dataPoints[dataPointIter];
-                    DateTime pointTime = DateTimeAxis.ToDateTime(point.X);
-                    pointTime = pointTime.AddYears(DisplayTimeShift.Years).AddMonths(DisplayTimeShift.Months).AddDays(DisplayTimeShift.Days).AddHours(DisplayTimeShift.Hours).AddMinutes(DisplayTimeShift.Minutes).AddSeconds(DisplayTimeShift.Seconds);
-                    dataPoints[dataPointIter] = new DataPoint(DateTimeAxis.ToDouble(pointTime), dataPoints[dataPointIter].Y);
-                }
-            }
+            List<DataPoint> dataPoints;
+            
+            // Decide if we want display time shift
+            TimeShift timeShift = null;
+            if (applyTimeShift && DisplayTimeShift.IsTimeShiftZero() == false) { timeShift = DisplayTimeShift; }
+
+            dataPoints = await Measurement.FetchData(timeShift);
             return dataPoints;
         }
 
@@ -147,5 +135,22 @@ namespace Dashboard.Widgets.Oxyplot
             };
             return timeShift;
         }
+        public static DateTime DoShifting(DateTime time, TimeShift timeShift)
+        {
+            DateTime tempTime = time;
+            tempTime = tempTime.AddYears(timeShift.Years).AddMonths(timeShift.Months).AddDays(timeShift.Days).AddHours(timeShift.Hours).AddMinutes(timeShift.Minutes).AddSeconds(timeShift.Seconds);
+            return tempTime;
+        }
+
+        public bool IsTimeShiftZero()
+        {
+            bool isTimeShiftZero = false;
+            if (Years == 0 && Months == 0 && Days == 0 && Hours == 0 && Minutes == 0 && Seconds == 0)
+            {
+                isTimeShiftZero = true;
+            }
+            return isTimeShiftZero;
+        }
+
     }
 }

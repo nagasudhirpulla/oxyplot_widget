@@ -43,8 +43,6 @@ namespace Dashboard.Measurements.RandomTimeSeriesMeasurement
             public MeasEditUCVM(RandomTimeSeriesMeasurement measurement)
             {
                 mRandomMeasurement = measurement;
-                VarTime = new VariableTime { AbsoluteTime = new DateTime(2017, 1, 10) };
-                OnPropertyChanged("VarTime");
             }
 
             public RandomTimeSeriesMeasurement mRandomMeasurement { get; set; }
@@ -53,13 +51,12 @@ namespace Dashboard.Measurements.RandomTimeSeriesMeasurement
 
             public double High { get { return mRandomMeasurement.High; } set { mRandomMeasurement.High = value; } }
 
-            public DateTime FromTime { get { return mRandomMeasurement.FromTime; } set { mRandomMeasurement.FromTime = value; } }
+            public VariableTime FromTime { get { return mRandomMeasurement.FromTime; } set { mRandomMeasurement.FromTime = value; } }
 
-            public DateTime ToTime { get { return mRandomMeasurement.ToTime; } set { mRandomMeasurement.ToTime = value; } }
+            public VariableTime ToTime { get { return mRandomMeasurement.ToTime; } set { mRandomMeasurement.ToTime = value; } }
 
             public TimeSpan TimeResolution { get { return mRandomMeasurement.TimeResolution; } set { mRandomMeasurement.TimeResolution = value; } }
 
-            public VariableTime VarTime { get; set; }
         }
     }
 }

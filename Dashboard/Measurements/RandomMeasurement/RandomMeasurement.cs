@@ -1,4 +1,5 @@
 ﻿using Dashboard.Interfaces;
+using Dashboard.Widgets.Oxyplot;
 using OxyPlot;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace Dashboard.Measurements.RandomMeasurement
         public double High { get; set; } = 10;
         public int NumPnts { get; set; } = 30;
 
-        public async Task<List<DataPoint>> FetchData()
+        public async Task<List<DataPoint>> FetchData(TimeShift timeShift)
         {
             List<DataPoint> dataPoints = new List<DataPoint>();
             Random random = new Random();

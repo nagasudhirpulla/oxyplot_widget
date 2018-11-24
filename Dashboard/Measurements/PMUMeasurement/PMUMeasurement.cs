@@ -9,6 +9,7 @@ using PMUDataLayer;
 using PMUDataLayer.DataExchangeClasses;
 using PMUDataLayer.Config;
 using OxyPlot.Axes;
+using Dashboard.Widgets.Oxyplot;
 
 namespace Dashboard.Measurements.PMUMeasurement
 {
@@ -19,7 +20,7 @@ namespace Dashboard.Measurements.PMUMeasurement
         public int MeasId { get; set; } = 4924;
         public string MeasName { get; set; } = "Meas name";
 
-        public async Task<List<DataPoint>> FetchData()
+        public async Task<List<DataPoint>> FetchData(TimeShift timeShift)
         {
             List<DataPoint> dataPoints = new List<DataPoint>();
 
@@ -36,6 +37,11 @@ namespace Dashboard.Measurements.PMUMeasurement
                 List<PMUDataStructure> dataResults = res.Values.ElementAt(0);
                 for (int resIter = 0; resIter < dataResults.Count; resIter++)
                 {
+                    DateTime dataTime = dataResults[resIter].TimeStamp;
+                    if (timeShift != null)
+                    {
+                        dataTime = TimeShift.DoShifting(dataTime, timeShift);
+                    }
                     DataPoint dataPoint = new DataPoint(DateTimeAxis.ToDouble(dataResults[resIter].TimeStamp), dataResults[resIter].Value[0]);
                     dataPoints.Add(dataPoint);
                 }

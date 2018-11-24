@@ -1,4 +1,6 @@
 ﻿using Dashboard.Interfaces;
+using Dashboard.UserControls.VariableTimePicker;
+using Dashboard.Widgets.Oxyplot;
 using OxyPlot;
 using OxyPlot.Axes;
 using System;
@@ -13,19 +15,26 @@ namespace Dashboard.Measurements.RandomTimeSeriesMeasurement
     {
         public double Low { get; set; } = 0;
         public double High { get; set; } = 10;
-        public DateTime FromTime { get; set; } = DateTime.Now.AddMinutes(-20);
-        public DateTime ToTime { get; set; } = DateTime.Now.AddMinutes(-1);
+        public VariableTime FromTime { get; set; } = new VariableTime { AbsoluteTime = DateTime.Now.AddMinutes(-20) };
+        public VariableTime ToTime { get; set; } = new VariableTime { AbsoluteTime = DateTime.Now.AddMinutes(-1) };
         public TimeSpan TimeResolution { get; set; } = TimeSpan.FromMinutes(1);
+        public static Random Random { get; set; } = new Random();
 
-        public async Task<List<DataPoint>> FetchData()
+        public async Task<List<DataPoint>> FetchData(TimeShift timeShift)
         {
             List<DataPoint> dataPoints = new List<DataPoint>();
-            Random random = new Random();
-            int numPnts = (int)((ToTime - FromTime).TotalMilliseconds / TimeResolution.TotalMilliseconds);
-            DateTime tempTime = FromTime;
-            for (int pointIter = 0; pointIter < numPnts; pointIter++)
+            DateTime fromTime = FromTime.GetTime();
+            DateTime toTime = ToTime.GetTime();
+            //int numPnts = (int)((toTime - fromTime).TotalMilliseconds / TimeResolution.TotalMilliseconds);
+            if (timeShift!=null)
             {
-                double value = random.NextDouble();
+                fromTime = TimeShift.DoShifting(fromTime, timeShift);
+                toTime = TimeShift.DoShifting(toTime, timeShift);
+            }
+            DateTime tempTime = FromTime.GetTime();
+            for (int pointIter = 0; tempTime < toTime; pointIter++)
+            {
+                double value = Random.NextDouble();
                 value = Low + value * (High - Low);
                 DataPoint dataPoint = new DataPoint(DateTimeAxis.ToDouble(tempTime), value);
                 dataPoints.Add(dataPoint);
@@ -36,7 +45,7 @@ namespace Dashboard.Measurements.RandomTimeSeriesMeasurement
 
         public string GetDisplayText()
         {
-            return $"{Low} (Low), {High} (High), {FromTime} to {ToTime}";
+            return $"{Low} (Low), {High} (High), {FromTime.GetTime()} to {ToTime.GetTime()}";
         }
 
         public IMeasurement Clone()

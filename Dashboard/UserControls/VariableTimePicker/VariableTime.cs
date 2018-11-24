@@ -47,12 +47,30 @@ namespace Dashboard.UserControls.VariableTimePicker
         public DateTime GetTime()
         {
             DateTime time = AbsoluteTime;
-            if (IsYearsVariable) { time.AddYears(YearsOffset); }
-            if (IsMonthsVariable) { time.AddMonths(MonthsOffset); }
-            if (IsDaysVariable) { time.AddDays(DaysOffset); }
-            if (IsHoursVariable) { time.AddHours(HoursOffset); }
-            if (IsMinutesVariable) { time.AddHours(MinutesOffset); }
-            if (IsSecondsVariable) { time.AddSeconds(SecondsOffset); }
+            DateTime nowTime = DateTime.Now;
+            if (IsYearsVariable)
+            {
+                time = time.AddYears(nowTime.AddYears(YearsOffset).Year - time.Year);
+            }
+            if (IsMonthsVariable)
+            {
+                time = time.AddMonths(nowTime.AddMonths(MonthsOffset).Month - time.Month);
+            }
+            if (IsDaysVariable)
+            {
+                time = time.AddDays(nowTime.AddDays(DaysOffset).Day - time.Day);
+            }
+            if (IsHoursVariable)
+            {
+                time = time.AddHours(nowTime.AddHours(HoursOffset).Hour - time.Hour);
+            }
+            if (IsMinutesVariable)
+            {
+                time = time.AddMinutes(nowTime.AddMinutes(MinutesOffset).Minute - time.Minute);
+            }
+            if (IsSecondsVariable) {
+                time = time.AddSeconds(nowTime.AddSeconds(SecondsOffset).Second - time.Second);
+            }
             return time;
         }
     }

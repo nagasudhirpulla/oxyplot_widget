@@ -1,4 +1,5 @@
-﻿using OxyPlot;
+﻿using Dashboard.Widgets.Oxyplot;
+using OxyPlot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Dashboard.Interfaces
 {
     public interface IMeasurement
     {
-        Task<List<DataPoint>> FetchData();
+        Task<List<DataPoint>> FetchData(TimeShift timeShift);
         string GetDisplayText();
         IMeasurement Clone();
     }
