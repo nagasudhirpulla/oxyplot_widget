@@ -13,6 +13,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Label Content="Plot Configuration" Grid.Row="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
         <!-- Series Appearance and Name Config Start-->
@@ -38,7 +39,37 @@
             
         </Grid>
         <!-- Series Measurement Container End -->
-        <StackPanel Orientation="Horizontal" Grid.Row="3">
+        <!-- Series Time Shift Config Start -->
+        <Grid Grid.Row="3">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Content="TimeShift"/>
+            <xctk:IntegerUpDown Value="{Binding TimeShiftYears}" Grid.Row="1" Grid.Column="0"/>
+            <Label Content="Years" Margin="0 0 10 0" Grid.Row="1" Grid.Column="1"/>
+            <xctk:IntegerUpDown Value="{Binding TimeShiftMonths}" Grid.Row="1" Grid.Column="2"/>
+            <Label Content="Months" Margin="0 0 10 0" Grid.Row="1" Grid.Column="3"/>
+            <xctk:IntegerUpDown Value="{Binding TimeShiftDays}" Grid.Row="1" Grid.Column="4"/>
+            <Label Content="Days" Margin="0 0 10 0" Grid.Row="1" Grid.Column="5"/>
+            <xctk:IntegerUpDown Value="{Binding TimeShiftHours}" Grid.Row="2" Grid.Column="0"/>
+            <Label Content="Hours" Margin="0 0 10 0" Grid.Row="2" Grid.Column="1"/>
+            <xctk:IntegerUpDown Value="{Binding TimeShiftMinutes}" Grid.Row="2" Grid.Column="2"/>
+            <Label Content="Minutes" Margin="0 0 10 0" Grid.Row="2" Grid.Column="3"/>
+            <xctk:IntegerUpDown Value="{Binding TimeShiftSeconds}" Grid.Row="2" Grid.Column="4"/>
+            <Label Content="Seconds" Margin="0 0 10 0" Grid.Row="2" Grid.Column="5"/>
+        </Grid>
+        <!-- Series Time Shift Config End -->
+        <StackPanel Orientation="Horizontal" Grid.Row="4">
             <Button Content="OK" Click="OkBtnClick" Padding="5" Margin="5"></Button>
             <Button Content="Cancel" Click="CancelBtnClick" Padding="5" Margin="5"></Button>
         </StackPanel>

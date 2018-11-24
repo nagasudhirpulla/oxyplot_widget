@@ -1,5 +1,7 @@
 ﻿using Dashboard.Interfaces;
 using Dashboard.Measurements.RandomMeasurement;
+using OxyPlot;
+using OxyPlot.Axes;
 using OxyPlot.Series;
 using System;
 using System.Collections.Generic;
@@ -50,7 +52,31 @@ namespace Dashboard.Widgets.Oxyplot
     {
         public string Name { get; set; } = "Default";
         public LineSeriesAppearance Appearance { get; set; } = new LineSeriesAppearance();
+        public TimeShift DisplayTimeShift { get; set; } = new TimeShift();
         public IMeasurement Measurement { get; set; } = new RandomMeasurement();
+        public async Task<List<DataPoint>> FetchData(bool applyTimeShift)
+        {
+            // fetch the data
+            List<DataPoint> dataPoints = await Measurement.FetchData();
+            //check if time shift is zero
+            bool isTimeShiftZero = false;
+            if (DisplayTimeShift.Years == 0 && DisplayTimeShift.Months == 0 && DisplayTimeShift.Days == 0 && DisplayTimeShift.Hours == 0 && DisplayTimeShift.Minutes == 0 && DisplayTimeShift.Seconds == 0)
+            {
+                isTimeShiftZero = true;
+            }
+            // Now do the time shifting
+            if (applyTimeShift && isTimeShiftZero == false)
+            {
+                for (int dataPointIter = 0; dataPointIter < dataPoints.Count; dataPointIter++)
+                {
+                    DataPoint point = dataPoints[dataPointIter];
+                    DateTime pointTime = DateTimeAxis.ToDateTime(point.X);
+                    pointTime = pointTime.AddYears(DisplayTimeShift.Years).AddMonths(DisplayTimeShift.Months).AddDays(DisplayTimeShift.Days).AddHours(DisplayTimeShift.Hours).AddMinutes(DisplayTimeShift.Minutes).AddSeconds(DisplayTimeShift.Seconds);
+                    dataPoints[dataPointIter] = new DataPoint(DateTimeAxis.ToDouble(pointTime), dataPoints[dataPointIter].Y);
+                }
+            }
+            return dataPoints;
+        }
 
         public string GetDisplayText()
         {
@@ -59,7 +85,7 @@ namespace Dashboard.Widgets.Oxyplot
 
         public LineSeriesConfig Clone()
         {
-            LineSeriesConfig config = new LineSeriesConfig { Name = Name, Appearance = Appearance.Clone(), Measurement = Measurement.Clone() };
+            LineSeriesConfig config = new LineSeriesConfig { Name = Name, Appearance = Appearance.Clone(), Measurement = Measurement.Clone(), DisplayTimeShift = DisplayTimeShift.Clone() };
             return config;
         }
     }
@@ -96,6 +122,30 @@ namespace Dashboard.Widgets.Oxyplot
             {
                 Color = Color
             };
+        }
+    }
+
+    public class TimeShift
+    {
+        public int Years { get; set; } = 0;
+        public int Months { get; set; } = 0;
+        public int Days { get; set; } = 0;
+        public int Hours { get; set; } = 0;
+        public int Minutes { get; set; } = 0;
+        public int Seconds { get; set; } = 0;
+
+        public TimeShift Clone()
+        {
+            TimeShift timeShift = new TimeShift
+            {
+                Years = Years,
+                Months = Months,
+                Days = Days,
+                Hours = Hours,
+                Minutes = Minutes,
+                Seconds = Seconds
+            };
+            return timeShift;
         }
     }
 }

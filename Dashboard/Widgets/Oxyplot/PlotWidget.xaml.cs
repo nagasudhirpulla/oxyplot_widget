@@ -87,7 +87,8 @@ namespace Dashboard.Widgets.Oxyplot
             //PlotViewModel.SetXAxisStringFormat("dd-MMM-yyyy");
             for (int seriesIter = 0; seriesIter < PlotViewModel.GetSeriesCount(); seriesIter++)
             {
-                List<DataPoint> points = await mLinePlotConfig.SeriesConfigs[seriesIter].Measurement.FetchData();
+                bool isTimeSeriesDataExpected = mLinePlotConfig.Appearance.IsXAxisDateTime;
+                List<DataPoint> points = await mLinePlotConfig.SeriesConfigs[seriesIter].FetchData(isTimeSeriesDataExpected);
                 PlotViewModel.ReplacePointsInLineSeries(seriesIter, points);
             }
         }

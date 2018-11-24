@@ -233,7 +233,20 @@ namespace Dashboard.Widgets.Oxyplot
         public bool IsXAxisDateTime
         {
             get { return mLinePlotConfig.Appearance.IsXAxisDateTime; }
-            set { mLinePlotConfig.Appearance.IsXAxisDateTime = value; }
+            set { mLinePlotConfig.Appearance.IsXAxisDateTime = value; OnPropertyChanged("DateTimeSettingsVisibility"); }
+        }
+
+        public Visibility DateTimeSettingsVisibility
+        {
+            get
+            {
+                Visibility visibility = Visibility.Visible;
+                if (!IsXAxisDateTime)
+                {
+                    visibility = Visibility.Collapsed;
+                }
+                return visibility;
+            }
         }
 
         public string AxisTimeFormat

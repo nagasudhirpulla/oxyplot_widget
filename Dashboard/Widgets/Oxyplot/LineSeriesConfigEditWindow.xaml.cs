@@ -39,7 +39,7 @@ namespace Dashboard.Widgets.Oxyplot
             {
                 MeasEditContainer.Children.Add(new RandomMeasEditUC((RandomMeasurement)measurement));
             }
-            else if(measurement is PMUMeasurement)
+            else if (measurement is PMUMeasurement)
             {
                 MeasEditContainer.Children.Add(new PMUMeasEditUC((PMUMeasurement)measurement));
             }
@@ -48,7 +48,7 @@ namespace Dashboard.Widgets.Oxyplot
                 MeasEditContainer.Children.Add(new RandomTimeMeasEditUC((RandomTimeSeriesMeasurement)measurement));
             }
         }
-        
+
         private void OkBtnClick(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("Save Changes ?", "Save Changes", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
@@ -99,5 +99,13 @@ namespace Dashboard.Widgets.Oxyplot
             get { return mLineSeriesConfig.Appearance.Color; }
             set { mLineSeriesConfig.Appearance.Color = value; }
         }
+
+        public int TimeShiftYears { get { return mLineSeriesConfig.DisplayTimeShift.Years; } set { mLineSeriesConfig.DisplayTimeShift.Years = value; } }
+        public int TimeShiftMonths { get { return mLineSeriesConfig.DisplayTimeShift.Months; } set { mLineSeriesConfig.DisplayTimeShift.Months = value; } }
+        public int TimeShiftDays { get { return mLineSeriesConfig.DisplayTimeShift.Days; } set { mLineSeriesConfig.DisplayTimeShift.Days = value; } }
+        public int TimeShiftHours { get { return mLineSeriesConfig.DisplayTimeShift.Hours; } set { mLineSeriesConfig.DisplayTimeShift.Hours = value; } }
+        public int TimeShiftMinutes { get { return mLineSeriesConfig.DisplayTimeShift.Minutes; } set { mLineSeriesConfig.DisplayTimeShift.Minutes = value; } }
+        public int TimeShiftSeconds { get { return mLineSeriesConfig.DisplayTimeShift.Seconds; } set { mLineSeriesConfig.DisplayTimeShift.Seconds = value; } }
+
     }
 }
