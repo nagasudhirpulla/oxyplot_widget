@@ -9,8 +9,8 @@ namespace Dashboard.States
     public class DashboardState
     {
         // Dimensions
-        public int InitHeight { get; set; }
-        public int InitWidth { get; set; }
+        public int InitHeight { get; set; } = 800;
+        public int InitWidth { get; set; } = 800;
         public bool IsDimensionsLocked { get; set; } = false;
     }
 }
