@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="Dashboard.UserControls.VariableTimePicker.VariableTimePicker"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Dashboard.UserControls.VariableTimePicker"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.Resources>
+            <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <xctk:DateTimePicker Format="Custom" Name="AbsoluteTimePicker"
+                FormatString="dd-MM-yy HH:mm:ss" TimeFormat="Custom" TimeFormatString="HH:mm:ss"
+                Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Value="{Binding _VariableTime.AbsoluteTime}" />
+        <CheckBox Grid.Row="1" IsChecked="{Binding _VariableTime.IsYearsVariable}">
+            <TextBlock Text="Variable Years?"></TextBlock>
+        </CheckBox>
+        <StackPanel Grid.Row="1" Grid.Column="1" Visibility="{Binding _VariableTime.IsYearsVariable, Converter={StaticResource BoolToVis}}" Orientation="Horizontal" Width="Auto" >
+            <xctk:IntegerUpDown Value="{Binding _VariableTime.YearsOffset}" Margin="10 0 0 0"/>
+            <TextBlock Text="Offset" Margin="10 0 0 0"/>
+        </StackPanel>
+        <CheckBox Grid.Row="2"  IsChecked="{Binding _VariableTime.IsMonthsVariable}">
+            <TextBlock Text="Variable Months?"></TextBlock>
+        </CheckBox>
+        <StackPanel Grid.Row="2" Grid.Column="1" Visibility="{Binding _VariableTime.IsMonthsVariable, Converter={StaticResource BoolToVis}}" Orientation="Horizontal" Width="Auto">
+            <xctk:IntegerUpDown Value="{Binding _VariableTime.MonthsOffset}" Margin="10 0 0 0"/>
+            <TextBlock Text="Offset" Margin="10 0 0 0"/>
+        </StackPanel>
+        <CheckBox IsChecked="{Binding _VariableTime.IsDaysVariable}" Grid.Row="3">
+            <TextBlock Text="Variable Days?"></TextBlock>
+        </CheckBox>
+        <StackPanel Grid.Row="3" Grid.Column="1" Visibility="{Binding _VariableTime.IsDaysVariable, Converter={StaticResource BoolToVis}}" Orientation="Horizontal" Width="Auto">
+            <xctk:IntegerUpDown Value="{Binding _VariableTime.DaysOffset}" Margin="10 0 0 0"/>
+            <TextBlock Text="Offset" Margin="10 0 0 0"/>
+        </StackPanel>
+        <CheckBox IsChecked="{Binding _VariableTime.IsHoursVariable}" Grid.Row="4">
+            <TextBlock Text="Variable Hours?"></TextBlock>
+        </CheckBox>
+        <StackPanel Grid.Row="4" Grid.Column="1" Visibility="{Binding _VariableTime.IsHoursVariable, Converter={StaticResource BoolToVis}}" Orientation="Horizontal" Width="Auto">
+            <xctk:IntegerUpDown Value="{Binding _VariableTime.HoursOffset}" Margin="10 0 0 0"/>
+            <TextBlock Text="Offset" Margin="10 0 0 0"/>
+        </StackPanel>
+        <CheckBox IsChecked="{Binding _VariableTime.IsMinutesVariable}" Grid.Row="5">
+            <TextBlock Text="Variable Minutes?"></TextBlock>
+        </CheckBox>
+        <StackPanel Grid.Row="5" Grid.Column="1" Visibility="{Binding _VariableTime.IsMinutesVariable, Converter={StaticResource BoolToVis}}" Orientation="Horizontal" Width="Auto">
+            <xctk:IntegerUpDown Value="{Binding _VariableTime.MinutesOffset}" Margin="10 0 0 0"/>
+            <TextBlock Text="Offset" Margin="10 0 0 0"/>
+        </StackPanel>
+        <CheckBox IsChecked="{Binding _VariableTime.IsSecondsVariable}" Grid.Row="6">
+            <TextBlock Text="Variable Seconds?"></TextBlock>
+        </CheckBox>
+        <StackPanel Grid.Row="6" Grid.Column="1" Visibility="{Binding _VariableTime.IsSecondsVariable, Converter={StaticResource BoolToVis}}" Orientation="Horizontal" Width="Auto">
+            <xctk:IntegerUpDown Value="{Binding _VariableTime.SecondsOffset}" Margin="10 0 0 0"/>
+            <TextBlock Text="Offset" Margin="10 0 0 0"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

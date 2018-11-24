@@ -114,6 +114,10 @@
       <DependentUpon>Dashboard.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Dashboard\DashboardLayoutManager.cs" />
+    <Compile Include="UserControls\VariableTimePicker\VariableTime.cs" />
+    <Compile Include="UserControls\VariableTimePicker\VariableTimePicker.xaml.cs">
+      <DependentUpon>VariableTimePicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WidgetLayout\CellMessageArgs.cs" />
     <Compile Include="WidgetLayout\CellPosChangeReqArgs.cs" />
     <Compile Include="WidgetLayout\DimensionEnum.cs" />
@@ -176,6 +180,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\Dashboard\Dashboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\VariableTimePicker\VariableTimePicker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

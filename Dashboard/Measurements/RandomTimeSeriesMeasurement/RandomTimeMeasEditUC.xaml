@@ -5,10 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Dashboard.Measurements.RandomTimeSeriesMeasurement"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:controls="clr-namespace:Dashboard.UserControls.VariableTimePicker"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -33,5 +35,6 @@
                 FormatString="dd-MM-yy HH:mm:ss" TimeFormat="Custom" TimeFormatString="HH:mm:ss"
                 Grid.Column="1" Grid.Row="3" Value="{Binding ToTime}" />
         <xctk:TimeSpanUpDown x:Name="TimespanPicker" Grid.Column="1" Grid.Row="4" Value="{Binding TimeResolution}"/>
+        <controls:VariableTimePicker Grid.Row="5" Grid.Column="1"/>
     </Grid>
 </UserControl>
