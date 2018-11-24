@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dashboard.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,5 +13,6 @@ namespace Dashboard.States
         public int InitHeight { get; set; } = 800;
         public int InitWidth { get; set; } = 800;
         public bool IsDimensionsLocked { get; set; } = false;
+        public List<IWidgetContainerState> WidgetContainerStates { get; set; }
     }
 }

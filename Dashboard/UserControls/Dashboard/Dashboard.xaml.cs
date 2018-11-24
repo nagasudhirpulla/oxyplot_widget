@@ -9,6 +9,7 @@ using Dashboard.WidgetLayout;
 using System;
 using Dashboard.EditorWindows;
 using System.Windows;
+using Newtonsoft.Json;
 
 namespace Dashboard.UserControls.Dashboard
 {
@@ -29,7 +30,7 @@ namespace Dashboard.UserControls.Dashboard
         {
 
         }
-
+        
         private List<IWidgetContainer> Widgets { get; set; }
 
         public DashboardState DashboardState { get; set; }
