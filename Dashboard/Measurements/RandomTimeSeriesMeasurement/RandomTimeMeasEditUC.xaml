@@ -35,6 +35,6 @@
                 FormatString="dd-MM-yy HH:mm:ss" TimeFormat="Custom" TimeFormatString="HH:mm:ss"
                 Grid.Column="1" Grid.Row="3" Value="{Binding ToTime}" />
         <xctk:TimeSpanUpDown x:Name="TimespanPicker" Grid.Column="1" Grid.Row="4" Value="{Binding TimeResolution}"/>
-        <controls:VariableTimePicker Grid.Row="5" Grid.Column="1"/>
+        <controls:VariableTimePicker VariableTimeObj="{Binding VarTime}" Grid.Row="5" Grid.Column="1"/>
     </Grid>
 </UserControl>

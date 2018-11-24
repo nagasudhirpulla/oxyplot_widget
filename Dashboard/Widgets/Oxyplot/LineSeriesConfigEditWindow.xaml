@@ -54,7 +54,7 @@
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Label Content="TimeShift"/>
+            <Label Content="Display TimeShift"/>
             <xctk:IntegerUpDown Value="{Binding TimeShiftYears}" Grid.Row="1" Grid.Column="0"/>
             <Label Content="Years" Margin="0 0 10 0" Grid.Row="1" Grid.Column="1"/>
             <xctk:IntegerUpDown Value="{Binding TimeShiftMonths}" Grid.Row="1" Grid.Column="2"/>

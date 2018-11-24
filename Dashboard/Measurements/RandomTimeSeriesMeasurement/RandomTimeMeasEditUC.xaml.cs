@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Dashboard.UserControls.VariableTimePicker;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,11 +30,21 @@ namespace Dashboard.Measurements.RandomTimeSeriesMeasurement
             DataContext = editorVM;
         }
 
-        public class MeasEditUCVM
+        public class MeasEditUCVM : INotifyPropertyChanged
         {
+            // Declare the event
+            public event PropertyChangedEventHandler PropertyChanged;
+            // Create the OnPropertyChanged method to raise the event
+            protected void OnPropertyChanged(string name)
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            }
+
             public MeasEditUCVM(RandomTimeSeriesMeasurement measurement)
             {
                 mRandomMeasurement = measurement;
+                VarTime = new VariableTime { AbsoluteTime = new DateTime(2017, 1, 10) };
+                OnPropertyChanged("VarTime");
             }
 
             public RandomTimeSeriesMeasurement mRandomMeasurement { get; set; }
@@ -46,6 +58,8 @@ namespace Dashboard.Measurements.RandomTimeSeriesMeasurement
             public DateTime ToTime { get { return mRandomMeasurement.ToTime; } set { mRandomMeasurement.ToTime = value; } }
 
             public TimeSpan TimeResolution { get { return mRandomMeasurement.TimeResolution; } set { mRandomMeasurement.TimeResolution = value; } }
+
+            public VariableTime VarTime { get; set; }
         }
     }
 }

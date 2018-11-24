@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,22 +19,32 @@ namespace Dashboard.UserControls.VariableTimePicker
     /// <summary>
     /// Interaction logic for VariableTimePicker.xaml
     /// </summary>
-    public partial class VariableTimePicker : UserControl
+    public partial class VariableTimePicker : UserControl, INotifyPropertyChanged
     {
-        public VariableTimePickerVM PickerVM { get; set; }
+        public static readonly DependencyProperty VariableTimeObjProperty = DependencyProperty.Register("VariableTimeObj", typeof(VariableTime),
+         typeof(VariableTimePicker), new PropertyMetadata(null));
+
+        public VariableTime VariableTimeObj
+        {
+            get { return (VariableTime)GetValue(VariableTimeObjProperty); }
+            set
+            {
+                SetValue(VariableTimeObjProperty, value);
+                OnPropertyChanged("VariableTimeObj");
+            }
+        }
+
         public VariableTimePicker()
         {
             InitializeComponent();
-            PickerVM = new VariableTimePickerVM(new VariableTime());
-            DataContext = PickerVM;
         }
-    }
-    public class VariableTimePickerVM
-    {
-        public VariableTime _VariableTime { get; set; }
-        public VariableTimePickerVM(VariableTime variableTime)
+
+        // Declare the event
+        public event PropertyChangedEventHandler PropertyChanged;
+        // Create the OnPropertyChanged method to raise the event
+        protected void OnPropertyChanged(string name)
         {
-            _VariableTime = variableTime.Clone();
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 }
