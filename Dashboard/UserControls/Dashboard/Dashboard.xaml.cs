@@ -184,7 +184,15 @@ namespace Dashboard.UserControls.Dashboard
                 // Generate the dashboard state
                 DashboardState dashboardState = JsonConvert.DeserializeObject<DashboardState>(File.ReadAllText(str));
                 Console.WriteLine($"Dashboard State \"{dashboardState.Name}\" loaded");
-                
+
+                // Clean up the Dashboard by deleting all the widget containers
+                int totalWidgetContainerCount = CellsContainer.Children.Count;
+                for (int widgetContIter = 0; widgetContIter < totalWidgetContainerCount; widgetContIter++)
+                {
+                    // Delete the container. All CellsContainer children are expected to WidgetContainers.
+                    LayoutManager.DeleteWidgetFromContainer(CellsContainer, (IWidgetContainer)CellsContainer.Children[0]);
+                }
+
                 //todo create WidgetFrames based on the Dashboard state
 
             }
