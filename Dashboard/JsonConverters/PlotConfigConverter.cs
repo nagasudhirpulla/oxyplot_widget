@@ -27,23 +27,21 @@ namespace Dashboard.JsonConverters
             Type objectType, object existingValue,
             JsonSerializer serializer)
         {
-            List<IPlotConfig> fields = new List<IPlotConfig>();
-            var jsonArray = JArray.Load(reader);
+            var jsonObject = JObject.Load(reader);
+            var plotConfig = default(IPlotConfig);
 
-            foreach (var item in jsonArray)
+            string objectTypeName = jsonObject["TypeName"].Value<string>();
+            if (objectTypeName == typeof(LinePlotConfig).Name)
             {
-                var jsonObject = item as JObject;
-                var plotConfig = default(IPlotConfig);
-                string objectTypeName = jsonObject["TypeName"].Value<string>();
-                if (objectTypeName == typeof(LinePlotConfig).Name)
-                {
-                    plotConfig = new LinePlotConfig();
-                }
-
-                serializer.Populate(jsonObject.CreateReader(), plotConfig);
-                fields.Add(plotConfig);
+                plotConfig = new LinePlotConfig();
             }
-            return fields;
+
+            if (plotConfig != null)
+            {
+                serializer.Populate(jsonObject.CreateReader(), plotConfig);
+
+            }
+            return plotConfig;
         }
     }
 }

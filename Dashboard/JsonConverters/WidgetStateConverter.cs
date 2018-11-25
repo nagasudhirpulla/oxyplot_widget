@@ -26,26 +26,24 @@ namespace Dashboard.JsonConverters
             Type objectType, object existingValue,
             JsonSerializer serializer)
         {
-            List<IWidgetState> fields = new List<IWidgetState>();
-            var jsonArray = JArray.Load(reader);
-
-            foreach (var item in jsonArray)
+            var jsonObject = JObject.Load(reader);
+            var WidgetState = default(IWidgetState);
+            string objectTypeName = jsonObject["TypeName"].Value<string>();
+            if (objectTypeName == typeof(BlankWidgetState).Name)
             {
-                var jsonObject = item as JObject;
-                var WidgetState = default(IWidgetState);
-                string objectTypeName = jsonObject["TypeName"].Value<string>();
-                if (objectTypeName == typeof(BlankWidgetState).Name)
-                {
-                    WidgetState = new BlankWidgetState();
-                }
-                else if (objectTypeName == typeof(OxyPlotWidgetState).Name)
-                {
-                    WidgetState = new OxyPlotWidgetState();
-                }
-                serializer.Populate(jsonObject.CreateReader(), WidgetState);
-                fields.Add(WidgetState);
+                WidgetState = new BlankWidgetState();
             }
-            return fields;
+            else if (objectTypeName == typeof(OxyPlotWidgetState).Name)
+            {
+                WidgetState = new OxyPlotWidgetState();
+            }
+
+            if (WidgetState!=null)
+            {
+                serializer.Populate(jsonObject.CreateReader(), WidgetState);
+            }
+
+            return WidgetState;
         }
     }
 }

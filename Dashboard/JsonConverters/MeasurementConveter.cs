@@ -30,30 +30,29 @@ namespace Dashboard.JsonConverters
             Type objectType, object existingValue,
             JsonSerializer serializer)
         {
-            List<IMeasurement> fields = new List<IMeasurement>();
-            var jsonArray = JArray.Load(reader);
+            var jsonObject = JObject.Load(reader);
+            var measurement = default(IMeasurement);
 
-            foreach (var item in jsonArray)
+            string objectTypeName = jsonObject["TypeName"].Value<string>();
+            if (objectTypeName == typeof(RandomMeasurement).Name)
             {
-                var jsonObject = item as JObject;
-                var measurement = default(IMeasurement);
-                string objectTypeName = jsonObject["TypeName"].Value<string>();
-                if (objectTypeName == typeof(RandomMeasurement).Name)
-                {
-                    measurement = new RandomMeasurement();
-                }
-                else if (objectTypeName == typeof(RandomTimeSeriesMeasurement).Name)
-                {
-                    measurement = new RandomTimeSeriesMeasurement();
-                }
-                else if (objectTypeName == typeof(PMUMeasurement).Name)
-                {
-                    measurement = new PMUMeasurement();
-                }
-                serializer.Populate(jsonObject.CreateReader(), measurement);
-                fields.Add(measurement);
+                measurement = new RandomMeasurement();
             }
-            return fields;
+            else if (objectTypeName == typeof(RandomTimeSeriesMeasurement).Name)
+            {
+                measurement = new RandomTimeSeriesMeasurement();
+            }
+            else if (objectTypeName == typeof(PMUMeasurement).Name)
+            {
+                measurement = new PMUMeasurement();
+            }
+
+            if (measurement != null)
+            {
+                serializer.Populate(jsonObject.CreateReader(), measurement);
+            }
+
+            return measurement;
         }
     }
 }

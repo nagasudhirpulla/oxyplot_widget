@@ -5,6 +5,6 @@ namespace Dashboard.States
 {
     public class BlankWidgetState:IWidgetState
     {
-        public string TypeName { get; set; } = typeof(BlankWidget).Name;
+        public string TypeName { get; set; } = typeof(BlankWidgetState).Name;
     }
 }

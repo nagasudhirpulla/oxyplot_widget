@@ -12,7 +12,7 @@ namespace Dashboard.States
 {
     public class OxyPlotWidgetState : IWidgetState
     {
-        public string TypeName { get; set; } = typeof(PlotWidget).Name;
+        public string TypeName { get; set; } = typeof(OxyPlotWidgetState).Name;
 
         [JsonConverter(typeof(PlotConfigConverter))]
         public IPlotConfig PlotConfig { get; set; }

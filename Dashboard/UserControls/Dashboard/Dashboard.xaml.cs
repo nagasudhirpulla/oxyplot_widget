@@ -161,9 +161,33 @@ namespace Dashboard.UserControls.Dashboard
 
         private void OpenCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            //todo generate the dashboard state
+            OpenDashBoard();
+        }
 
-            //todo create WidgetFrames based on the Dashboard state
+        private void OpenDashBoard()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            // openFileDialog.Multiselect = true;
+            openFileDialog.Filter = "dash files (*.dash)|*.dash|All files (*.*)|*.*";
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyComputer);
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string filename = openFileDialog.FileNames[0];
+                OpenFileName(filename);
+            }
+        }
+
+        public void OpenFileName(string str)
+        {
+            if (str != null)
+            {
+                // Generate the dashboard state
+                DashboardState dashboardState = JsonConvert.DeserializeObject<DashboardState>(File.ReadAllText(str));
+                Console.WriteLine($"Dashboard State \"{dashboardState.Name}\" loaded");
+                
+                //todo create WidgetFrames based on the Dashboard state
+
+            }
         }
 
         private void SaveAsCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
