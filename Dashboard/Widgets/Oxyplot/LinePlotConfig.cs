@@ -1,5 +1,7 @@
 ﻿using Dashboard.Interfaces;
+using Dashboard.JsonConverters;
 using Dashboard.Measurements.RandomMeasurement;
+using Newtonsoft.Json;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
@@ -16,6 +18,7 @@ namespace Dashboard.Widgets.Oxyplot
     {
         public LinePlotAppearance Appearance { get; set; } = new LinePlotAppearance();
         public List<LineSeriesConfig> SeriesConfigs { get; set; } = new List<LineSeriesConfig>();
+        public string TypeName { get; set; } = typeof(LinePlotConfig).Name;
         public string Name { get; set; } = "Default";
 
         public List<LineSeries> GetSeriesListForPlotSetup()
@@ -53,7 +56,10 @@ namespace Dashboard.Widgets.Oxyplot
         public string Name { get; set; } = "Default";
         public LineSeriesAppearance Appearance { get; set; } = new LineSeriesAppearance();
         public TimeShift DisplayTimeShift { get; set; } = new TimeShift();
+
+        [JsonConverter(typeof(MeasurementConverter))]
         public IMeasurement Measurement { get; set; } = new RandomMeasurement();
+
         public async Task<List<DataPoint>> FetchData(bool applyTimeShift)
         {
             List<DataPoint> dataPoints;

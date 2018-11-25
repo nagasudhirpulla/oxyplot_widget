@@ -11,6 +11,7 @@ namespace Dashboard.Measurements.RandomMeasurement
 {
     public class RandomMeasurement : IMeasurement
     {
+        public string TypeName { get; set; } = typeof(RandomMeasurement).Name;
         public double Low { get; set; } = 0;
         public double High { get; set; } = 10;
         public int NumPnts { get; set; } = 30;

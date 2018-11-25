@@ -1,5 +1,7 @@
 ﻿using Dashboard.Interfaces;
+using Dashboard.JsonConverters;
 using Dashboard.Widgets.Oxyplot;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +13,8 @@ namespace Dashboard.States
     public class OxyPlotWidgetState : IWidgetState
     {
         public string TypeName { get; set; } = typeof(PlotWidget).Name;
-        public IPlotConfigState PlotConfigState { get; set; }
+
+        [JsonConverter(typeof(PlotConfigConverter))]
+        public IPlotConfig PlotConfig { get; set; }
     }
 }

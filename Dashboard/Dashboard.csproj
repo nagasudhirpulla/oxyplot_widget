@@ -94,11 +94,14 @@
     <Compile Include="Helpers\OxyUtility.cs" />
     <Compile Include="Interfaces\IMeasurement.cs" />
     <Compile Include="Interfaces\IPlotConfig.cs" />
-    <Compile Include="Interfaces\IPlotConfigState.cs" />
     <Compile Include="Interfaces\IWidget.cs" />
     <Compile Include="Interfaces\IWidgetContainer.cs" />
     <Compile Include="Interfaces\IWidgetContainerState.cs" />
     <Compile Include="Interfaces\IWidgetState.cs" />
+    <Compile Include="JsonConverters\MeasurementConveter.cs" />
+    <Compile Include="JsonConverters\PlotConfigConverter.cs" />
+    <Compile Include="JsonConverters\WidgetContainerStateConverter.cs" />
+    <Compile Include="JsonConverters\WidgetStateConverter.cs" />
     <Compile Include="Measurements\PMUMeasurement\PMUMeasEditUC.xaml.cs">
       <DependentUpon>PMUMeasEditUC.xaml</DependentUpon>
     </Compile>
@@ -116,7 +119,6 @@
     <Compile Include="Measurements\RandomTimeSeriesMeasurement\RandomTimeSeriesMeasurement.cs" />
     <Compile Include="States\BlankWidgetState.cs" />
     <Compile Include="States\DashboardState.cs" />
-    <Compile Include="States\LinePlotConfigState.cs" />
     <Compile Include="States\OxyPlotWidgetState.cs" />
     <Compile Include="States\WidgetFrameState.cs" />
     <Compile Include="UserControls\Converters\ColorBrushConverter.cs" />
@@ -255,8 +257,6 @@
       <Name>PMUDataLayer</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="JsonConverters\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,4 +1,6 @@
 ﻿using Dashboard.Interfaces;
+using Dashboard.JsonConverters;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +15,7 @@ namespace Dashboard.States
         public int InitHeight { get; set; } = 800;
         public int InitWidth { get; set; } = 800;
         public bool IsDimensionsLocked { get; set; } = false;
+        [JsonConverter(typeof(WidgetContainerStateConverter))]
         public List<IWidgetContainerState> WidgetContainerStates { get; set; }
     }
 }

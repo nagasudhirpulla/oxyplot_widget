@@ -10,6 +10,7 @@ namespace Dashboard.Widgets.Oxyplot
 {
     public interface IPlotFetcher
     {
+        //not used
         List<LineSeries> GetSeriesForSetup();
         List<DataPoint> FetchData(int seriesIndex);
         void OpenConfigEditWindow();

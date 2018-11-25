@@ -9,6 +9,8 @@ namespace Dashboard.Interfaces
 {
     public interface IPlotConfig
     {
+        string TypeName { get; set; }
+
         string Name { get; set; }
 
         void OpenConfigEditWindow();

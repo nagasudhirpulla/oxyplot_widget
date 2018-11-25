@@ -13,6 +13,7 @@ namespace Dashboard.Measurements.RandomTimeSeriesMeasurement
 {
     public class RandomTimeSeriesMeasurement : IMeasurement
     {
+        public string TypeName { get; set; } = typeof(RandomTimeSeriesMeasurement).Name;
         public double Low { get; set; } = 0;
         public double High { get; set; } = 10;
         public VariableTime FromTime { get; set; } = new VariableTime { AbsoluteTime = DateTime.Now.AddMinutes(-20) };

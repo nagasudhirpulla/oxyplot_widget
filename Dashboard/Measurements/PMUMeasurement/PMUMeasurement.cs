@@ -19,6 +19,7 @@ namespace Dashboard.Measurements.PMUMeasurement
         public DateTime EndTime { get; set; } = DateTime.Now.AddSeconds(-5);
         public int MeasId { get; set; } = 4924;
         public string MeasName { get; set; } = "Meas name";
+        public string TypeName { get; set; } = typeof(PMUMeasurement).Name;
 
         public async Task<List<DataPoint>> FetchData(TimeShift timeShift)
         {
