@@ -16,5 +16,6 @@ namespace Dashboard.Interfaces
         void OpenConfigEditWindow();
 
         List<LineSeries> GetSeriesListForPlotSetup();
+        
     }
 }

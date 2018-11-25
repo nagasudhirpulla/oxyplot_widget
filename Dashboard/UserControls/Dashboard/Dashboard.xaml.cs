@@ -10,6 +10,7 @@ using System;
 using Dashboard.EditorWindows;
 using System.Windows;
 using Newtonsoft.Json;
+using System.Windows.Input;
 
 namespace Dashboard.UserControls.Dashboard
 {
@@ -33,7 +34,7 @@ namespace Dashboard.UserControls.Dashboard
         
         private List<IWidgetContainer> Widgets { get; set; }
 
-        public DashboardState DashboardState { get; set; }
+        public DashboardState DashboardState { get; set; } = new DashboardState();
 
         private DashboardLayoutManager LayoutManager = new DashboardLayoutManager();
 
@@ -139,5 +140,66 @@ namespace Dashboard.UserControls.Dashboard
                 }
             }
         }
+
+        private DashboardState GenerateDashboardState()
+        {
+            DashboardState state = DashboardState;
+            
+            // Create WidgetContainerStates and append to list
+            DashboardState.WidgetContainerStates.Clear();
+            for (int widgetContIter = 0; widgetContIter < CellsContainer.Children.Count; widgetContIter++)
+            {
+                IWidgetContainer container = (IWidgetContainer)CellsContainer.Children[widgetContIter];
+                IWidgetContainerState containerState = container.GenerateState();
+                DashboardState.WidgetContainerStates.Add(containerState);
+            }
+
+            return state;
+        }
+
+        private void OpenCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+        }
+
+        private void SaveAsCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            // https://stackoverflow.com/questions/4682915/defining-menuitem-shortcuts
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            DashboardState state = GenerateDashboardState();
+            // get the filename
+            if (MessageBox.Show("Save this Dashboard?", "Save", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            {
+                
+            }
+        }
+
+        private void Settings_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void NewWindow_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow win = new MainWindow();
+            win.Show();
+        }
+
+        private void About_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void FetchBtn_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void FetchStopBtn_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
     }
 }

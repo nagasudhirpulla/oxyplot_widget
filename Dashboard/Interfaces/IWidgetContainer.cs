@@ -19,5 +19,8 @@ namespace Dashboard.Interfaces
 
         // Send Messages to Dashboard using this event handler
         event EventHandler<EventArgs> Changed;
+
+        // Required for JSON serialization
+        IWidgetContainerState GenerateState();
     }
 }

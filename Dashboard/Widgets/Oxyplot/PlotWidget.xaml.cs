@@ -1,5 +1,6 @@
 ﻿using Dashboard.DataFetchers.RandomDataFetcher;
 using Dashboard.Interfaces;
+using Dashboard.States;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
@@ -104,6 +105,16 @@ namespace Dashboard.Widgets.Oxyplot
             mLinePlotConfig.OpenConfigEditWindow();
             SetupPlotView();
             RefreshData();
+        }
+
+        public IWidgetState GenerateState()
+        {
+            OxyPlotWidgetState state = new OxyPlotWidgetState();
+
+            // Generate the IPlotConfig state
+            state.PlotConfig = mLinePlotConfig;
+
+            return state;
         }
     }
 }

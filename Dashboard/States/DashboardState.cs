@@ -16,6 +16,6 @@ namespace Dashboard.States
         public int InitWidth { get; set; } = 800;
         public bool IsDimensionsLocked { get; set; } = false;
         [JsonConverter(typeof(WidgetContainerStateConverter))]
-        public List<IWidgetContainerState> WidgetContainerStates { get; set; }
+        public List<IWidgetContainerState> WidgetContainerStates { get; set; } = new List<IWidgetContainerState>();
     }
 }

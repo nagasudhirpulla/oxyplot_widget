@@ -1,4 +1,5 @@
 ﻿using Dashboard.Interfaces;
+using Dashboard.States;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -38,6 +39,15 @@ namespace Dashboard.Widgets
         public void OpenConfigWindow()
         {
             // do nothing
+        }
+
+        public IWidgetState GenerateState()
+        {
+            BlankWidgetState state = new BlankWidgetState();
+
+            // currently nothing is stored in the state
+
+            return state;
         }
     }
 }

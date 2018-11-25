@@ -13,5 +13,6 @@ namespace Dashboard.Interfaces
         WidgetPosition Position { get; set; }
         WidgetDimension Dimension { get; set; }
         WidgetAppearance WidgetAppearance { get; set; }
+        IWidgetState WidgetState { get; set; }
     }
 }

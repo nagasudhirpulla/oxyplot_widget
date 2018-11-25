@@ -1,4 +1,5 @@
 ﻿using Dashboard.Interfaces;
+using Dashboard.States;
 using Dashboard.WidgetLayout;
 using System;
 using System.Collections.Generic;
@@ -208,6 +209,17 @@ namespace Dashboard.Widgets
             {
                 OnChanged(new CellPosChangeReqArgs(CellPosChangeMsgType.POS_DELETE));
             }            
+        }
+
+        public IWidgetContainerState GenerateState()
+        {
+            WidgetFrameState containerState = new WidgetFrameState();
+            containerState.Dimension = Dimension;
+            containerState.Position = Position;
+            containerState.WidgetAppearance = WidgetAppearance;
+            // todo generate WidgetState also
+            containerState.WidgetState = mWidget.GenerateState();
+            return containerState;
         }
     }
 }
