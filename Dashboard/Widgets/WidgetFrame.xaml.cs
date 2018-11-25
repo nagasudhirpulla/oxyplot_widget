@@ -1,6 +1,7 @@
 ﻿using Dashboard.Interfaces;
 using Dashboard.States;
 using Dashboard.WidgetLayout;
+using Dashboard.Widgets.Oxyplot;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -208,7 +209,7 @@ namespace Dashboard.Widgets
             else
             {
                 OnChanged(new CellPosChangeReqArgs(CellPosChangeMsgType.POS_DELETE));
-            }            
+            }
         }
 
         public IWidgetContainerState GenerateState()
@@ -217,9 +218,41 @@ namespace Dashboard.Widgets
             containerState.Dimension = Dimension;
             containerState.Position = Position;
             containerState.WidgetAppearance = WidgetAppearance;
-            // todo generate WidgetState also
+            // Generate WidgetState also
             containerState.WidgetState = mWidget.GenerateState();
             return containerState;
+        }
+
+        public void SetState(IWidgetContainerState state)
+        {
+            if (state is WidgetFrameState frameState)
+            {
+                Dimension = frameState.Dimension;
+                Position = frameState.Position;
+                WidgetAppearance = frameState.WidgetAppearance;
+                // Set the Widget
+                IWidget widget;
+                if (frameState.WidgetState is BlankWidgetState)
+                {
+                    widget = new BlankWidget();
+                }
+                else if (frameState.WidgetState is OxyPlotWidgetState)
+                {
+                    widget = new PlotWidget();
+                }
+                else
+                {
+                    widget = new BlankWidget();
+                }
+
+                SetWidget(widget);
+                // Set Widget State also
+                mWidget.SetState(frameState.WidgetState);
+            }
+            else
+            {
+                Console.WriteLine("Inflation rejected since non WidgetFrameState given for inflation...");
+            }
         }
     }
 }

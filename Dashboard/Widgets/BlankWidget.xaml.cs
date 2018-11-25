@@ -49,5 +49,17 @@ namespace Dashboard.Widgets
 
             return state;
         }
+
+        public void SetState(IWidgetState state)
+        {
+            if (state is BlankWidgetState widgetState)
+            {
+                // nothing is currentlt stored in state, hence do nothing
+            }
+            else
+            {
+                Console.WriteLine("Inflation rejected since non BlankWidgetState given for inflation...");
+            }
+        }
     }
 }

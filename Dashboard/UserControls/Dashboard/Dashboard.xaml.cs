@@ -143,7 +143,7 @@ namespace Dashboard.UserControls.Dashboard
             }
         }
 
-        private DashboardState GenerateDashboardState()
+        private DashboardState GenerateState()
         {
             DashboardState state = DashboardState;
 
@@ -186,15 +186,46 @@ namespace Dashboard.UserControls.Dashboard
                 Console.WriteLine($"Dashboard State \"{dashboardState.Name}\" loaded");
 
                 // Clean up the Dashboard by deleting all the widget containers
-                int totalWidgetContainerCount = CellsContainer.Children.Count;
-                for (int widgetContIter = 0; widgetContIter < totalWidgetContainerCount; widgetContIter++)
+                DeleteAllWidgets();
+
+                // Create WidgetFrames based on the Dashboard state
+                SetState(dashboardState);
+            }
+        }
+
+        public void DeleteAllWidgets()
+        {
+            int totalWidgetContainerCount = CellsContainer.Children.Count;
+            for (int widgetContIter = 0; widgetContIter < totalWidgetContainerCount; widgetContIter++)
+            {
+                // Delete the container. All CellsContainer children are expected to WidgetContainers.
+                LayoutManager.DeleteWidgetFromContainer(CellsContainer, (IWidgetContainer)CellsContainer.Children[0]);
+            }
+        }
+
+        public void SetState(DashboardState state)
+        {
+            DashboardState = state;
+            // Create WidgetContainers one by one from DashbaordState and add them to the CellsContainer
+            for (int containerIter = 0; containerIter < state.WidgetContainerStates.Count; containerIter++)
+            {
+                // Create a new WidgetContainer
+                IWidgetContainer widgetContainer;
+                IWidgetContainerState containerState = state.WidgetContainerStates[containerIter];
+                if (containerState is WidgetFrameState)
                 {
-                    // Delete the container. All CellsContainer children are expected to WidgetContainers.
-                    LayoutManager.DeleteWidgetFromContainer(CellsContainer, (IWidgetContainer)CellsContainer.Children[0]);
+                    widgetContainer = new WidgetFrame();
                 }
+                else
+                {
+                    widgetContainer = new WidgetFrame();
+                }
+                
+                // Set the WidgetContainerState
+                widgetContainer.SetState(state.WidgetContainerStates[containerIter]);
 
-                //todo create WidgetFrames based on the Dashboard state
-
+                // Add the WidgetContainer to the Dashboard
+                LayoutManager.AddDashboardWidgetToContainer(CellsContainer, widgetContainer, Changed);
             }
         }
 
@@ -205,7 +236,7 @@ namespace Dashboard.UserControls.Dashboard
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            DashboardState state = GenerateDashboardState();
+            DashboardState state = GenerateState();
             // get the filename
             string filename = DashboardState.Name;
             string jsonText = JsonConvert.SerializeObject(DashboardState, Formatting.Indented);
@@ -245,6 +276,12 @@ namespace Dashboard.UserControls.Dashboard
 
         private void FetchBtn_Click(object sender, RoutedEventArgs e)
         {
+            // Refresh data of all widgetContainers
+            for (int containerIter = 0; containerIter < CellsContainer.Children.Count; containerIter++)
+            {
+                IWidgetContainer container = (IWidgetContainer)CellsContainer.Children[containerIter];
+                container.RefreshData();
+            }
         }
 
         private void FetchStopBtn_Click(object sender, RoutedEventArgs e)

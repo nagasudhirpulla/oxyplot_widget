@@ -18,5 +18,8 @@ namespace Dashboard.Interfaces
 
         // Required for JSON serialization
         IWidgetState GenerateState();
+
+        // Required for JSON deserialization
+        void SetState(IWidgetState state);
     }
 }

@@ -116,5 +116,19 @@ namespace Dashboard.Widgets.Oxyplot
 
             return state;
         }
+
+        public void SetState(IWidgetState state)
+        {
+            if (state is OxyPlotWidgetState widgetState)
+            {
+                if (widgetState.PlotConfig is LinePlotConfig plotConfig)
+                {
+                    mLinePlotConfig = plotConfig;
+                    SetupPlotView();
+                }
+                else { Console.WriteLine("Inflation rejected since non LinePlotConfig given for inflation..."); }
+            }
+            else { Console.WriteLine("Inflation rejected since non OxyPlotWidgetState given for inflation..."); }
+        }
     }
 }
