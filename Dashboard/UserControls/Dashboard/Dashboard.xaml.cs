@@ -11,6 +11,8 @@ using Dashboard.EditorWindows;
 using System.Windows;
 using Newtonsoft.Json;
 using System.Windows.Input;
+using System.IO;
+using Microsoft.Win32;
 
 namespace Dashboard.UserControls.Dashboard
 {
@@ -31,7 +33,7 @@ namespace Dashboard.UserControls.Dashboard
         {
 
         }
-        
+
         private List<IWidgetContainer> Widgets { get; set; }
 
         public DashboardState DashboardState { get; set; } = new DashboardState();
@@ -56,7 +58,7 @@ namespace Dashboard.UserControls.Dashboard
         {
             LayoutManager.DeleteWidgetFromContainer(CellsContainer, widget);
         }
-        
+
         public void AddNewBlankWidget()
         {
             WidgetFrame widgetFrame = new WidgetFrame
@@ -144,7 +146,7 @@ namespace Dashboard.UserControls.Dashboard
         private DashboardState GenerateDashboardState()
         {
             DashboardState state = DashboardState;
-            
+
             // Create WidgetContainerStates and append to list
             DashboardState.WidgetContainerStates.Clear();
             for (int widgetContIter = 0; widgetContIter < CellsContainer.Children.Count; widgetContIter++)
@@ -159,6 +161,9 @@ namespace Dashboard.UserControls.Dashboard
 
         private void OpenCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            //todo generate the dashboard state
+
+            //todo create WidgetFrames based on the Dashboard state
         }
 
         private void SaveAsCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -170,15 +175,29 @@ namespace Dashboard.UserControls.Dashboard
         {
             DashboardState state = GenerateDashboardState();
             // get the filename
-            if (MessageBox.Show("Save this Dashboard?", "Save", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            string filename = DashboardState.Name;
+            string jsonText = JsonConvert.SerializeObject(DashboardState, Formatting.Indented);
+            SaveFileDialog savefileDialog = new SaveFileDialog
             {
-                
+                // set a default file name
+                FileName = filename,
+                // set filters - this can be done in properties as well
+                Filter = "dash Files (*.dash)|*.dash|All files (*.*)|*.*"
+            };
+            if (savefileDialog.ShowDialog() == true)
+            {
+                File.WriteAllText(savefileDialog.FileName, jsonText);
+                Console.WriteLine("Saved the updated dashboard file!!!");
             }
+            //if (MessageBox.Show("Save this Dashboard?", "Save", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            //{
+
+            //}
         }
 
         private void Settings_Click(object sender, RoutedEventArgs e)
         {
-            
+            // todo open dashboard settings window
         }
 
         private void NewWindow_Click(object sender, RoutedEventArgs e)
@@ -198,7 +217,7 @@ namespace Dashboard.UserControls.Dashboard
 
         private void FetchStopBtn_Click(object sender, RoutedEventArgs e)
         {
-            
+
         }
 
     }

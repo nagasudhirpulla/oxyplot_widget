@@ -11,6 +11,7 @@ namespace Dashboard.States
 {
     public class DashboardState
     {
+        public string Name = "Dashboard";
         // Dimensions
         public int InitHeight { get; set; } = 800;
         public int InitWidth { get; set; } = 800;
