@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,18 @@ namespace Dashboard
         public MainWindow()
         {
             InitializeComponent();
+            String filenameStr = (String)((App)Application.Current).Properties["FilePathArgName"];
+            OpenFileName(filenameStr);
+        }
+
+        private void OpenFileName(string filenameStr)
+        {
+            if (filenameStr != null)
+            {
+                //String fileStr = File.ReadAllText(filenameStr);
+                Console.WriteLine($"Opening {filenameStr}");
+                DashboardUC.OpenFileName(filenameStr);
+            }
         }
 
         private void AddBlankWidget_Click(object sender, RoutedEventArgs e)

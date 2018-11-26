@@ -108,6 +108,7 @@
     <Compile Include="EditorWindows\WidgetPositionEditorWindow.xaml.cs">
       <DependentUpon>WidgetPositionEditorWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FileAssociation.cs" />
     <Compile Include="Helpers\ListUtility.cs" />
     <Compile Include="Helpers\OxyUtility.cs" />
     <Compile Include="Interfaces\IMeasurement.cs" />
