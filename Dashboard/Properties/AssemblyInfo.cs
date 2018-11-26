@@ -7,11 +7,11 @@ using System.Windows;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Dashboard")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("OxyDashboard")]
+[assembly: AssemblyDescription("Modular dashboard app")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Dashboard")]
+[assembly: AssemblyCompany("WRLDC")]
+[assembly: AssemblyProduct("OxyDashboard")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
