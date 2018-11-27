@@ -209,17 +209,17 @@ namespace PMUDataLayer
                     _serviceClient = CreateServiceClient();
                     _serviceClient.Open();
                     //byte[] data = _serviceClient.GetFullResolutionData(tre, measurementIDs.ToArray());
-                    //GetFullResolutionDataResponse dataResponse = await _serviceClient.GetFullResolutionDataAsync(tre, measurementIDs.ToArray());
-                    byte[] data = await Task.Run<byte[]>(() =>
-                        {
-                            return _serviceClient.GetFullResolutionData(tre, measurementIDs.ToArray());
-                        });
+                    GetFullResolutionDataResponse dataResponse = await _serviceClient.GetFullResolutionDataAsync(tre, measurementIDs.ToArray());
+                    //byte[] data = await Task.Run<byte[]>(() =>
+                    //    {
+                    //        return _serviceClient.GetFullResolutionData(tre, measurementIDs.ToArray());
+                    //    });
                     _serviceClient.Close();
                     PhasorPointBinaryDataParser parser = new PhasorPointBinaryDataParser();
                     //parsedData = parser.Parse(data);
                     parsedData = await Task.Run<Dictionary<object, List<PMUDataStructure>>>(() =>
                     {
-                        return parser.Parse(data);
+                        return parser.Parse(dataResponse.data);
                     });
                     return parsedData;
                 }

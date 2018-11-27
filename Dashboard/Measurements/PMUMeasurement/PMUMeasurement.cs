@@ -40,12 +40,13 @@ namespace Dashboard.Measurements.PMUMeasurement
                 for (int resIter = 0; resIter < dataResults.Count; resIter++)
                 {
                     DateTime dataTime = dataResults[resIter].TimeStamp;
-                    // todo convert the time from utc to utc + 5.30
+                    // convert the time from utc to local
+                    dataTime = DateTime.SpecifyKind((TimeZoneInfo.ConvertTime(dataTime, TimeZoneInfo.Utc, TimeZoneInfo.Local)), DateTimeKind.Local);
                     if (timeShift != null)
                     {
                         dataTime = TimeShift.DoShifting(dataTime, timeShift);
                     }
-                    DataPoint dataPoint = new DataPoint(DateTimeAxis.ToDouble(dataResults[resIter].TimeStamp), dataResults[resIter].Value[0]);
+                    DataPoint dataPoint = new DataPoint(DateTimeAxis.ToDouble(dataTime), dataResults[resIter].Value[0]);
                     dataPoints.Add(dataPoint);
                 }
             }
