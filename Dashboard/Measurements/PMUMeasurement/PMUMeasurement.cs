@@ -10,13 +10,14 @@ using PMUDataLayer.DataExchangeClasses;
 using PMUDataLayer.Config;
 using OxyPlot.Axes;
 using Dashboard.Widgets.Oxyplot;
+using Dashboard.UserControls.VariableTimePicker;
 
 namespace Dashboard.Measurements.PMUMeasurement
 {
     public class PMUMeasurement : IMeasurement
     {
-        public DateTime StartTime { get; set; } = DateTime.Now.AddSeconds(-5);
-        public DateTime EndTime { get; set; } = DateTime.Now.AddSeconds(-5);
+        public VariableTime StartTime { get; set; } = new VariableTime { AbsoluteTime = DateTime.Now.AddMinutes(-10) };
+        public VariableTime EndTime { get; set; } = new VariableTime { AbsoluteTime = DateTime.Now.AddMinutes(-9) };
         public int MeasId { get; set; } = 4924;
         public string MeasName { get; set; } = "Meas name";
         public string TypeName { get; set; } = typeof(PMUMeasurement).Name;
@@ -28,7 +29,7 @@ namespace Dashboard.Measurements.PMUMeasurement
             // using data layer for fetching data
             HistoryDataAdapter adapter = new HistoryDataAdapter(new ConfigurationManagerJSON());
             List<int> measIds = new List<int> { MeasId };
-            Dictionary<object, List<PMUDataStructure>> res = await adapter.GetDataAsync(StartTime, EndTime, measIds, true, false, 25);
+            Dictionary<object, List<PMUDataStructure>> res = await adapter.GetDataAsync(StartTime.GetTime(), EndTime.GetTime(), measIds, true, false, 25);
 
             // check if result has one key since we queried for only one key
             if (res.Keys.Count == 1)
@@ -39,6 +40,7 @@ namespace Dashboard.Measurements.PMUMeasurement
                 for (int resIter = 0; resIter < dataResults.Count; resIter++)
                 {
                     DateTime dataTime = dataResults[resIter].TimeStamp;
+                    // todo convert the time from utc to utc + 5.30
                     if (timeShift != null)
                     {
                         dataTime = TimeShift.DoShifting(dataTime, timeShift);
@@ -52,7 +54,7 @@ namespace Dashboard.Measurements.PMUMeasurement
 
         public string GetDisplayText()
         {
-            return $"{MeasName} ({MeasId}), {StartTime.ToString()} - {EndTime.ToString()}";
+            return $"{MeasName} ({MeasId}), {StartTime.GetTime().ToString()} - {EndTime.GetTime().ToString()}";
         }
 
         public IMeasurement Clone()

@@ -6,6 +6,7 @@
              xmlns:s="clr-namespace:System;assembly=mscorlib"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Dashboard.Measurements.PMUMeasurement"
+             xmlns:controls="clr-namespace:Dashboard.UserControls.VariableTimePicker"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -25,11 +26,7 @@
         <Label Content="End Time" Grid.Row="3"></Label>
         <xctk:IntegerUpDown Grid.Column="1" Value="{Binding MeasId}" Increment="1" Maximum="200000" Minimum="0"/>
         <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding MeasName}"/>
-        <xctk:DateTimePicker Format="Custom" Name="StartTimePicker"
-                FormatString="dd-MM-yy HH:mm:ss" TimeFormat="Custom" TimeFormatString="HH:mm:ss"
-                Grid.Column="1" Grid.Row="2" Value="{Binding StartTime}" />
-        <xctk:DateTimePicker Format="Custom" x:Name="EndTimePicker" 
-                FormatString="dd-MM-yy HH:mm:ss" TimeFormat="Custom" TimeFormatString="HH:mm:ss"
-                Grid.Column="1" Grid.Row="3" Value="{Binding EndTime}" />
+        <controls:VariableTimePicker x:Name="StartTimePicker" VariableTimeObj="{Binding StartTime}" Grid.Row="2" Grid.Column="1"/>
+        <controls:VariableTimePicker x:Name="EndTimePicker" VariableTimeObj="{Binding EndTime}" Grid.Row="3" Grid.Column="1"/>
     </Grid>
 </UserControl>
