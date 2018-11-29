@@ -54,6 +54,13 @@ namespace PMUDataLayer.Tests
                 List<int> measIds = new List<int> { 4924 };
                 Dictionary<object, List<PMUDataStructure>> res = await adapter.GetDataAsync(startTime, endTime, measIds, true, false, 25);
 
+                // check if start time is expected
+                DateTime dataTime = res.Values.ElementAt(0)[0].TimeStamp;
+                // convert the time from utc to local
+                dataTime = DateTime.SpecifyKind((TimeZoneInfo.ConvertTime(dataTime, TimeZoneInfo.Utc, TimeZoneInfo.Local)), DateTimeKind.Local);
+                TimeSpan timeDiff = dataTime - startTime;
+                Assert.AreEqual(timeDiff.TotalMilliseconds, 0);
+
                 // check of result has keys with count same as measIds
                 Assert.AreEqual(measIds.Count, res.Keys.Count);
 
