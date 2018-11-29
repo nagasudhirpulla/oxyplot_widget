@@ -289,5 +289,14 @@ namespace Dashboard.UserControls.Dashboard
 
         }
 
+        private void AddBlankWidget_Click(object sender, RoutedEventArgs e)
+        {
+            AddNewBlankWidget();
+        }
+
+        private void AddPlotWidget_Click(object sender, RoutedEventArgs e)
+        {
+            AddNewPlotWidget();
+        }
     }
 }

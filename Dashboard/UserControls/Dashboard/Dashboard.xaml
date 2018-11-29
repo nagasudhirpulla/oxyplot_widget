@@ -32,6 +32,10 @@
                 <MenuItem Header="_Help">
                     <MenuItem Header="_About" Click="About_Click"/>
                 </MenuItem>
+                <MenuItem Header="Add">
+                    <MenuItem Header="Plot Widget" Click="AddPlotWidget_Click"/>
+                    <MenuItem Header="Blank Widget" Click="AddBlankWidget_Click"/>
+                </MenuItem>
                 <MenuItem Header="FetchData" Click="FetchBtn_Click"></MenuItem>
                 <MenuItem Header="StopFetch" Click="FetchStopBtn_Click"></MenuItem>
             </Menu>

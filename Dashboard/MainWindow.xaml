@@ -10,14 +10,8 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <dashboard:Dashboard x:Name="DashboardUC">
         </dashboard:Dashboard>
-        <StackPanel Orientation="Horizontal" Grid.Row="1">
-            <Button Content="AddBlankWidgetBtn" Click="AddBlankWidget_Click"/>
-            <Button Content="AddPlotWidgetBtn" Click="AddPlotWidget_Click"/>
-        </StackPanel>
-
     </Grid>
 </Window>

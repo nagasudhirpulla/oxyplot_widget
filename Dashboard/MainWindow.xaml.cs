@@ -38,14 +38,14 @@ namespace Dashboard
             }
         }
 
-        private void AddBlankWidget_Click(object sender, RoutedEventArgs e)
-        {
-            DashboardUC.AddNewBlankWidget();
-        }
+        //private void AddBlankWidget_Click(object sender, RoutedEventArgs e)
+        //{
+        //    DashboardUC.AddNewBlankWidget();
+        //}
 
-        private void AddPlotWidget_Click(object sender, RoutedEventArgs e)
-        {
-            DashboardUC.AddNewPlotWidget();
-        }
+        //private void AddPlotWidget_Click(object sender, RoutedEventArgs e)
+        //{
+        //    DashboardUC.AddNewPlotWidget();
+        //}
     }
 }
