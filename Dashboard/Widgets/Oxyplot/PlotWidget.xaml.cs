@@ -60,8 +60,7 @@ namespace Dashboard.Widgets.Oxyplot
             PlotViewModel.SetPlotTextColor(Helpers.OxyUtility.ConvertColorToOxyColor(mLinePlotConfig.Appearance.TextColor));
             PlotViewModel.SetPlotAxesTickColor(Helpers.OxyUtility.ConvertColorToOxyColor(mLinePlotConfig.Appearance.ForegroundColor));
             
-            //todo incorporate in plotConfig separately
-            //PlotViewModel.SetPlotMajorAxesLineColor(Helpers.OxyUtility.ConvertColorToOxyColor(mLinePlotConfig.Appearance.ForegroundColor));
+            PlotViewModel.SetPlotMajorAxesLineColor(Helpers.OxyUtility.ConvertColorToOxyColor(mLinePlotConfig.Appearance.MajorAxesLineColor));
 
             //set the x axis as datetime if necessary
             if (mLinePlotConfig.Appearance.IsXAxisDateTime)

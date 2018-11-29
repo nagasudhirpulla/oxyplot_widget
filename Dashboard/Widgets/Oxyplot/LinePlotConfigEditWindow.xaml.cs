@@ -230,6 +230,12 @@ namespace Dashboard.Widgets.Oxyplot
             set { mLinePlotConfig.Appearance.TextColor = value; }
         }
 
+        public Color MajorAxesLineColor
+        {
+            get { return mLinePlotConfig.Appearance.MajorAxesLineColor; }
+            set { mLinePlotConfig.Appearance.MajorAxesLineColor = value; }
+        }
+
         public bool IsXAxisDateTime
         {
             get { return mLinePlotConfig.Appearance.IsXAxisDateTime; }

@@ -89,6 +89,7 @@ namespace Dashboard.Widgets.Oxyplot
         public Color BackgroundColor { get; set; } = Color.FromRgb(0, 0, 0);
         public Color ForegroundColor { get; set; } = Color.FromRgb(255, 255, 255);
         public Color TextColor { get; set; } = Color.FromRgb(255, 255, 255);
+        public Color MajorAxesLineColor { get; set; } = Color.FromRgb(100, 100, 100);
         public bool IsXAxisDateTime { get; set; } = true;
         public string AxisTimeFormat { get; set; } = "HH:mm:ss"; // dd-MMM-yyyy HH:mm:ss
         //todo set time format option visibility as per the IsXAxisDateTime value
@@ -101,7 +102,8 @@ namespace Dashboard.Widgets.Oxyplot
                 ForegroundColor = ForegroundColor,
                 TextColor = TextColor,
                 IsXAxisDateTime = IsXAxisDateTime,
-                AxisTimeFormat = AxisTimeFormat
+                AxisTimeFormat = AxisTimeFormat,
+                MajorAxesLineColor = MajorAxesLineColor
             };
         }
     }
