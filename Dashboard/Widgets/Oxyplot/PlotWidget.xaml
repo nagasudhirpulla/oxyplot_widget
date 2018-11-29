@@ -7,5 +7,17 @@
              xmlns:oxy="http://oxyplot.org/wpf"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <oxy:PlotView Name="OxyplotView" Model="{Binding PlotViewModel.LinePlotModel}"/>
+    <UserControl.Resources>
+        <Style x:Key="OverlayBtnStyle" TargetType="Button">
+            <Setter Property="Background" Value="WhiteSmoke" />
+            <Setter Property="Opacity" Value="0.5" />
+            <Setter Property="FontSize" Value="10" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Margin" Value="2,0,2,0" />
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <oxy:PlotView Name="OxyplotView" Model="{Binding PlotViewModel.LinePlotModel}"/>
+        <Button Click="ResetZoom_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Reset Zoom" Style="{StaticResource OverlayBtnStyle}"></Button>
+    </Grid>
 </UserControl>

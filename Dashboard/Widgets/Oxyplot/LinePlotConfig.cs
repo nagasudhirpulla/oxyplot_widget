@@ -90,7 +90,7 @@ namespace Dashboard.Widgets.Oxyplot
         public Color ForegroundColor { get; set; } = Color.FromRgb(255, 255, 255);
         public Color TextColor { get; set; } = Color.FromRgb(255, 255, 255);
         public bool IsXAxisDateTime { get; set; } = true;
-        public string AxisTimeFormat { get; set; } = "dd-MMM-yyyy";
+        public string AxisTimeFormat { get; set; } = "HH:mm:ss"; // dd-MMM-yyyy HH:mm:ss
         //todo set time format option visibility as per the IsXAxisDateTime value
 
         public LinePlotAppearance Clone()

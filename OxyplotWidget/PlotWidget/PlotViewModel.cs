@@ -28,6 +28,12 @@ namespace OxyplotWidget.PlotWidget
             Changed?.Invoke(this, e);
         }
 
+        public void CreateXYAxes()
+        {
+            _linePlotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Left });
+            _linePlotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom });
+        }
+
         /// <summary>
         /// Constructor 
         /// </summary>
@@ -81,6 +87,12 @@ namespace OxyplotWidget.PlotWidget
         public int GetSeriesCount()
         {
             return _linePlotModel.Series.Count;
+        }
+
+        public void ResetZoom()
+        {
+            _linePlotModel.ResetAllAxes();
+            RefreshPlot();
         }
 
         /// <summary>
@@ -230,7 +242,7 @@ namespace OxyplotWidget.PlotWidget
         {
             for (int iter = 0; iter < _linePlotModel.Axes.Count; iter++)
             {
-                if (_linePlotModel.Axes[iter].Position == OxyPlot.Axes.AxisPosition.Bottom)
+                if (_linePlotModel.Axes[iter].Position == AxisPosition.Bottom)
                 {
                     _linePlotModel.Axes[iter] = new DateTimeAxis() { StringFormat = "M/d" };
                 }
@@ -242,7 +254,7 @@ namespace OxyplotWidget.PlotWidget
         {
             for (int iter = 0; iter < _linePlotModel.Axes.Count; iter++)
             {
-                if (_linePlotModel.Axes[iter].Position == OxyPlot.Axes.AxisPosition.Bottom)
+                if (_linePlotModel.Axes[iter].Position == AxisPosition.Bottom)
                 {
                     _linePlotModel.Axes[iter].StringFormat = stringFormat;
                 }

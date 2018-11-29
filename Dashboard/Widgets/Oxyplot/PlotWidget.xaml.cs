@@ -22,6 +22,7 @@ namespace Dashboard.Widgets.Oxyplot
         {
             InitializeComponent();
             DataContext = this;
+            PlotViewModel.CreateXYAxes();
             SetupPlotView();
         }
 
@@ -49,6 +50,8 @@ namespace Dashboard.Widgets.Oxyplot
         {
             PlotViewModel.ClearSeries();
             List<LineSeries> seriesList = mLinePlotConfig.GetSeriesListForPlotSetup();
+            
+            // Add all the series to the PlotViewModel
             for (int seriesIter = 0; seriesIter < seriesList.Count; seriesIter++)
             {
                 PlotViewModel.AddNewSeries(seriesList[seriesIter]);
@@ -56,6 +59,7 @@ namespace Dashboard.Widgets.Oxyplot
             PlotViewModel.SetPlotBackground(Helpers.OxyUtility.ConvertColorToOxyColor(mLinePlotConfig.Appearance.BackgroundColor));
             PlotViewModel.SetPlotTextColor(Helpers.OxyUtility.ConvertColorToOxyColor(mLinePlotConfig.Appearance.TextColor));
             PlotViewModel.SetPlotAxesTickColor(Helpers.OxyUtility.ConvertColorToOxyColor(mLinePlotConfig.Appearance.ForegroundColor));
+            
             //todo incorporate in plotConfig separately
             //PlotViewModel.SetPlotMajorAxesLineColor(Helpers.OxyUtility.ConvertColorToOxyColor(mLinePlotConfig.Appearance.ForegroundColor));
 
@@ -129,6 +133,11 @@ namespace Dashboard.Widgets.Oxyplot
                 else { Console.WriteLine("Inflation rejected since non LinePlotConfig given for inflation..."); }
             }
             else { Console.WriteLine("Inflation rejected since non OxyPlotWidgetState given for inflation..."); }
+        }
+
+        private void ResetZoom_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            PlotViewModel.ResetZoom();
         }
     }
 }
