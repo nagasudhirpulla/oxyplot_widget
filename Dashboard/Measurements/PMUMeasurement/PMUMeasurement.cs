@@ -27,7 +27,9 @@ namespace Dashboard.Measurements.PMUMeasurement
             List<DataPoint> dataPoints = new List<DataPoint>();
 
             // using data layer for fetching data
-            HistoryDataAdapter adapter = new HistoryDataAdapter(new ConfigurationManagerJSON());
+            ConfigurationManagerJSON configManager = new ConfigurationManagerJSON();
+            configManager.Initialize();
+            HistoryDataAdapter adapter = new HistoryDataAdapter(configManager);
             List<int> measIds = new List<int> { MeasId };
             Dictionary<object, List<PMUDataStructure>> res = await adapter.GetDataAsync(StartTime.GetTime(), EndTime.GetTime(), measIds, true, false, 25);
 
