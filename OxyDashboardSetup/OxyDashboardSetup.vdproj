@@ -975,18 +975,13 @@
         "InstallerBootstrapper" = "3:2"
             "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
             {
-            "Enabled" = "11:TRUE"
+            "Enabled" = "11:FALSE"
             "PromptEnabled" = "11:TRUE"
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
                 "Items"
                 {
-                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.5.2"
-                    {
-                    "Name" = "8:Microsoft .NET Framework 4.5.2 (x86 and x64)"
-                    "ProductCode" = "8:.NETFramework,Version=v4.5.2"
-                    }
                 }
             }
         }
@@ -3141,7 +3136,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:OxyDashboard"
         "ProductCode" = "8:{5C77718A-B2CA-4F76-914B-38AC32F82992}"
-        "PackageCode" = "8:{7E7A5BC4-C77E-4163-BA44-ECC45A449956}"
+        "PackageCode" = "8:{FC7729FA-FFEE-4229-BB8B-1D18F62F1708}"
         "UpgradeCode" = "8:{8B8A0C33-0054-4EAD-AE66-40FA5721134C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
