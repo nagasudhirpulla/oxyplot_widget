@@ -16,6 +16,7 @@ using Dashboard.Interfaces;
 using Dashboard.Measurements.PMUMeasurement;
 using Dashboard.Measurements.RandomMeasurement;
 using Dashboard.Measurements.RandomTimeSeriesMeasurement;
+using Dashboard.Measurements.ScadaMeasurement;
 
 namespace Dashboard.Widgets.Oxyplot
 {
@@ -46,6 +47,10 @@ namespace Dashboard.Widgets.Oxyplot
             else if (measurement is RandomTimeSeriesMeasurement)
             {
                 MeasEditContainer.Children.Add(new RandomTimeMeasEditUC((RandomTimeSeriesMeasurement)measurement));
+            }
+            else if (measurement is ScadaMeasurement)
+            {
+                MeasEditContainer.Children.Add(new ScadaMeasEditUC((ScadaMeasurement)measurement));
             }
         }
 

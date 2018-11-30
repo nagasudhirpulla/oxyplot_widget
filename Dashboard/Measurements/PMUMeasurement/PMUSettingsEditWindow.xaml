@@ -30,7 +30,7 @@
         <TextBox Text="{Binding Host}" Grid.Column="1" Grid.Row="0"/>
         <TextBox Text="{Binding Path}" Grid.Column="1" Grid.Row="1"/>
         <xctk:IntegerUpDown Value="{Binding Port}" Grid.Column="1" Grid.Row="2"/>
-        <TextBox Text="{Binding Username}" Grid.Column="1" Grid.Row="3"/>
+        <TextBox Text="{Binding UserName}" Grid.Column="1" Grid.Row="3"/>
         <TextBox Text="{Binding Password}" Grid.Column="1" Grid.Row="4"/>
         <xctk:IntegerUpDown Value="{Binding LatencyTime}" Grid.Column="1" Grid.Row="5"/>
         <StackPanel Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">

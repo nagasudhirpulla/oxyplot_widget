@@ -2,6 +2,7 @@
 using Dashboard.Measurements.PMUMeasurement;
 using Dashboard.Measurements.RandomMeasurement;
 using Dashboard.Measurements.RandomTimeSeriesMeasurement;
+using Dashboard.Measurements.ScadaMeasurement;
 using Dashboard.States;
 using Dashboard.Widgets;
 using Dashboard.Widgets.Oxyplot;
@@ -45,6 +46,10 @@ namespace Dashboard.JsonConverters
             else if (objectTypeName == typeof(PMUMeasurement).Name)
             {
                 measurement = new PMUMeasurement();
+            }
+            else if (objectTypeName == typeof(ScadaMeasurement).Name)
+            {
+                measurement = new ScadaMeasurement();
             }
 
             if (measurement != null)

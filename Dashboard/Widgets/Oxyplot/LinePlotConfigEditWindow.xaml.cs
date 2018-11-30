@@ -2,6 +2,7 @@
 using Dashboard.Measurements.PMUMeasurement;
 using Dashboard.Measurements.RandomMeasurement;
 using Dashboard.Measurements.RandomTimeSeriesMeasurement;
+using Dashboard.Measurements.ScadaMeasurement;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,6 +27,7 @@ namespace Dashboard.Widgets.Oxyplot
     public partial class LinePlotConfigEditWindow : Window
     {
         public const string PMUMeasOption = "PMU_Measurement";
+        public const string ScadaMeasOption = "Scada_Measurement";
         public const string RandomTimeSeriesMeasOption = "Random_TimeSeries_Measurement";
         public const string RandomMeasOption = "Random_Measurement";
 
@@ -37,7 +39,7 @@ namespace Dashboard.Widgets.Oxyplot
             editorVM = new LinePlotConfigEditorVM(config);
             DataContext = editorVM;
             ConfigItemsContainer.ItemsSource = editorVM.SeriesConfigListItems;
-            string[] comboItemStrings = new string[] { PMUMeasOption, RandomTimeSeriesMeasOption, RandomMeasOption };
+            string[] comboItemStrings = new string[] { PMUMeasOption, ScadaMeasOption, RandomTimeSeriesMeasOption, RandomMeasOption };
             MeasOptionComboBox.ItemsSource = comboItemStrings;
             MeasOptionComboBox.SelectedIndex = 0;
         }
@@ -275,6 +277,10 @@ namespace Dashboard.Widgets.Oxyplot
             else if (measType == LinePlotConfigEditWindow.RandomTimeSeriesMeasOption)
             {
                 lineSeriesConfig.Measurement = new RandomTimeSeriesMeasurement();
+            }
+            else if (measType == LinePlotConfigEditWindow.ScadaMeasOption)
+            {
+                lineSeriesConfig.Measurement = new ScadaMeasurement();
             }
             mLinePlotConfig.SeriesConfigs.Add(lineSeriesConfig);
             SyncSeriesConfigListItemsWithConfig();

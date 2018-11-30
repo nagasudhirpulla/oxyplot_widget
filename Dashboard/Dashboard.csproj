@@ -53,6 +53,9 @@
     <ApplicationIcon>Resources\AppIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EzDNAApiNet">
+      <HintPath>..\packages\eDNAApi\EzDNAApiNet.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -139,6 +142,10 @@
       <DependentUpon>RandomTimeMeasEditUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="Measurements\RandomTimeSeriesMeasurement\RandomTimeSeriesMeasurement.cs" />
+    <Compile Include="Measurements\ScadaMeasurement\ScadaMeasEditUC.xaml.cs">
+      <DependentUpon>ScadaMeasEditUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Measurements\ScadaMeasurement\ScadaMeasurement.cs" />
     <Compile Include="States\BlankWidgetState.cs" />
     <Compile Include="States\DashboardState.cs" />
     <Compile Include="States\OxyPlotWidgetState.cs" />
@@ -214,6 +221,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Measurements\RandomTimeSeriesMeasurement\RandomTimeMeasEditUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Measurements\ScadaMeasurement\ScadaMeasEditUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
