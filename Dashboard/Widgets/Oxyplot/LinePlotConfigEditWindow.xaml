@@ -14,7 +14,9 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Label Content="Plot Configuration" Grid.Row="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Width="Auto">
+            <Label Content="Plot Configuration"/>
+        </StackPanel>
         <!-- Plot Appearance and Name Config Start-->
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>

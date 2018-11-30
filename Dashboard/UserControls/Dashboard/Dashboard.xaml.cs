@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using System.Windows.Input;
 using System.IO;
 using Microsoft.Win32;
+using Dashboard.Measurements.PMUMeasurement;
 
 namespace Dashboard.UserControls.Dashboard
 {
@@ -297,6 +298,11 @@ namespace Dashboard.UserControls.Dashboard
         private void AddPlotWidget_Click(object sender, RoutedEventArgs e)
         {
             AddNewPlotWidget();
+        }
+
+        private void PMUSettings_Click(object sender, RoutedEventArgs e)
+        {
+            PMUMeasurement.OpenSettingsWindow();
         }
     }
 }

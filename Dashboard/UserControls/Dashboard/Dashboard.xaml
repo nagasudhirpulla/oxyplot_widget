@@ -29,6 +29,9 @@
                 <MenuItem Header="_Window" >
                     <MenuItem Header="NewWindow" Click="NewWindow_Click"/>
                 </MenuItem>
+                <MenuItem Header="Settings" >
+                    <MenuItem Header="PMU" Click="PMUSettings_Click"/>
+                </MenuItem>
                 <MenuItem Header="_Help">
                     <MenuItem Header="_About" Click="About_Click"/>
                 </MenuItem>

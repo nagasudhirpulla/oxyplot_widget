@@ -17,16 +17,21 @@ namespace PMUDataLayer.Config
         public string Path { get; set; } = "/eterra-ws/HistoricalTrendProvider";
         public string UserName { get; set; } = "pdcAdmin";
         public string Password { get; set; } = "p@ssw0rd";
+        public string configFilename = "pmuHistorianConfig.json";
 
         public void Initialize()
         {
             string path = Environment.CurrentDirectory;
-            string jsonPath = path + "\\pmuHistorianConfig.json";
+            string jsonPath = path + "\\"+ configFilename;
 
             if (File.Exists(jsonPath))
             {
                 ConfigurationManagerJSON pmuHistConfig = JsonConvert.DeserializeObject<ConfigurationManagerJSON>(File.ReadAllText(jsonPath));
                 CloneFromObject(pmuHistConfig);
+            }
+            else
+            {
+                Save();
             }
         }
 
@@ -35,9 +40,9 @@ namespace PMUDataLayer.Config
             string ConfigJSONStr = JsonConvert.SerializeObject(this, Formatting.Indented);
 
             string path = Environment.CurrentDirectory;
-            string xmlPath = path + "\\pmuHistorianConfig.json";
+            string jsonPath = path + "\\" + configFilename;
 
-            File.WriteAllText(xmlPath, ConfigJSONStr);
+            File.WriteAllText(jsonPath, ConfigJSONStr);
         }
 
         public void CloneFromObject(ConfigurationManagerJSON configuration)

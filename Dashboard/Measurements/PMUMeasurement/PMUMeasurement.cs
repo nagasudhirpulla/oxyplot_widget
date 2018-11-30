@@ -62,5 +62,15 @@ namespace Dashboard.Measurements.PMUMeasurement
         {
             return new PMUMeasurement { StartTime = StartTime, EndTime = EndTime, MeasId = MeasId, MeasName = MeasName };
         }
+
+        public static void OpenSettingsWindow()
+        {
+            PMUSettingsEditWindow positionEditor = new PMUSettingsEditWindow();
+            positionEditor.ShowDialog();
+            if (positionEditor.DialogResult == true)
+            {
+                // since it is saved in file, do nothing
+            }
+        }
     }
 }

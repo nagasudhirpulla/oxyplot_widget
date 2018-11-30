@@ -1,0 +1,41 @@
+﻿<Window x:Class="Dashboard.Measurements.PMUMeasurement.PMUSettingsEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Dashboard.Measurements.PMUMeasurement"
+        mc:Ignorable="d"
+        Title="PMUSettingsEditWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Label Content="Host" Grid.Row="0"></Label>
+        <Label Content="Path" Grid.Row="1"></Label>
+        <Label Content="Port" Grid.Row="2"></Label>
+        <Label Content="Username" Grid.Row="3"></Label>
+        <Label Content="Password" Grid.Row="4"></Label>
+        <Label Content="Latency time" Grid.Row="5"></Label>
+        <TextBox Text="{Binding Host}" Grid.Column="1" Grid.Row="0"/>
+        <TextBox Text="{Binding Path}" Grid.Column="1" Grid.Row="1"/>
+        <xctk:IntegerUpDown Value="{Binding Port}" Grid.Column="1" Grid.Row="2"/>
+        <TextBox Text="{Binding Username}" Grid.Column="1" Grid.Row="3"/>
+        <TextBox Text="{Binding Password}" Grid.Column="1" Grid.Row="4"/>
+        <xctk:IntegerUpDown Value="{Binding LatencyTime}" Grid.Column="1" Grid.Row="5"/>
+        <StackPanel Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Margin="15" Padding="8" Content="Cancel" Click="Cancel_Click"/>
+            <Button Margin="15" Padding="8" Content="Save" Click="Save_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
