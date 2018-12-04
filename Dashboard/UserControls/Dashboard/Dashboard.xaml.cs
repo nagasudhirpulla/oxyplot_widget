@@ -221,7 +221,7 @@ namespace Dashboard.UserControls.Dashboard
                 {
                     widgetContainer = new WidgetFrame();
                 }
-                
+
                 // Set the WidgetContainerState
                 widgetContainer.SetState(state.WidgetContainerStates[containerIter]);
 
@@ -233,9 +233,15 @@ namespace Dashboard.UserControls.Dashboard
         private void SaveAsCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             // https://stackoverflow.com/questions/4682915/defining-menuitem-shortcuts
+            Save_Dashboard();
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            Save_Dashboard();
+        }
+
+        private void Save_Dashboard()
         {
             DashboardState state = GenerateState();
             // get the filename
@@ -259,9 +265,9 @@ namespace Dashboard.UserControls.Dashboard
             //}
         }
 
-        private void Settings_Click(object sender, RoutedEventArgs e)
+        private void Preferences_Click(object sender, RoutedEventArgs e)
         {
-            // todo open dashboard settings window
+            // todo open dashboard preferenes window
         }
 
         private void NewWindow_Click(object sender, RoutedEventArgs e)
@@ -303,6 +309,22 @@ namespace Dashboard.UserControls.Dashboard
         private void PMUSettings_Click(object sender, RoutedEventArgs e)
         {
             PMUMeasurement.OpenSettingsWindow();
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Exit_Dashboard();
+        }
+
+        private void Exit_Dashboard()
+        {
+            Window parent = Window.GetWindow(this);
+            parent.Close();
+        }
+
+        private void FetchSettingsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // todo implement this
         }
     }
 }
