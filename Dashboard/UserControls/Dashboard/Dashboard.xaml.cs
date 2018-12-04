@@ -41,6 +41,8 @@ namespace Dashboard.UserControls.Dashboard
 
         private DashboardLayoutManager LayoutManager = new DashboardLayoutManager();
 
+        private DashboardAutoFetchManager AutoFetchManager = new DashboardAutoFetchManager();
+
         // Declare the event
         public event PropertyChangedEventHandler PropertyChanged;
         // Create the OnPropertyChanged method to raise the event
@@ -324,7 +326,11 @@ namespace Dashboard.UserControls.Dashboard
 
         private void FetchSettingsBtn_Click(object sender, RoutedEventArgs e)
         {
-            // todo implement this
+            DashboardAutoFetchState state = AutoFetchManager.OpenDashboardAutoFetchConfigWindow(DashboardState.AutoFetchState);
+            if (state != null)
+            {
+                DashboardState.AutoFetchState = state;
+            }
         }
     }
 }

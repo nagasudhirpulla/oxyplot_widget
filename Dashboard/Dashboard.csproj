@@ -105,6 +105,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="EditorWindows\DashboardAutoFetchEditWindow.xaml.cs">
+      <DependentUpon>DashboardAutoFetchEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Scheduler\SchedulerStateEditUC.xaml.cs">
+      <DependentUpon>SchedulerStateEditUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EditorWindows\RandomPlotFetchConfigWindow.xaml.cs">
       <DependentUpon>RandomPlotFetchConfigWindow.xaml</DependentUpon>
     </Compile>
@@ -112,6 +118,8 @@
       <DependentUpon>WidgetPositionEditorWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="FileAssociation.cs" />
+    <Compile Include="Helpers\EnumHelpers\EnumBindingSourceExtension.cs" />
+    <Compile Include="Helpers\EnumHelpers\EnumDescriptionTypeConverter.cs" />
     <Compile Include="Helpers\ListUtility.cs" />
     <Compile Include="Helpers\OxyUtility.cs" />
     <Compile Include="Interfaces\IMeasurement.cs" />
@@ -146,6 +154,7 @@
       <DependentUpon>ScadaMeasEditUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="Measurements\ScadaMeasurement\ScadaMeasurement.cs" />
+    <Compile Include="Scheduler\SchedulerState.cs" />
     <Compile Include="States\BlankWidgetState.cs" />
     <Compile Include="States\DashboardState.cs" />
     <Compile Include="States\OxyPlotWidgetState.cs" />
@@ -154,6 +163,8 @@
     <Compile Include="UserControls\Dashboard\Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\Dashboard\DashboardAutoFetchManager.cs" />
+    <Compile Include="UserControls\Dashboard\DashboardAutoFetchState.cs" />
     <Compile Include="UserControls\Dashboard\DashboardLayoutManager.cs" />
     <Compile Include="UserControls\VariableTimePicker\VariableTime.cs" />
     <Compile Include="UserControls\VariableTimePicker\VariableTimePicker.xaml.cs">
@@ -184,6 +195,14 @@
     <Compile Include="Widgets\WidgetFrame.xaml.cs">
       <DependentUpon>WidgetFrame.xaml</DependentUpon>
     </Compile>
+    <Page Include="EditorWindows\DashboardAutoFetchEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Scheduler\SchedulerStateEditUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="EditorWindows\RandomPlotFetchConfigWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

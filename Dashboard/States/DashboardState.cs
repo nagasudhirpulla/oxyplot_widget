@@ -1,5 +1,6 @@
 ﻿using Dashboard.Interfaces;
 using Dashboard.JsonConverters;
+using Dashboard.UserControls.Dashboard;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -18,5 +19,6 @@ namespace Dashboard.States
         public bool IsDimensionsLocked { get; set; } = false;
         [JsonConverter(typeof(WidgetContainerStateConverter))]
         public List<IWidgetContainerState> WidgetContainerStates { get; set; } = new List<IWidgetContainerState>();
+        public DashboardAutoFetchState AutoFetchState { get; set; } = new DashboardAutoFetchState();
     }
 }
