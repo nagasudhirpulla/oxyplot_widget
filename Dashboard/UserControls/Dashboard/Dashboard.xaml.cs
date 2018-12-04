@@ -32,7 +32,7 @@ namespace Dashboard.UserControls.Dashboard
 
         private void DoInitialStuff()
         {
-
+            AutoFetchManager = new DashboardAutoFetchManager(Fetch_Timer_Tick, DashboardState.AutoFetchState);
         }
 
         private List<IWidgetContainer> Widgets { get; set; }
@@ -41,7 +41,12 @@ namespace Dashboard.UserControls.Dashboard
 
         private DashboardLayoutManager LayoutManager = new DashboardLayoutManager();
 
-        private DashboardAutoFetchManager AutoFetchManager = new DashboardAutoFetchManager();
+        public void Fetch_Timer_Tick(object sender, EventArgs e)
+        {
+            RefreshAllWidgets();
+        }
+
+        private DashboardAutoFetchManager AutoFetchManager { get; set; }
 
         // Declare the event
         public event PropertyChangedEventHandler PropertyChanged;
@@ -209,6 +214,7 @@ namespace Dashboard.UserControls.Dashboard
         public void SetState(DashboardState state)
         {
             DashboardState = state;
+            UpdateDashboardAutoFetchState();
             // Create WidgetContainers one by one from DashbaordState and add them to the CellsContainer
             for (int containerIter = 0; containerIter < state.WidgetContainerStates.Count; containerIter++)
             {
@@ -285,6 +291,11 @@ namespace Dashboard.UserControls.Dashboard
 
         private void FetchBtn_Click(object sender, RoutedEventArgs e)
         {
+            AutoFetchManager.StartScheduler();
+        }
+
+        private void RefreshAllWidgets()
+        {
             // Refresh data of all widgetContainers
             for (int containerIter = 0; containerIter < CellsContainer.Children.Count; containerIter++)
             {
@@ -295,7 +306,7 @@ namespace Dashboard.UserControls.Dashboard
 
         private void FetchStopBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            AutoFetchManager.StopScheduler();
         }
 
         private void AddBlankWidget_Click(object sender, RoutedEventArgs e)
@@ -329,8 +340,19 @@ namespace Dashboard.UserControls.Dashboard
             DashboardAutoFetchState state = AutoFetchManager.OpenDashboardAutoFetchConfigWindow(DashboardState.AutoFetchState);
             if (state != null)
             {
-                DashboardState.AutoFetchState = state;
+                UpdateDashboardAutoFetchState(state);
             }
+        }
+
+        private void UpdateDashboardAutoFetchState(DashboardAutoFetchState state)
+        {
+            DashboardState.AutoFetchState = state;
+            UpdateDashboardAutoFetchState();
+        }
+
+        private void UpdateDashboardAutoFetchState()
+        {
+            AutoFetchManager.DashboardAutoFetchState = DashboardState.AutoFetchState;
         }
     }
 }

@@ -12,6 +12,12 @@ namespace Dashboard.UserControls.Dashboard
         public SchedulerState SchedulerState { get; set; } = new SchedulerState();
         public bool IsDominatingSchedule { get; set; } = false;
 
+        public TimeSpan GetTimerPeriod()
+        {
+            TimeSpan span = SchedulerState.FetchPeriodicity;
+            return span;
+        }
+
         public DashboardAutoFetchState Clone()
         {
             DashboardAutoFetchState state = new DashboardAutoFetchState
