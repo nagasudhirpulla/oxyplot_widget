@@ -214,7 +214,6 @@ namespace Dashboard.UserControls.Dashboard
         public void SetState(DashboardState state)
         {
             DashboardState = state;
-            UpdateDashboardAutoFetchState();
             // Create WidgetContainers one by one from DashbaordState and add them to the CellsContainer
             for (int containerIter = 0; containerIter < state.WidgetContainerStates.Count; containerIter++)
             {
@@ -236,6 +235,7 @@ namespace Dashboard.UserControls.Dashboard
                 // Add the WidgetContainer to the Dashboard
                 LayoutManager.AddDashboardWidgetToContainer(CellsContainer, widgetContainer, Changed);
             }
+            UpdateDashboardAutoFetchState();
         }
 
         private void SaveAsCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)

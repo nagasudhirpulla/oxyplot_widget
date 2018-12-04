@@ -37,7 +37,7 @@ namespace Dashboard.UserControls.Dashboard
 
         public void ReconfigureTimer()
         {
-            //check if scheduling is enabled in config
+            // Check if scheduling is enabled in config
             if (DashboardAutoFetchState_.SchedulerState.Mode == ScheduleMode.Periodic)
             {
                 UpdateSchedulerPeriod();
@@ -53,11 +53,12 @@ namespace Dashboard.UserControls.Dashboard
         {
             StopScheduler();
             FetchTimer_.Start();
+            Fetch_Timer_Tick(null, null);
         }
 
         public void StopScheduler()
         {
-            // stop the fetch timer if active
+            // Stop the fetch timer if active
             if (FetchTimer_.IsEnabled)
             {
                 FetchTimer_.Stop();
@@ -66,7 +67,7 @@ namespace Dashboard.UserControls.Dashboard
 
         public void UpdateSchedulerPeriod()
         {
-            //get the periodicity of the timer
+            // Get the periodicity of the timer
             FetchTimer_.Interval = DashboardAutoFetchState_.GetTimerPeriod();
         }
 
