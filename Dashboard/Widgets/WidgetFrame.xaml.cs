@@ -53,9 +53,20 @@ namespace Dashboard.Widgets
 
         public WidgetContainerAutoFetchState AutoFetchState_ { get; set; } = new WidgetContainerAutoFetchState();
 
+        public WidgetContainerAutoFetchState AutoFetchState
+        {
+            get { return AutoFetchState_; }
+            set { AutoFetchState_ = value; UpdateAutoFetchState(); }
+        }
+
         public async Task Fetch_Timer_TickAsync(object sender, EventArgs e)
         {
-            await RefreshData();
+            // since the timer is suppressed, the refresh may be done by the global scheduler. 
+            // Hence refresh only if not suppressed
+            if (!AutoFetchState_.IsSuppressed)
+            {
+                await RefreshData();
+            }
         }
 
         private WidgetContainerAutoFetchManager AutoFetchManager_;

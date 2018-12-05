@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dashboard.WidgetLayout;
+using Dashboard.Widgets;
 
 namespace Dashboard.Interfaces
 {
@@ -16,6 +17,7 @@ namespace Dashboard.Interfaces
         WidgetPosition Position { get; set; }
         WidgetDimension Dimension { get; set; }
         WidgetAppearance WidgetAppearance { get; set; }
+        WidgetContainerAutoFetchState AutoFetchState { get; set; }
 
         // Send Messages to Dashboard using this event handler
         event EventHandler<EventArgs> Changed;

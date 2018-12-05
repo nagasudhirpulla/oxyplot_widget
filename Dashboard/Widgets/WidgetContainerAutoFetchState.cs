@@ -10,6 +10,7 @@ namespace Dashboard.Widgets
     public class WidgetContainerAutoFetchState
     {
         public SchedulerState SchedulerState { get; set; } = new SchedulerState();
+        public bool IsSuppressed { get; set; } = false;
 
         public TimeSpan GetTimerPeriod()
         {

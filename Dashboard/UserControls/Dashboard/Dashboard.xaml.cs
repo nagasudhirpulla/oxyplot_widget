@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.IO;
 using Microsoft.Win32;
 using Dashboard.Measurements.PMUMeasurement;
+using Dashboard.Scheduler;
 
 namespace Dashboard.UserControls.Dashboard
 {
@@ -41,9 +42,37 @@ namespace Dashboard.UserControls.Dashboard
 
         private DashboardLayoutManager LayoutManager = new DashboardLayoutManager();
 
+        // This function will be passed as the timer trigger function
         public void Fetch_Timer_Tick(object sender, EventArgs e)
         {
-            RefreshAllWidgets();
+            // Refresh data of all widgetContainers
+            for (int containerIter = 0; containerIter < CellsContainer.Children.Count; containerIter++)
+            {
+                IWidgetContainer container = (IWidgetContainer)CellsContainer.Children[containerIter];
+                if (!AutoFetchManager.DashboardAutoFetchState.IsDominatingSchedule)
+                {
+                    // handle non dominating schedule case. 
+                    // Here we refresh container widget only if it's scheduler is disabled
+                    WidgetContainerAutoFetchState containerState = container.AutoFetchState;
+                    containerState.IsSuppressed = false;
+                    container.AutoFetchState = containerState;
+
+                    if (container.AutoFetchState.SchedulerState.Mode == ScheduleMode.Disabled)
+                    {
+                        container.RefreshData();
+                    }
+                }
+                else
+                {
+                    // handle dominating schedule case
+                    // here we disable container scheduler and refresh its data
+                    WidgetContainerAutoFetchState containerState = container.AutoFetchState;
+                    containerState.IsSuppressed = true;
+                    container.AutoFetchState = containerState;
+                    container.RefreshData();
+                }
+            }
+
         }
 
         private DashboardAutoFetchManager AutoFetchManager { get; set; }
@@ -354,6 +383,6 @@ namespace Dashboard.UserControls.Dashboard
                 UpdateDashboardAutoFetchState(state);
             }
         }
-                
+
     }
 }
