@@ -46,9 +46,30 @@ namespace Dashboard.Widgets
             InitializeComponent();
             Children = PART_Host.Children;
             DataContext = this;
+            AutoFetchManager_ = new WidgetContainerAutoFetchManager(Fetch_Timer_TickAsync, AutoFetchState_);
         }
 
         private IWidget mWidget = null;
+
+        public WidgetContainerAutoFetchState AutoFetchState_ { get; set; } = new WidgetContainerAutoFetchState();
+
+        public async Task Fetch_Timer_TickAsync(object sender, EventArgs e)
+        {
+            await RefreshData();
+        }
+
+        private WidgetContainerAutoFetchManager AutoFetchManager_;
+
+        private void UpdateAutoFetchState(WidgetContainerAutoFetchState state)
+        {
+            AutoFetchState_ = state;
+            UpdateAutoFetchState();
+        }
+
+        private void UpdateAutoFetchState()
+        {
+            AutoFetchManager_.WidgetContainerAutoFetchState = AutoFetchState_;
+        }
 
         // Declare the event
         public event PropertyChangedEventHandler PropertyChanged;
@@ -218,6 +239,7 @@ namespace Dashboard.Widgets
             containerState.Dimension = Dimension;
             containerState.Position = Position;
             containerState.WidgetAppearance = WidgetAppearance;
+            containerState.WidgetContainerAutoFetchState_ = AutoFetchState_;
             // Generate WidgetState also
             containerState.WidgetState = mWidget.GenerateState();
             return containerState;
@@ -230,6 +252,7 @@ namespace Dashboard.Widgets
                 Dimension = frameState.Dimension;
                 Position = frameState.Position;
                 WidgetAppearance = frameState.WidgetAppearance;
+                AutoFetchState_ = frameState.WidgetContainerAutoFetchState_;
                 // Set the Widget
                 IWidget widget;
                 if (frameState.WidgetState is BlankWidgetState)
@@ -248,10 +271,20 @@ namespace Dashboard.Widgets
                 SetWidget(widget);
                 // Set Widget State also
                 mWidget.SetState(frameState.WidgetState);
+                UpdateAutoFetchState(frameState.WidgetContainerAutoFetchState_);
             }
             else
             {
                 Console.WriteLine("Inflation rejected since non WidgetFrameState given for inflation...");
+            }
+        }
+
+        private void FetchSettingsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            WidgetContainerAutoFetchState state = AutoFetchManager_.OpenWidgetContainerAutoFetchConfigWindow(AutoFetchState_);
+            if (state != null)
+            {
+                UpdateAutoFetchState(state);
             }
         }
     }

@@ -28,6 +28,7 @@
                     <Button Content="Down" Click="DownBtn_Click" HorizontalAlignment="Right" Style="{StaticResource OverlayBtnStyle}"/>
                     <Button Content="Right" Click="RightBtn_Click" HorizontalAlignment="Right" Style="{StaticResource OverlayBtnStyle}"/>
                     <Button Content="Left" Click="LeftBtn_Click" HorizontalAlignment="Right" Style="{StaticResource OverlayBtnStyle}"/>
+                    <Button Content="Fetch Timer" Click="FetchSettingsBtn_Click" HorizontalAlignment="Right" Style="{StaticResource OverlayBtnStyle}"/>
                     <Button Content="Refresh" Click="RefreshDataBtn_Click" HorizontalAlignment="Right" Style="{StaticResource OverlayBtnStyle}"/>
                     <Button Content="Position" Click="EditPositionBtn_Click" HorizontalAlignment="Right" Style="{StaticResource OverlayBtnStyle}"/>
                     <Button Content="Config" Click="EditConfigBtn_Click" HorizontalAlignment="Right" Style="{StaticResource OverlayBtnStyle}"/>

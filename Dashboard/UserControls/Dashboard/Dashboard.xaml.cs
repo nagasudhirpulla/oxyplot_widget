@@ -48,6 +48,17 @@ namespace Dashboard.UserControls.Dashboard
 
         private DashboardAutoFetchManager AutoFetchManager { get; set; }
 
+        private void UpdateDashboardAutoFetchState(DashboardAutoFetchState state)
+        {
+            DashboardState.AutoFetchState = state;
+            UpdateDashboardAutoFetchState();
+        }
+
+        private void UpdateDashboardAutoFetchState()
+        {
+            AutoFetchManager.DashboardAutoFetchState = DashboardState.AutoFetchState;
+        }
+
         // Declare the event
         public event PropertyChangedEventHandler PropertyChanged;
         // Create the OnPropertyChanged method to raise the event
@@ -343,16 +354,6 @@ namespace Dashboard.UserControls.Dashboard
                 UpdateDashboardAutoFetchState(state);
             }
         }
-
-        private void UpdateDashboardAutoFetchState(DashboardAutoFetchState state)
-        {
-            DashboardState.AutoFetchState = state;
-            UpdateDashboardAutoFetchState();
-        }
-
-        private void UpdateDashboardAutoFetchState()
-        {
-            AutoFetchManager.DashboardAutoFetchState = DashboardState.AutoFetchState;
-        }
+                
     }
 }

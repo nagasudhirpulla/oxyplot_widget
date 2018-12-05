@@ -108,6 +108,9 @@
     <Compile Include="EditorWindows\DashboardAutoFetchEditWindow.xaml.cs">
       <DependentUpon>DashboardAutoFetchEditWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EditorWindows\WidgetContainerAutoFetchEditWindow.xaml.cs">
+      <DependentUpon>WidgetContainerAutoFetchEditWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Scheduler\SchedulerStateEditUC.xaml.cs">
       <DependentUpon>SchedulerStateEditUC.xaml</DependentUpon>
     </Compile>
@@ -192,11 +195,16 @@
     </Compile>
     <Compile Include="DataFetchers\RandomDataFetcher\RandomPlotDataFetcher.cs" />
     <Compile Include="DataFetchers\RandomDataFetcher\RandomPlotFetchConfig.cs" />
+    <Compile Include="Widgets\WidgetContainerAutoFetchManager.cs" />
     <Compile Include="Widgets\WidgetContainerAutoFetchState.cs" />
     <Compile Include="Widgets\WidgetFrame.xaml.cs">
       <DependentUpon>WidgetFrame.xaml</DependentUpon>
     </Compile>
     <Page Include="EditorWindows\DashboardAutoFetchEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditorWindows\WidgetContainerAutoFetchEditWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

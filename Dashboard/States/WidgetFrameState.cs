@@ -14,9 +14,10 @@ namespace Dashboard.States
     public class WidgetFrameState : IWidgetContainerState
     {
         public string TypeName { get; set; } = typeof(WidgetFrameState).Name;
-        public WidgetPosition Position { get; set; }
-        public WidgetDimension Dimension { get; set; }
-        public WidgetAppearance WidgetAppearance { get; set; }
+        public WidgetPosition Position { get; set; } = new WidgetPosition();
+        public WidgetDimension Dimension { get; set; } = new WidgetDimension();
+        public WidgetAppearance WidgetAppearance { get; set; } = new WidgetAppearance();
+        public WidgetContainerAutoFetchState WidgetContainerAutoFetchState_ { get; set; } = new WidgetContainerAutoFetchState();
         [JsonConverter(typeof(WidgetStateConverter))]
         public IWidgetState WidgetState { get; set; }
     }
