@@ -192,6 +192,7 @@
     </Compile>
     <Compile Include="DataFetchers\RandomDataFetcher\RandomPlotDataFetcher.cs" />
     <Compile Include="DataFetchers\RandomDataFetcher\RandomPlotFetchConfig.cs" />
+    <Compile Include="Widgets\WidgetContainerAutoFetchState.cs" />
     <Compile Include="Widgets\WidgetFrame.xaml.cs">
       <DependentUpon>WidgetFrame.xaml</DependentUpon>
     </Compile>
