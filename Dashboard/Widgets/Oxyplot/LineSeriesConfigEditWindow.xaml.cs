@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,8 @@ using Dashboard.Measurements.PMUMeasurement;
 using Dashboard.Measurements.RandomMeasurement;
 using Dashboard.Measurements.RandomTimeSeriesMeasurement;
 using Dashboard.Measurements.ScadaMeasurement;
+using Microsoft.Win32;
+using Newtonsoft.Json;
 
 namespace Dashboard.Widgets.Oxyplot
 {
@@ -71,6 +74,41 @@ namespace Dashboard.Widgets.Oxyplot
         {
             DialogResult = false;
             this.Close();
+        }
+
+        private void SaveMeasBtnClick(object sender, RoutedEventArgs e)
+        {
+            SaveMeasurement();
+        }
+
+        private void SaveMeasurement()
+        {
+            string jsonText = JsonConvert.SerializeObject(EditorVM.mLineSeriesConfig.Measurement);
+            string filename = EditorVM.mLineSeriesConfig.Name;
+            SaveFileDialog savefileDialog = new SaveFileDialog
+            {
+                // set a default file name
+                FileName = filename,
+                // set filters - this can be done in properties as well
+                Filter = "meas Files (*.meas)|*.meas|All files (*.*)|*.*"
+            };
+
+            if (savefileDialog.ShowDialog() == true)
+            {
+                File.WriteAllText(savefileDialog.FileName, jsonText);
+                Console.WriteLine("Saved the measurement to file!!!");
+            }
+        }
+
+        private void OpenMeasBtnClick(object sender, RoutedEventArgs e)
+        {
+            OpenMeasurement();
+        }
+
+        private void OpenMeasurement()
+        {
+            // todo implement this
+            MessageBox.Show("Yet to be implemented");
         }
     }
 

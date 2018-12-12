@@ -14,6 +14,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Label Content="Plot Configuration" Grid.Row="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
         <!-- Series Appearance and Name Config Start-->
@@ -39,8 +40,14 @@
             
         </Grid>
         <!-- Series Measurement Container End -->
+        <!-- Measurement Open Close Panel Start -->
+        <StackPanel Orientation="Horizontal" Grid.Row="3">
+            <Button Content="Save Measurement" Click="SaveMeasBtnClick" Padding="5" Margin="5"></Button>
+            <Button Content="Open Measurement" Click="OpenMeasBtnClick" Padding="5" Margin="5"></Button>
+        </StackPanel>
+        <!-- Measurement Open Close Panel End -->
         <!-- Series Time Shift Config Start -->
-        <Grid Grid.Row="3">
+        <Grid Grid.Row="4">
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
@@ -69,7 +76,7 @@
             <Label Content="Seconds" Margin="0 0 10 0" Grid.Row="2" Grid.Column="5"/>
         </Grid>
         <!-- Series Time Shift Config End -->
-        <StackPanel Orientation="Horizontal" Grid.Row="4">
+        <StackPanel Orientation="Horizontal" Grid.Row="5">
             <Button Content="OK" Click="OkBtnClick" Padding="5" Margin="5"></Button>
             <Button Content="Cancel" Click="CancelBtnClick" Padding="5" Margin="5"></Button>
         </StackPanel>
