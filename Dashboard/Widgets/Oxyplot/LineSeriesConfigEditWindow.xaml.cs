@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Dashboard.Interfaces;
+using Dashboard.JsonConverters;
 using Dashboard.Measurements.PMUMeasurement;
 using Dashboard.Measurements.RandomMeasurement;
 using Dashboard.Measurements.RandomTimeSeriesMeasurement;
@@ -39,6 +40,11 @@ namespace Dashboard.Widgets.Oxyplot
 
         private void SetupMeasUC(IMeasurement measurement)
         {
+            if (MeasEditContainer.Children.Count > 0)
+            {
+                // Remove the children for replacement with the input measurement
+                MeasEditContainer.Children.Clear();
+            }
             if (measurement is RandomMeasurement)
             {
                 MeasEditContainer.Children.Add(new RandomMeasEditUC((RandomMeasurement)measurement));
@@ -83,7 +89,7 @@ namespace Dashboard.Widgets.Oxyplot
 
         private void SaveMeasurement()
         {
-            string jsonText = JsonConvert.SerializeObject(EditorVM.mLineSeriesConfig.Measurement);
+            string jsonText = JsonConvert.SerializeObject(EditorVM.mLineSeriesConfig.Measurement, Formatting.Indented, new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Ignore });
             string filename = EditorVM.mLineSeriesConfig.Name;
             SaveFileDialog savefileDialog = new SaveFileDialog
             {
@@ -102,13 +108,30 @@ namespace Dashboard.Widgets.Oxyplot
 
         private void OpenMeasBtnClick(object sender, RoutedEventArgs e)
         {
-            OpenMeasurement();
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            // openFileDialog.Multiselect = true;
+            openFileDialog.Filter = "meas files (*.meas)|*.meas|All files (*.*)|*.*";
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyComputer);
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string filename = openFileDialog.FileNames[0];
+                OpenMeasurement(filename);
+            }
         }
 
-        private void OpenMeasurement()
+        private void OpenMeasurement(string filename)
         {
-            // todo implement this
-            MessageBox.Show("Yet to be implemented");
+            // Load measurement from file string using the json converter
+            IMeasurement loadedMeasurement = JsonConvert.DeserializeObject<IMeasurement>(File.ReadAllText(filename), new MeasurementConverter());
+
+            // Replace the current measurement with the loaded measurement
+            ReplaceConfigMeasurement(loadedMeasurement);
+        }
+
+        private void ReplaceConfigMeasurement(IMeasurement newMeas)
+        {
+            EditorVM.mLineSeriesConfig.Measurement = newMeas;
+            SetupMeasUC(EditorVM.mLineSeriesConfig.Measurement);
         }
     }
 
