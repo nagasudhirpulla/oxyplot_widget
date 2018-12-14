@@ -93,6 +93,8 @@ namespace Dashboard.Widgets.Oxyplot
         public bool IsXAxisDateTime { get; set; } = true;
         public string AxisTimeFormat { get; set; } = "HH:mm:ss"; // dd-MMM-yyyy HH:mm:ss
         //todo set time format option visibility as per the IsXAxisDateTime value
+        public double XLabelFontSize { get; set; } = 15;
+        public double YLabelFontSize { get; set; } = 20;
 
         public LinePlotAppearance Clone()
         {
@@ -103,7 +105,9 @@ namespace Dashboard.Widgets.Oxyplot
                 TextColor = TextColor,
                 IsXAxisDateTime = IsXAxisDateTime,
                 AxisTimeFormat = AxisTimeFormat,
-                MajorAxesLineColor = MajorAxesLineColor
+                MajorAxesLineColor = MajorAxesLineColor,
+                XLabelFontSize = XLabelFontSize,
+                YLabelFontSize = YLabelFontSize
             };
         }
     }

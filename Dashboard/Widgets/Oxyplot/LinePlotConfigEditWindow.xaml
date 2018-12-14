@@ -28,6 +28,8 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -39,15 +41,19 @@
             <Label Content="Foreground" Grid.Row="3" Grid.Column="0"/>
             <Label Content="Text Color" Grid.Row="4" Grid.Column="0"/>
             <Label Content="Major Grid Color" Grid.Row="5" Grid.Column="0"/>
-            <Label Content="Timeseries X Axis" Grid.Row="6" Grid.Column="0"/>
-            <Label Content="Time Axis Format" Visibility="{Binding DateTimeSettingsVisibility}" Grid.Row="7" Grid.Column="0"/>
+            <Label Content="X axis Font Size" Grid.Row="6" Grid.Column="0"/>
+            <Label Content="Y axis Font Size" Grid.Row="7" Grid.Column="0"/>
+            <Label Content="Timeseries X Axis" Grid.Row="8" Grid.Column="0"/>
+            <Label Content="Time Axis Format" Visibility="{Binding DateTimeSettingsVisibility}" Grid.Row="9" Grid.Column="0"/>
             <TextBox Text="{Binding Name}" Grid.Row="1" Grid.Column="1"></TextBox>
             <xctk:ColorPicker SelectedColor="{Binding Background}" Grid.Row="2" Grid.Column="1"></xctk:ColorPicker>
             <xctk:ColorPicker SelectedColor="{Binding Foreground}" Grid.Row="3" Grid.Column="1"></xctk:ColorPicker>
             <xctk:ColorPicker SelectedColor="{Binding TextColor}" Grid.Row="4" Grid.Column="1"></xctk:ColorPicker>
             <xctk:ColorPicker SelectedColor="{Binding MajorAxesLineColor}" Grid.Row="5" Grid.Column="1"></xctk:ColorPicker>
-            <CheckBox IsChecked="{Binding IsXAxisDateTime}" Grid.Row="6" Grid.Column="1"></CheckBox>
-            <TextBox Text="{Binding AxisTimeFormat}" Visibility="{Binding DateTimeSettingsVisibility}" Grid.Row="7" Grid.Column="1"></TextBox>            
+            <xctk:DoubleUpDown Value="{Binding XLabelFontSize}" Grid.Row="6" Grid.Column="1"/>
+            <xctk:DoubleUpDown Value="{Binding YLabelFontSize}" Grid.Row="7" Grid.Column="1"/>
+            <CheckBox IsChecked="{Binding IsXAxisDateTime}" Grid.Row="8" Grid.Column="1"></CheckBox>
+            <TextBox Text="{Binding AxisTimeFormat}" Visibility="{Binding DateTimeSettingsVisibility}" Grid.Row="9" Grid.Column="1"></TextBox>            
         </Grid>
         <!-- Plot Appearance and Name Config End -->
         <!-- Plot Series Config Start-->

@@ -263,6 +263,18 @@ namespace Dashboard.Widgets.Oxyplot
             set { mLinePlotConfig.Appearance.AxisTimeFormat = value; }
         }
 
+        public double XLabelFontSize
+        {
+            get { return mLinePlotConfig.Appearance.XLabelFontSize; }
+            set { mLinePlotConfig.Appearance.XLabelFontSize = value; }
+        }
+
+        public double YLabelFontSize
+        {
+            get { return mLinePlotConfig.Appearance.YLabelFontSize; }
+            set { mLinePlotConfig.Appearance.YLabelFontSize = value; }
+        }
+
         public void AddSeries(string measType)
         {
             LineSeriesConfig lineSeriesConfig = new LineSeriesConfig();

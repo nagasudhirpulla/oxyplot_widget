@@ -261,6 +261,42 @@ namespace OxyplotWidget.PlotWidget
             }
             RefreshPlot();
         }
+
+        public void MakeXAxisLinear()
+        {
+            for (int iter = 0; iter < _linePlotModel.Axes.Count; iter++)
+            {
+                if (_linePlotModel.Axes[iter].Position == AxisPosition.Bottom)
+                {
+                    _linePlotModel.Axes[iter] = new LinearAxis() { Position = AxisPosition.Bottom };
+                }
+            }
+            RefreshPlot();
+        }
+
+        public void SetXAxisFontSize(double fontSize)
+        {
+            for (int iter = 0; iter < _linePlotModel.Axes.Count; iter++)
+            {
+                if (_linePlotModel.Axes[iter].Position == AxisPosition.Bottom)
+                {
+                    _linePlotModel.Axes[iter].FontSize = fontSize;
+                }
+            }
+            RefreshPlot();
+        }
+
+        public void SetYAxisFontSize(double fontSize)
+        {
+            for (int iter = 0; iter < _linePlotModel.Axes.Count; iter++)
+            {
+                if (_linePlotModel.Axes[iter].Position == AxisPosition.Left)
+                {
+                    _linePlotModel.Axes[iter].FontSize = fontSize;
+                }
+            }
+            RefreshPlot();
+        }
     }
 }
 

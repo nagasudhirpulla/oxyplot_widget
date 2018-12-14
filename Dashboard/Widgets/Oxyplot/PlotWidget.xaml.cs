@@ -48,6 +48,21 @@ namespace Dashboard.Widgets.Oxyplot
 
         private void SetupPlotView()
         {
+            //set the x axis as datetime if necessary
+            if (mLinePlotConfig.Appearance.IsXAxisDateTime)
+            {
+                PlotViewModel.MakeXAxisDateTime();
+                // settimg the axis time format string
+                PlotViewModel.SetXAxisStringFormat(mLinePlotConfig.Appearance.AxisTimeFormat);
+            }
+            else
+            {
+                PlotViewModel.MakeXAxisLinear();
+            }
+
+            PlotViewModel.SetXAxisFontSize(mLinePlotConfig.Appearance.XLabelFontSize);
+            PlotViewModel.SetYAxisFontSize(mLinePlotConfig.Appearance.YLabelFontSize);
+
             PlotViewModel.ClearSeries();
             List<LineSeries> seriesList = mLinePlotConfig.GetSeriesListForPlotSetup();
             
@@ -61,14 +76,7 @@ namespace Dashboard.Widgets.Oxyplot
             PlotViewModel.SetPlotAxesTickColor(Helpers.OxyUtility.ConvertColorToOxyColor(mLinePlotConfig.Appearance.ForegroundColor));
             
             PlotViewModel.SetPlotMajorAxesLineColor(Helpers.OxyUtility.ConvertColorToOxyColor(mLinePlotConfig.Appearance.MajorAxesLineColor));
-
-            //set the x axis as datetime if necessary
-            if (mLinePlotConfig.Appearance.IsXAxisDateTime)
-            {
-                PlotViewModel.MakeXAxisDateTime();
-                // settimg the axis time format string
-                PlotViewModel.SetXAxisStringFormat(mLinePlotConfig.Appearance.AxisTimeFormat);
-            }
+            
         }
 
         public async Task RefreshData()
