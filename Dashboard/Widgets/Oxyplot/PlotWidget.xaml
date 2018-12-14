@@ -18,6 +18,9 @@
     </UserControl.Resources>
     <Grid>
         <oxy:PlotView Name="OxyplotView" Model="{Binding PlotViewModel.LinePlotModel}"/>
-        <Button Click="ResetZoom_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Reset Zoom" Style="{StaticResource OverlayBtnStyle}"></Button>
+        <StackPanel Orientation="Horizontal">
+            <Button Click="ResetZoom_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Reset Zoom" Style="{StaticResource OverlayBtnStyle}"></Button>
+            <Button Click="ExportExcel_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Export excel" Style="{StaticResource OverlayBtnStyle}"></Button>
+        </StackPanel>
     </Grid>
 </UserControl>

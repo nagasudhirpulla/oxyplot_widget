@@ -65,7 +65,7 @@ namespace Dashboard.Widgets.Oxyplot
 
             PlotViewModel.ClearSeries();
             List<LineSeries> seriesList = mLinePlotConfig.GetSeriesListForPlotSetup();
-            
+
             // Add all the series to the PlotViewModel
             for (int seriesIter = 0; seriesIter < seriesList.Count; seriesIter++)
             {
@@ -74,9 +74,9 @@ namespace Dashboard.Widgets.Oxyplot
             PlotViewModel.SetPlotBackground(Helpers.OxyUtility.ConvertColorToOxyColor(mLinePlotConfig.Appearance.BackgroundColor));
             PlotViewModel.SetPlotTextColor(Helpers.OxyUtility.ConvertColorToOxyColor(mLinePlotConfig.Appearance.TextColor));
             PlotViewModel.SetPlotAxesTickColor(Helpers.OxyUtility.ConvertColorToOxyColor(mLinePlotConfig.Appearance.ForegroundColor));
-            
+
             PlotViewModel.SetPlotMajorAxesLineColor(Helpers.OxyUtility.ConvertColorToOxyColor(mLinePlotConfig.Appearance.MajorAxesLineColor));
-            
+
         }
 
         public async Task RefreshData()
@@ -143,6 +143,11 @@ namespace Dashboard.Widgets.Oxyplot
         }
 
         private void ResetZoom_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            PlotViewModel.ResetZoom();
+        }
+
+        private void ExportExcel_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             PlotViewModel.ResetZoom();
         }
