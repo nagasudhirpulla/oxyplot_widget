@@ -29,6 +29,12 @@ namespace Dashboard.UserControls.Dashboard
             InitializeComponent();
             DoInitialStuff();
             DataContext = this;
+            this.Loaded += new RoutedEventHandler(OnDashboardLoaded);
+        }
+
+        private void OnDashboardLoaded(object sender, RoutedEventArgs e)
+        {
+            ApplyDashboardSettings();
         }
 
         private void DoInitialStuff()
@@ -283,20 +289,21 @@ namespace Dashboard.UserControls.Dashboard
                 LayoutManager.AddDashboardWidgetToContainer(CellsContainer, widgetContainer, Changed);
             }
             UpdateDashboardAutoFetchState();
+            ApplyDashboardSettings();
         }
 
         private void SaveAsCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             // https://stackoverflow.com/questions/4682915/defining-menuitem-shortcuts
-            Save_Dashboard();
+            SaveDashboard();
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            Save_Dashboard();
+            SaveDashboard();
         }
 
-        private void Save_Dashboard()
+        private void SaveDashboard()
         {
             DashboardState state = GenerateState();
             // get the filename
@@ -369,6 +376,45 @@ namespace Dashboard.UserControls.Dashboard
         private void PMUSettings_Click(object sender, RoutedEventArgs e)
         {
             PMUMeasurement.OpenSettingsWindow();
+        }
+
+        private void DashboardSettings_Click(object sender, RoutedEventArgs e)
+        {
+            DashboardSettingsWindow editor = new DashboardSettingsWindow(DashboardState);
+            editor.ShowDialog();
+            if (editor.DialogResult == true)
+            {
+                // change the settings of the dashboard
+                DashboardState.SetSettings(editor.DashboardState);
+
+                ApplyDashboardSettings();
+            }
+        }
+
+        private void ApplyDashboardSettings()
+        {
+            Window parent = Window.GetWindow(this);
+            if (parent != null)
+            {
+                // Set the window title
+                parent.Title = DashboardState.Name;
+
+                // Set the window height
+                parent.Height = DashboardState.InitHeight;
+
+                // Set the window width
+                parent.Width = DashboardState.InitWidth;
+
+                // Set the window dimension locked
+                if (DashboardState.IsDimensionsLocked)
+                {
+                    parent.ResizeMode = ResizeMode.NoResize;
+                }
+                else
+                {
+                    parent.ResizeMode = ResizeMode.CanResize;
+                }
+            }
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)

@@ -108,6 +108,9 @@
     <Compile Include="EditorWindows\DashboardAutoFetchEditWindow.xaml.cs">
       <DependentUpon>DashboardAutoFetchEditWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EditorWindows\DashboardSettingsWindow.xaml.cs">
+      <DependentUpon>DashboardSettingsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EditorWindows\WidgetContainerAutoFetchEditWindow.xaml.cs">
       <DependentUpon>WidgetContainerAutoFetchEditWindow.xaml</DependentUpon>
     </Compile>
@@ -201,6 +204,10 @@
       <DependentUpon>WidgetFrame.xaml</DependentUpon>
     </Compile>
     <Page Include="EditorWindows\DashboardAutoFetchEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditorWindows\DashboardSettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
