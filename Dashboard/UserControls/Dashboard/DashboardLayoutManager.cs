@@ -25,7 +25,12 @@ namespace Dashboard.UserControls.Dashboard
             widgetContainer.Position = legitPosition;
             // todo make user opt for this in the future
             RemoveEmptyRowsAndColumns(container);
-        }        
+        }
+
+        public void ChangeWidgetDimension(Grid container, IWidgetContainer widgetContainer, WidgetDimension newDimension)
+        {
+            widgetContainer.Dimension = newDimension;
+        }
 
         public void DeleteWidgetFromContainer(Grid container, IWidgetContainer widgetContainer)
         {

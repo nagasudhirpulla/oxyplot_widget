@@ -3,11 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:Dashboard.EditorWindows"
         mc:Ignorable="d"
-        Title="WidgetPositionEditorWindow" Height="450" Width="800">
+        Title="Widget Position Editor" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -21,14 +24,18 @@
         </Grid.ColumnDefinitions>
         <Label Content="Edit Widget Position" Grid.ColumnSpan="2"></Label>
         <Label Content="Row" Grid.Row="1"></Label>
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding RowString}"></TextBox>
+        <xctk:IntegerUpDown Grid.Row="1" Grid.Column="1" Value="{Binding Row}" Increment="1" Maximum="200000" Minimum="0"/>
         <Label Content="Column" Grid.Row="2"></Label>
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ColumnString}"></TextBox>
+        <xctk:IntegerUpDown Grid.Row="2" Grid.Column="1" Value="{Binding Column}" Increment="1" Maximum="200000" Minimum="0"/>
         <Label Content="Column Span" Grid.Row="3"></Label>
-        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding ColSpanString}"></TextBox>
+        <xctk:IntegerUpDown Grid.Row="3" Grid.Column="1" Value="{Binding ColSpan}" Increment="1" Maximum="200000" Minimum="0"/>
         <Label Content="Row Span" Grid.Row="4"></Label>
-        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding RowSpanString}"></TextBox>
-        <Grid Grid.Row="5">
+        <xctk:IntegerUpDown Grid.Row="4" Grid.Column="1" Value="{Binding RowSpan}" Increment="1" Maximum="200000" Minimum="0"/>
+        <Label Content="Min Height" Grid.Row="5"></Label>
+        <xctk:IntegerUpDown Grid.Row="5" Grid.Column="1" Value="{Binding MinHeight}" Increment="1" Maximum="200000" Minimum="0"/>
+        <Label Content="Min Width" Grid.Row="6"></Label>
+        <xctk:IntegerUpDown Grid.Row="6" Grid.Column="1" Value="{Binding MinWidth}" Increment="1" Maximum="200000" Minimum="0"/>
+        <Grid Grid.Row="7">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>

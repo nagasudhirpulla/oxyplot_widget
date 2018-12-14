@@ -20,20 +20,21 @@ namespace Dashboard.EditorWindows
     /// </summary>
     public partial class WidgetPositionEditorWindow : Window
     {
-        public WidgetPositionEditorWindow(WidgetPosition position)
+        public WidgetPositionEditorWindow(WidgetPosition position, WidgetDimension dimension)
         {
             InitializeComponent();
-            mWidgetPositionVM = new WidgetPositionEditorVM(position);
+            mWidgetPositionVM = new WidgetPositionEditorVM(position, dimension);
             DataContext = mWidgetPositionVM;
         }
 
         private WidgetPositionEditorVM mWidgetPositionVM;
 
         public WidgetPosition WidgetPosition { get { return mWidgetPositionVM.WidgetPosition; } }
+        public WidgetDimension WidgetDimension { get { return mWidgetPositionVM.WidgetDimension; } }
 
         private void OK_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Save Changes ?", "Save Changes", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+            if (MessageBox.Show("Apply Changes ?", "Apply Changes", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
             {
                 //do no stuff
                 return;
@@ -47,7 +48,7 @@ namespace Dashboard.EditorWindows
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
-            this.Close();
+            Close();
         }
     }
 
@@ -56,71 +57,26 @@ namespace Dashboard.EditorWindows
         public WidgetPositionEditorVM()
         {
             mWidgetPosition = new WidgetPosition();
+            mWidgetDimension = new WidgetDimension();
         }
 
-        public WidgetPositionEditorVM(WidgetPosition position)
+        public WidgetPositionEditorVM(WidgetPosition position, WidgetDimension dimension)
         {
             mWidgetPosition = new WidgetPosition(position);
+            mWidgetDimension = new WidgetDimension(dimension);
         }
 
         private WidgetPosition mWidgetPosition;
+        private WidgetDimension mWidgetDimension;
 
         public WidgetPosition WidgetPosition { get { return mWidgetPosition; } }
+        public WidgetDimension WidgetDimension { get { return mWidgetDimension; } }
 
-        public string RowString
-        {
-            get { return mWidgetPosition.Row.ToString(); }
-            set
-            {
-                // check if value is a number
-                bool isNumeric = int.TryParse(value, out int integerInput);
-                if (isNumeric && integerInput >= 0)
-                {
-                    mWidgetPosition.Row = integerInput;
-                }
-            }
-        }
-
-        public string RowSpanString
-        {
-            get { return mWidgetPosition.RowSpan.ToString(); }
-            set
-            {
-                // check if value is a number
-                bool isNumeric = int.TryParse(value, out int integerInput);
-                if (isNumeric && integerInput >= 0)
-                {
-                    mWidgetPosition.RowSpan = integerInput;
-                }
-            }
-        }
-
-        public string ColumnString
-        {
-            get { return mWidgetPosition.Column.ToString(); }
-            set
-            {
-                // check if value is a number
-                bool isNumeric = int.TryParse(value, out int integerInput);
-                if (isNumeric && integerInput >= 0)
-                {
-                    mWidgetPosition.Column = integerInput;
-                }
-            }
-        }
-
-        public string ColSpanString
-        {
-            get { return mWidgetPosition.ColSpan.ToString(); }
-            set
-            {
-                // check if value is a number
-                bool isNumeric = int.TryParse(value, out int integerInput);
-                if (isNumeric && integerInput >= 0)
-                {
-                    mWidgetPosition.ColSpan = integerInput;
-                }
-            }
-        }
+        public int Row { get { return mWidgetPosition.Row; } set { mWidgetPosition.Row = value; } }
+        public int RowSpan { get { return mWidgetPosition.RowSpan; } set { mWidgetPosition.RowSpan = value; } }
+        public int Column { get { return mWidgetPosition.Column; } set { mWidgetPosition.Column = value; } }
+        public int ColSpan { get { return mWidgetPosition.ColSpan; } set { mWidgetPosition.ColSpan = value; } }
+        public int MinWidth { get { return mWidgetDimension.MinWidth; } set { mWidgetDimension.MinWidth = value; } }
+        public int MinHeight { get { return mWidgetDimension.MinHeight; } set { mWidgetDimension.MinHeight = value; } }
     }
 }

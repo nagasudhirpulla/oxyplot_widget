@@ -102,6 +102,12 @@ namespace Dashboard.UserControls.Dashboard
             LayoutManager.ChangeWidgetPosition(CellsContainer, widget, newPosition);
         }
 
+        public void ChangeWidgetDimension(IWidgetContainer widget, WidgetDimension newDimension)
+        {
+            Console.WriteLine($"Setting New dimension to {newDimension.MinHeight} (min Height), {newDimension.MinWidth} (min Width)");
+            LayoutManager.ChangeWidgetDimension(CellsContainer, widget, newDimension);
+        }
+
         public void DeleteWidget(IWidgetContainer widget)
         {
             LayoutManager.DeleteWidgetFromContainer(CellsContainer, widget);
@@ -167,12 +173,13 @@ namespace Dashboard.UserControls.Dashboard
                         }
                         if (cellPosChangeArgs.MessageType == CellPosChangeMsgType.POS_EDIT_WIN)
                         {
-                            WidgetPositionEditorWindow positionEditor = new WidgetPositionEditorWindow(widget.Position);
+                            WidgetPositionEditorWindow positionEditor = new WidgetPositionEditorWindow(widget.Position, widget.Dimension);
                             positionEditor.ShowDialog();
                             if (positionEditor.DialogResult == true)
                             {
                                 WidgetPosition newWidgetPosition = positionEditor.WidgetPosition;
                                 ChangeWidgetPosition(widget, newWidgetPosition);
+                                ChangeWidgetDimension(widget, positionEditor.WidgetDimension);
                             }
                         }
                     }
