@@ -4,6 +4,7 @@ using OxyPlot.Series;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -296,6 +297,88 @@ namespace OxyplotWidget.PlotWidget
                 }
             }
             RefreshPlot();
+        }
+
+        public DataTable GetPlotDataTable()
+        {
+            // Create the x axis column of dataTable
+            DataTable plotDataTable = new DataTable("PlotData");
+            string xAxisCol = "XAxis";
+
+            // Check if the x axis is of datetime axis
+            bool isXAxisDateTime = false;
+            foreach (Axis axis in _linePlotModel.Axes)
+            {
+                if (axis.Position == AxisPosition.Bottom && axis is DateTimeAxis)
+                {
+                    isXAxisDateTime = true;
+                }
+            }
+            DataColumn workCol;
+            if (isXAxisDateTime)
+            {
+                workCol = plotDataTable.Columns.Add(xAxisCol, typeof(DateTime));
+            }
+            else
+            {
+                workCol = plotDataTable.Columns.Add(xAxisCol, typeof(Double));
+            }
+            workCol.AllowDBNull = false;
+            workCol.Unique = true;
+
+            for (int iter = 0; iter < _linePlotModel.Series.Count; iter++)
+            {
+                // Create the Series Columns of the data table
+                string seriesTitle = _linePlotModel.Series[iter].Title;
+                plotDataTable.Columns.Add(_linePlotModel.Series[iter].Title, typeof(Double));
+
+                DataPointSeries plotSeries = (DataPointSeries)_linePlotModel.Series[iter];
+
+                // Iterate the series pouints for data addition to the table
+                int seriesPointCount = ((DataPointSeries)_linePlotModel.Series[iter]).Points.Count;
+                DataRow[] searchedRows;
+                for (int seriesPntIter = 0; seriesPntIter < seriesPointCount; seriesPntIter++)
+                {
+                    DataPoint seriesPoint = plotSeries.Points[seriesPntIter];
+                    if (isXAxisDateTime)
+                    {
+                        DateTime xDateTime = DateTimeAxis.ToDateTime(seriesPoint.X);
+                        searchedRows = plotDataTable.Select($"{xAxisCol} = '{xDateTime}'");
+                    }
+                    else
+                    {
+                        double xVal = seriesPoint.X;
+                        searchedRows = plotDataTable.Select($"{xAxisCol} = {xVal}");
+                    }
+                    // Search for a row in data table by a x axis value
+                    if (searchedRows.Count() > 0)
+                    {
+                        DataRow searchedRow = searchedRows.ElementAt(0);
+                        //int RowIndex = plotDataTable.Rows.IndexOf(searchedRow);
+                        searchedRow[seriesTitle] = seriesPoint.Y;
+                    }
+                    else
+                    {
+                        DataRow dataPointRow = plotDataTable.NewRow();
+                        dataPointRow[seriesTitle] = seriesPoint.Y;
+                        if (isXAxisDateTime)
+                        {
+                            dataPointRow[xAxisCol] = DateTimeAxis.ToDateTime(seriesPoint.X);
+                        }
+                        else
+                        {
+                            dataPointRow[xAxisCol] = seriesPoint.X;
+                        }
+                        plotDataTable.Rows.Add(dataPointRow);
+                    }
+                }
+            }
+
+            // Sort the datatable by xAxis column
+            DataView dv = plotDataTable.DefaultView;
+            dv.Sort = $"{xAxisCol} asc";
+            plotDataTable = dv.ToTable();
+            return plotDataTable;
         }
     }
 }
