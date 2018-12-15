@@ -46,9 +46,9 @@ namespace Dashboard.Helpers
             return dataPoints;
         }
 
-        public static List<DataPoint> GetDataPointsWithGivenMaxSampleInterval(List<DataPoint> pnts, TimeSpan maxRes)
+        public static List<DataPoint> GetDataPointsWithGivenMaxSampleInterval(List<DataPoint> pnts, TimeSpan maxRes, SamplingStrategy samplingStrategy)
         {
-            if (maxRes.TotalDays == 0 || pnts.Count == 0)
+            if (samplingStrategy == SamplingStrategy.Raw || maxRes.TotalDays == 0 || pnts.Count == 0)
             {
                 return pnts;
             }
@@ -71,7 +71,7 @@ namespace Dashboard.Helpers
                 else
                 {
                     // Add the value to the final list
-                    dataPoints.Add(new DataPoint(sampleBoundaryStart, GetBucketAggregate(sampleBucket)));
+                    dataPoints.Add(new DataPoint(sampleBoundaryStart, GetBucketAggregate(sampleBucket, samplingStrategy)));
 
                     // Update the sample Boundaries
                     sampleBoundaryStart = sampleBoundaryEnd;
@@ -88,35 +88,90 @@ namespace Dashboard.Helpers
             if (sampleBucket.Count > 0)
             {
                 // handle the last bucket
-                dataPoints.Add(new DataPoint(sampleBoundaryStart, GetBucketAggregate(sampleBucket)));
+                dataPoints.Add(new DataPoint(sampleBoundaryStart, GetBucketAggregate(sampleBucket, samplingStrategy)));
             }
 
             return dataPoints;
         }
 
-        public static double GetBucketAggregate(List<double> sampleBucket)
+        public static double GetBucketAggregate(List<double> sampleBucket, SamplingStrategy samplingStrategy)
         {
             // Aggregate the sample bucket as per sampling strategy
-            double bucketValue = 0;
+            double bucketResult = 0;
+            if (sampleBucket.Count == 0)
+            {
+                return bucketResult;
+            }
             try
             {
-                // for now lets assume the data sampling strategy is average
-                double numValidSamples = 0;
-                foreach (double sampleVal in sampleBucket)
+                if (samplingStrategy == SamplingStrategy.Snap)
                 {
-                    if (!Double.IsNaN(sampleVal))
+                    foreach (double sampleVal in sampleBucket)
                     {
-                        bucketValue += sampleVal;
-                        numValidSamples += 1;
+                        if (!Double.IsNaN(sampleVal))
+                        {
+                            bucketResult = sampleVal;
+                            return bucketResult;
+                        }
                     }
                 }
-                bucketValue = bucketValue / numValidSamples;
+                else if (samplingStrategy == SamplingStrategy.Average || samplingStrategy == SamplingStrategy.Sum)
+                {
+                    double numValidSamples = 0;
+                    foreach (double sampleVal in sampleBucket)
+                    {
+                        if (!Double.IsNaN(sampleVal))
+                        {
+                            bucketResult += sampleVal;
+                            numValidSamples += 1;
+                        }
+                    }
+                    if (samplingStrategy == SamplingStrategy.Average)
+                    {
+                        bucketResult = bucketResult / numValidSamples;
+                    }
+                    return bucketResult;
+                }
+                else if (samplingStrategy == SamplingStrategy.Maximum)
+                {
+                    bucketResult = Double.NegativeInfinity;
+                    foreach (double sampleVal in sampleBucket)
+                    {
+                        if (!Double.IsNaN(sampleVal) && sampleVal > bucketResult)
+                        {
+                            bucketResult = sampleVal;
+                        }
+                    }
+                    return bucketResult;
+                }
+                else if (samplingStrategy == SamplingStrategy.Minimum)
+                {
+                    bucketResult = Double.PositiveInfinity;
+                    foreach (double sampleVal in sampleBucket)
+                    {
+                        if (!Double.IsNaN(sampleVal) && sampleVal < bucketResult)
+                        {
+                            bucketResult = sampleVal;
+                        }
+                    }
+                    return bucketResult;
+                }
             }
             catch (Exception)
             {
                 // do nothing
             }
-            return bucketValue;
+            return bucketResult;
         }
+    }
+
+    public enum SamplingStrategy
+    {
+        Average,
+        Snap,
+        Maximum,
+        Minimum,
+        Sum,
+        Raw
     }
 }

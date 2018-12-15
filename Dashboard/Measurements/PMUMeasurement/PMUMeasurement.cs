@@ -23,7 +23,8 @@ namespace Dashboard.Measurements.PMUMeasurement
         public int MeasId { get; set; } = 4924;
         public string MeasName { get; set; } = "Meas name";
         // The data resolution should not be more than this. If this zero, then give raw data.
-        public TimeSpan MaxResolution { get; set; } = TimeSpan.FromMilliseconds(40);
+        public TimeSpan MaxResolution { get; set; } = TimeSpan.FromMilliseconds(0);
+        public SamplingStrategy SamplingStrategy { get; set; } = SamplingStrategy.Average;
         public string TypeName { get; set; } = typeof(PMUMeasurement).Name;
 
         public async Task<List<DataPoint>> FetchData(TimeShift timeShift)
@@ -39,7 +40,7 @@ namespace Dashboard.Measurements.PMUMeasurement
 
         public IMeasurement Clone()
         {
-            return new PMUMeasurement { StartTime = StartTime, EndTime = EndTime, MeasId = MeasId, MeasName = MeasName, MaxFetchSize = MaxFetchSize, MaxResolution = MaxResolution };
+            return new PMUMeasurement { StartTime = StartTime, EndTime = EndTime, MeasId = MeasId, MeasName = MeasName, MaxFetchSize = MaxFetchSize, MaxResolution = MaxResolution, SamplingStrategy = SamplingStrategy };
         }
 
         public static void OpenSettingsWindow()
@@ -79,9 +80,9 @@ namespace Dashboard.Measurements.PMUMeasurement
                 }
 
                 // Create dataPoints based on the fetch strategy and max Resolution
-                dataPoints = FetchHelper.GetDataPointsWithGivenMaxSampleInterval(dataPoints, MaxResolution);
+                dataPoints = FetchHelper.GetDataPointsWithGivenMaxSampleInterval(dataPoints, MaxResolution, SamplingStrategy);
             }
             return dataPoints;
         }
-    }
+    }    
 }

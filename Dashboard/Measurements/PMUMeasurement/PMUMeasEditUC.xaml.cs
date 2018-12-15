@@ -1,4 +1,5 @@
-﻿using Dashboard.UserControls.VariableTimePicker;
+﻿using Dashboard.Helpers;
+using Dashboard.UserControls.VariableTimePicker;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,6 +51,8 @@ namespace Dashboard.Measurements.PMUMeasurement
         public TimeSpan MaxFetchSize { get { return mPMUMeasurement.MaxFetchSize; } set { mPMUMeasurement.MaxFetchSize = value; } }
 
         public TimeSpan MaxResolution { get { return mPMUMeasurement.MaxResolution; } set { mPMUMeasurement.MaxResolution = value; } }
+
+        public SamplingStrategy SamplingStrategy { get { return mPMUMeasurement.SamplingStrategy; } set { mPMUMeasurement.SamplingStrategy = value; } }
 
     }
 }

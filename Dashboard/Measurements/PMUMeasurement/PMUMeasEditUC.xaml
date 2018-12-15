@@ -3,9 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-             xmlns:s="clr-namespace:System;assembly=mscorlib"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Dashboard.Measurements.PMUMeasurement"
+             xmlns:local1="clr-namespace:Dashboard.Helpers"
              xmlns:controls="clr-namespace:Dashboard.UserControls.VariableTimePicker"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -14,8 +15,15 @@
             <Style TargetType="{x:Type controls:VariableTimePicker}">
                 <Setter Property="Margin" Value="10"/>
             </Style>
+            <ObjectDataProvider x:Key="dataFromEnum" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="local1:SamplingStrategy"/>
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
         </Grid.Resources>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -33,6 +41,7 @@
         <Label Content="End Time" Grid.Row="3"></Label>
         <Label Content="Maximum Fetch Batch Interval (days.hours:mins:secs)" Margin="0 0 10 0" Grid.Row="4"/>
         <Label Content="Maximum Data Resolution (days.hours:mins:secs)" Margin="0 0 10 0" Grid.Row="5"/>
+        <Label Content="Sampling Strategy" Margin="0 0 10 0" Grid.Row="6"/>
 
         <xctk:IntegerUpDown Grid.Column="1" Value="{Binding MeasId}" Increment="1" Maximum="200000" Minimum="0"/>
         <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding MeasName}"/>
@@ -40,6 +49,7 @@
         <controls:VariableTimePicker x:Name="EndTimePicker" VariableTimeObj="{Binding EndTime}" Grid.Row="3" Grid.Column="1"/>
         <xctk:TimeSpanUpDown Value="{Binding MaxFetchSize}" Grid.Row="4" Grid.Column="1"/>
         <xctk:TimeSpanUpDown Value="{Binding MaxResolution}" Grid.Row="5" Grid.Column="1"/>
-
+        <ComboBox Grid.Row="6" Grid.Column="1" ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
+                  SelectedItem="{Binding SamplingStrategy}" />
     </Grid>
 </UserControl>
