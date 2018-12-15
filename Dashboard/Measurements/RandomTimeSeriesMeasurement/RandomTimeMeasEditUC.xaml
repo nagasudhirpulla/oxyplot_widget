@@ -24,7 +24,7 @@
         <Label Content="High" Grid.Row="1"></Label>
         <Label Content="From Time" Grid.Row="2"></Label>
         <Label Content="To Time" Grid.Row="3"></Label>
-        <Label Content="Time Resolution" Grid.Row="4"></Label>
+        <Label Content="Time Resolution (days.hours:mins:secs)" Grid.Row="4"></Label>
         <xctk:DoubleUpDown Grid.Column="1" Value="{Binding Low}"/>
         <xctk:DoubleUpDown Grid.Column="1" Grid.Row="1" Value="{Binding High}"/>
         <controls:VariableTimePicker x:Name="StartTimePicker" VariableTimeObj="{Binding FromTime}" Grid.Row="2" Grid.Column="1"/>

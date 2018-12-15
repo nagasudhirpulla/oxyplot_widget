@@ -56,6 +56,7 @@ namespace Dashboard.Widgets.Oxyplot
         public string Name { get; set; } = "Default";
         public LineSeriesAppearance Appearance { get; set; } = new LineSeriesAppearance();
         public TimeShift DisplayTimeShift { get; set; } = new TimeShift();
+        public TimeSpan MaxFetchSize { get; set; } = TimeSpan.FromDays(1);
 
         [JsonConverter(typeof(MeasurementConverter))]
         public IMeasurement Measurement { get; set; } = new RandomMeasurement();
@@ -63,7 +64,7 @@ namespace Dashboard.Widgets.Oxyplot
         public async Task<List<DataPoint>> FetchData(bool applyTimeShift)
         {
             List<DataPoint> dataPoints;
-            
+
             // Decide if we want display time shift
             TimeShift timeShift = null;
             if (applyTimeShift && DisplayTimeShift.IsTimeShiftZero() == false) { timeShift = DisplayTimeShift; }

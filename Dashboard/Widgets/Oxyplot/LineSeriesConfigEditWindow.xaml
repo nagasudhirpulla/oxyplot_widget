@@ -15,6 +15,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Label Content="Plot Configuration" Grid.Row="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
         <!-- Series Appearance and Name Config Start-->
@@ -75,8 +76,21 @@
             <xctk:IntegerUpDown Value="{Binding TimeShiftSeconds}" Grid.Row="2" Grid.Column="4"/>
             <Label Content="Seconds" Margin="0 0 10 0" Grid.Row="2" Grid.Column="5"/>
         </Grid>
+        <!-- Other Series Start -->
+        <Grid Grid.Row="5">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Content="Maximum Fetch Batch Interval (days.hours:mins:secs)" Margin="0 0 10 0" Grid.Row="0" Grid.Column="0"/>
+            <xctk:TimeSpanUpDown Value="{Binding MaxFetchSize}" Grid.Row="0" Grid.Column="1"/>
+        </Grid>
+        <!-- Other Series End -->
         <!-- Series Time Shift Config End -->
-        <StackPanel Orientation="Horizontal" Grid.Row="5">
+        <StackPanel Orientation="Horizontal" Grid.Row="6">
             <Button Content="OK" Click="OkBtnClick" Padding="5" Margin="5"></Button>
             <Button Content="Cancel" Click="CancelBtnClick" Padding="5" Margin="5"></Button>
         </StackPanel>

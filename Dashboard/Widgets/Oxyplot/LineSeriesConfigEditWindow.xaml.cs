@@ -172,6 +172,7 @@ namespace Dashboard.Widgets.Oxyplot
         public int TimeShiftHours { get { return mLineSeriesConfig.DisplayTimeShift.Hours; } set { mLineSeriesConfig.DisplayTimeShift.Hours = value; } }
         public int TimeShiftMinutes { get { return mLineSeriesConfig.DisplayTimeShift.Minutes; } set { mLineSeriesConfig.DisplayTimeShift.Minutes = value; } }
         public int TimeShiftSeconds { get { return mLineSeriesConfig.DisplayTimeShift.Seconds; } set { mLineSeriesConfig.DisplayTimeShift.Seconds = value; } }
+        public TimeSpan MaxFetchSize { get { return mLineSeriesConfig.MaxFetchSize; } set { mLineSeriesConfig.MaxFetchSize = value; } }
 
     }
 }
