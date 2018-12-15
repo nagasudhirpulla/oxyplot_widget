@@ -46,5 +46,8 @@ namespace Dashboard.Measurements.PMUMeasurement
         public VariableTime StartTime { get { return mPMUMeasurement.StartTime; } set { mPMUMeasurement.StartTime = value; } }
 
         public VariableTime EndTime { get { return mPMUMeasurement.EndTime; } set { mPMUMeasurement.EndTime = value; } }
+
+        public TimeSpan MaxFetchSize { get { return mPMUMeasurement.MaxFetchSize; } set { mPMUMeasurement.MaxFetchSize = value; } }
+
     }
 }

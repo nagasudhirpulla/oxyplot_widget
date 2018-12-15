@@ -11,6 +11,7 @@ using PMUDataLayer.Config;
 using OxyPlot.Axes;
 using Dashboard.Widgets.Oxyplot;
 using Dashboard.UserControls.VariableTimePicker;
+using Dashboard.Helpers;
 
 namespace Dashboard.Measurements.PMUMeasurement
 {
@@ -25,7 +26,8 @@ namespace Dashboard.Measurements.PMUMeasurement
 
         public async Task<List<DataPoint>> FetchData(TimeShift timeShift)
         {
-            return await FetchData(StartTime.GetTime(), EndTime.GetTime());
+            return await FetchHelper.FetchData(StartTime.GetTime(), EndTime.GetTime(), MaxFetchSize, FetchData);
+            //return await FetchData(StartTime.GetTime(), EndTime.GetTime());
         }
 
         public string GetDisplayText()
@@ -35,7 +37,7 @@ namespace Dashboard.Measurements.PMUMeasurement
 
         public IMeasurement Clone()
         {
-            return new PMUMeasurement { StartTime = StartTime, EndTime = EndTime, MeasId = MeasId, MeasName = MeasName };
+            return new PMUMeasurement { StartTime = StartTime, EndTime = EndTime, MeasId = MeasId, MeasName = MeasName, MaxFetchSize = MaxFetchSize };
         }
 
         public static void OpenSettingsWindow()
