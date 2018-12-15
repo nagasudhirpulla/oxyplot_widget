@@ -45,5 +45,51 @@ namespace Dashboard.Helpers
             } while (fetchEndTime < toTime);
             return dataPoints;
         }
+
+        public static List<DataPoint> GetDataPointsWithGivenMaxSampleInterval(List<DataPoint> pnts, TimeSpan maxRes)
+        {
+            List<DataPoint> dataPoints = new List<DataPoint>();
+
+            // get max sample interval as numeric
+            double maxResNumeric = maxRes.TotalDays;
+
+            double sampleBoundaryStart = pnts[0].X;
+            double sampleBoundaryEnd = sampleBoundaryStart + maxResNumeric;
+            List<double> sampleBucket = new List<double>();
+            for (int pntIter = 0; pntIter < pnts.Count; pntIter++)
+            {
+                if (pnts[pntIter].X < sampleBoundaryEnd)
+                {
+                    // Add points to the sample bucket till we encounter the sample boundary
+                    sampleBucket.Add(pnts[pntIter].Y);
+                }
+                else
+                {
+                    // Aggregate the sample bucket as per sampling strategy
+                    double bucketValue = 0;
+                    try
+                    {
+                        // for now lets assume the data sampling strategy is average
+                        bucketValue = sampleBucket.Average();
+                    }
+                    catch (Exception)
+                    {
+                        // do nothing
+                    }
+                    
+                    // Add the value to the final list
+                    dataPoints.Add(new DataPoint(sampleBoundaryStart, bucketValue));
+                    
+                    // Update the sample Boundaries
+                    sampleBoundaryStart = sampleBoundaryEnd;
+                    sampleBoundaryEnd += maxResNumeric;
+
+                    // Empty the bucket
+                    sampleBucket.Clear();
+                }
+            }
+
+            return dataPoints;
+        }
     }
 }

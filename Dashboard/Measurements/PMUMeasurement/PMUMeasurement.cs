@@ -22,6 +22,8 @@ namespace Dashboard.Measurements.PMUMeasurement
         public TimeSpan MaxFetchSize { get; set; } = TimeSpan.FromDays(1);
         public int MeasId { get; set; } = 4924;
         public string MeasName { get; set; } = "Meas name";
+        // The data resolution should not be more than this. If this zero, then give raw data.
+        public TimeSpan MaxResolution { get; set; } = TimeSpan.FromMilliseconds(40);
         public string TypeName { get; set; } = typeof(PMUMeasurement).Name;
 
         public async Task<List<DataPoint>> FetchData(TimeShift timeShift)
@@ -37,7 +39,7 @@ namespace Dashboard.Measurements.PMUMeasurement
 
         public IMeasurement Clone()
         {
-            return new PMUMeasurement { StartTime = StartTime, EndTime = EndTime, MeasId = MeasId, MeasName = MeasName, MaxFetchSize = MaxFetchSize };
+            return new PMUMeasurement { StartTime = StartTime, EndTime = EndTime, MeasId = MeasId, MeasName = MeasName, MaxFetchSize = MaxFetchSize, MaxResolution = MaxResolution };
         }
 
         public static void OpenSettingsWindow()
@@ -52,7 +54,6 @@ namespace Dashboard.Measurements.PMUMeasurement
 
         public async Task<List<DataPoint>> FetchData(DateTime startTime, DateTime endTime)
         {
-            // todo complete this
             List<DataPoint> dataPoints = new List<DataPoint>();
 
             // using data layer for fetching data
@@ -76,6 +77,9 @@ namespace Dashboard.Measurements.PMUMeasurement
                     DataPoint dataPoint = new DataPoint(DateTimeAxis.ToDouble(dataTime), dataResults[resIter].Value[0]);
                     dataPoints.Add(dataPoint);
                 }
+
+                // Create dataPoints based on the fetch strategy and max Resolution
+                dataPoints = FetchHelper.GetDataPointsWithGivenMaxSampleInterval(dataPoints, MaxResolution);
             }
             return dataPoints;
         }

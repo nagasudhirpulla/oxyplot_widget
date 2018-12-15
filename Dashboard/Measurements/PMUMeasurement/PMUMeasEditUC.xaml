@@ -21,6 +21,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -31,12 +32,14 @@
         <Label Content="Start Time" Grid.Row="2"></Label>
         <Label Content="End Time" Grid.Row="3"></Label>
         <Label Content="Maximum Fetch Batch Interval (days.hours:mins:secs)" Margin="0 0 10 0" Grid.Row="4"/>
+        <Label Content="Maximum Data Resolution (days.hours:mins:secs)" Margin="0 0 10 0" Grid.Row="5"/>
 
         <xctk:IntegerUpDown Grid.Column="1" Value="{Binding MeasId}" Increment="1" Maximum="200000" Minimum="0"/>
         <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding MeasName}"/>
         <controls:VariableTimePicker x:Name="StartTimePicker" VariableTimeObj="{Binding StartTime}" Grid.Row="2" Grid.Column="1"/>
         <controls:VariableTimePicker x:Name="EndTimePicker" VariableTimeObj="{Binding EndTime}" Grid.Row="3" Grid.Column="1"/>
-        <xctk:TimeSpanUpDown Value="{Binding MaxFetchSize}" Grid.Row="5" Grid.Column="1"/>
+        <xctk:TimeSpanUpDown Value="{Binding MaxFetchSize}" Grid.Row="4" Grid.Column="1"/>
+        <xctk:TimeSpanUpDown Value="{Binding MaxResolution}" Grid.Row="5" Grid.Column="1"/>
 
     </Grid>
 </UserControl>

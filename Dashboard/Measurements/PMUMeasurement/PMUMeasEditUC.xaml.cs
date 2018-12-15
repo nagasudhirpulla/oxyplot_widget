@@ -49,5 +49,7 @@ namespace Dashboard.Measurements.PMUMeasurement
 
         public TimeSpan MaxFetchSize { get { return mPMUMeasurement.MaxFetchSize; } set { mPMUMeasurement.MaxFetchSize = value; } }
 
+        public TimeSpan MaxResolution { get { return mPMUMeasurement.MaxResolution; } set { mPMUMeasurement.MaxResolution = value; } }
+
     }
 }
