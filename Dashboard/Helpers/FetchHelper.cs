@@ -75,7 +75,16 @@ namespace Dashboard.Helpers
                     try
                     {
                         // for now lets assume the data sampling strategy is average
-                        bucketValue = sampleBucket.Average();
+                        double numValidSamples = 0;
+                        foreach (double sampleVal in sampleBucket)
+                        {
+                            if (!Double.IsNaN(sampleVal))
+                            {
+                                bucketValue += sampleVal;
+                                numValidSamples += 1;
+                            }
+                        }
+                        bucketValue = bucketValue / numValidSamples;
                     }
                     catch (Exception)
                     {
