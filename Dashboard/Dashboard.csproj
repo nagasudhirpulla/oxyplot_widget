@@ -201,8 +201,6 @@
     <Compile Include="Widgets\Oxyplot\PlotWidget.xaml.cs">
       <DependentUpon>PlotWidget.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DataFetchers\RandomDataFetcher\RandomPlotDataFetcher.cs" />
-    <Compile Include="DataFetchers\RandomDataFetcher\RandomPlotFetchConfig.cs" />
     <Compile Include="Widgets\WidgetContainerAutoFetchManager.cs" />
     <Compile Include="Widgets\WidgetContainerAutoFetchState.cs" />
     <Compile Include="Widgets\WidgetFrame.xaml.cs">
