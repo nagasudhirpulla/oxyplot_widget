@@ -118,6 +118,7 @@
     <Compile Include="EditorWindows\WidgetContainerAutoFetchEditWindow.xaml.cs">
       <DependentUpon>WidgetContainerAutoFetchEditWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\FetchHelper.cs" />
     <Compile Include="Scheduler\SchedulerStateEditUC.xaml.cs">
       <DependentUpon>SchedulerStateEditUC.xaml</DependentUpon>
     </Compile>

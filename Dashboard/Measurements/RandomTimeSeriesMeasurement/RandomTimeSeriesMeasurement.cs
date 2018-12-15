@@ -1,4 +1,5 @@
-﻿using Dashboard.Interfaces;
+﻿using Dashboard.Helpers;
+using Dashboard.Interfaces;
 using Dashboard.UserControls.VariableTimePicker;
 using Dashboard.Widgets.Oxyplot;
 using OxyPlot;
@@ -57,8 +58,9 @@ namespace Dashboard.Measurements.RandomTimeSeriesMeasurement
             return value;
         }
 
-        public async Task<List<DataPoint>> FetchData(DateTime fromTime, DateTime toTime)
+        public async Task<List<DataPoint>> FetchDataOld(DateTime fromTime, DateTime toTime)
         {
+            // Remove this since we moved this to FetchHelper
             List<DataPoint> dataPoints = new List<DataPoint>();
             DateTime fetchStartTime = fromTime;
             DateTime fetchEndTime = fromTime;
@@ -94,7 +96,12 @@ namespace Dashboard.Measurements.RandomTimeSeriesMeasurement
             return dataPoints;
         }
 
-        public string GetDisplayText()
+        public async Task<List<DataPoint>> FetchData(DateTime fromTime, DateTime toTime)
+        {
+            return await FetchHelper.FetchData(fromTime, toTime, MaxFetchSize, FetchDataNonBatch);
+        }
+
+            public string GetDisplayText()
         {
             return $"{Low} (Low), {High} (High), {FromTime.GetTime()} to {ToTime.GetTime()}";
         }
