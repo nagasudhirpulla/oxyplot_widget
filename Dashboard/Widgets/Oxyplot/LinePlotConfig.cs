@@ -56,7 +56,6 @@ namespace Dashboard.Widgets.Oxyplot
         public string Name { get; set; } = "Default";
         public LineSeriesAppearance Appearance { get; set; } = new LineSeriesAppearance();
         public TimeShift DisplayTimeShift { get; set; } = new TimeShift();
-        public TimeSpan MaxFetchSize { get; set; } = TimeSpan.FromDays(1);
 
         [JsonConverter(typeof(MeasurementConverter))]
         public IMeasurement Measurement { get; set; } = new RandomMeasurement();
@@ -69,7 +68,20 @@ namespace Dashboard.Widgets.Oxyplot
             TimeShift timeShift = null;
             if (applyTimeShift && DisplayTimeShift.IsTimeShiftZero() == false) { timeShift = DisplayTimeShift; }
 
-            dataPoints = await Measurement.FetchData(timeShift);
+            dataPoints = await Measurement.FetchData(null);
+
+            // Handling timeshift here instead of the measurement to achieve modularity
+            if (timeShift != null)
+            {
+                //todo complete this
+                // find the shifting in double value 
+                double shiftForDateTime = timeShift.ToDoubleForDateTime();
+                for (int dataPntIter = 0; dataPntIter < dataPoints.Count; dataPntIter++)
+                {
+                    double newX = dataPoints[dataPntIter].X + shiftForDateTime;
+                    dataPoints[dataPntIter] = new DataPoint(newX, dataPoints[dataPntIter].Y);
+                }
+            }
             return dataPoints;
         }
 
@@ -163,6 +175,17 @@ namespace Dashboard.Widgets.Oxyplot
                 isTimeShiftZero = true;
             }
             return isTimeShiftZero;
+        }
+
+        public double ToDoubleForDateTime()
+        {
+            DateTime tempTime = DateTime.Now;
+            DateTime shiftedTime = DoShifting(tempTime, this);
+            TimeSpan span = shiftedTime - tempTime;
+
+            // refer ToDouble function at https://github.com/oxyplot/oxyplot/blob/develop/Source/OxyPlot/Axes/DateTimeAxis.cs
+            double shift = span.TotalDays;
+            return shift;
         }
 
     }

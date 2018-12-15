@@ -1,4 +1,5 @@
-﻿using Dashboard.Widgets.Oxyplot;
+﻿using Dashboard.UserControls.VariableTimePicker;
+using Dashboard.Widgets.Oxyplot;
 using OxyPlot;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace Dashboard.Interfaces
     {
         string TypeName { get; set; }
         Task<List<DataPoint>> FetchData(TimeShift timeShift);
+        Task<List<DataPoint>> FetchData(VariableTime startTime, VariableTime endTime);
         string GetDisplayText();
         IMeasurement Clone();
     }

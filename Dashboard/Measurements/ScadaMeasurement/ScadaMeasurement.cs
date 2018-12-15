@@ -22,6 +22,7 @@ namespace Dashboard.Measurements.ScadaMeasurement
 
         public VariableTime StartTime { get; set; } = new VariableTime { AbsoluteTime = DateTime.Now.AddMinutes(-10) };
         public VariableTime EndTime { get; set; } = new VariableTime { AbsoluteTime = DateTime.Now.AddMinutes(-9) };
+        public TimeSpan MaxFetchSize { get; set; } = TimeSpan.FromDays(1);
         public string MeasId { get; set; } = "Scada Measurement Id";
         public string MeasName { get; set; } = "Scada Meas name";
         public string FetchStrategy { get; set; } = FetchStrategyAverage;
@@ -36,13 +37,13 @@ namespace Dashboard.Measurements.ScadaMeasurement
 
         public IMeasurement Clone()
         {
-            return new ScadaMeasurement { StartTime = StartTime, EndTime = EndTime, MeasId = MeasId, MeasName = MeasName, FetchStrategy=FetchStrategy, FetchPeriodicitySecs =FetchPeriodicitySecs };
+            return new ScadaMeasurement { StartTime = StartTime, EndTime = EndTime, MeasId = MeasId, MeasName = MeasName, FetchStrategy = FetchStrategy, FetchPeriodicitySecs = FetchPeriodicitySecs };
         }
 
         public async Task<List<DataPoint>> FetchData(TimeShift timeShift)
         {
             List<DataPoint> dataPoints = new List<DataPoint>();
-            List<ScadaPointResult> dataResults = FetchHistoricalPointData();
+            List<ScadaPointResult> dataResults = FetchHistoricalPointData(StartTime.GetTime(), EndTime.GetTime());
             if (dataResults != null)
             {
                 for (int resIter = 0; resIter < dataResults.Count; resIter++)
@@ -59,7 +60,24 @@ namespace Dashboard.Measurements.ScadaMeasurement
             return dataPoints;
         }
 
-        public List<ScadaPointResult> FetchHistoricalPointData()
+        public async Task<List<DataPoint>> FetchData(VariableTime startTime, VariableTime endTime)
+        {
+            List<DataPoint> dataPoints = new List<DataPoint>();
+            List<ScadaPointResult> dataResults = FetchHistoricalPointData(startTime.GetTime(), endTime.GetTime());
+            if (dataResults != null)
+            {
+                for (int resIter = 0; resIter < dataResults.Count; resIter++)
+                {
+                    DateTime dataTime = dataResults[resIter].ResultTime_;
+
+                    DataPoint dataPoint = new DataPoint(DateTimeAxis.ToDouble(dataTime), dataResults[resIter].Val_);
+                    dataPoints.Add(dataPoint);
+                }
+            }
+            return dataPoints;
+        }
+
+        public List<ScadaPointResult> FetchHistoricalPointData(DateTime startTime, DateTime endTime)
         {
             try
             {
@@ -69,8 +87,6 @@ namespace Dashboard.Measurements.ScadaMeasurement
                 DateTime timestamp = DateTime.Now;
                 string status = "";
                 TimeSpan period = TimeSpan.FromSeconds(FetchPeriodicitySecs);
-                DateTime startTime = StartTime.GetTime();
-                DateTime endTime = EndTime.GetTime();
                 // History request initiation
                 if (FetchStrategy == FetchStrategyRaw)
                 { nret = History.DnaGetHistRaw(MeasId, startTime, endTime, out s); }

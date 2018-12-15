@@ -18,21 +18,22 @@ namespace Dashboard.Measurements.RandomTimeSeriesMeasurement
         public double High { get; set; } = 10;
         public VariableTime FromTime { get; set; } = new VariableTime { AbsoluteTime = DateTime.Now.AddMinutes(-20) };
         public VariableTime ToTime { get; set; } = new VariableTime { AbsoluteTime = DateTime.Now.AddMinutes(-1) };
+        public TimeSpan MaxFetchSize { get; set; } = TimeSpan.FromDays(1);
         public TimeSpan TimeResolution { get; set; } = TimeSpan.FromMinutes(1);
         public static Random Random { get; set; } = new Random();
 
         public async Task<List<DataPoint>> FetchData(TimeShift timeShift)
         {
+            return await FetchData(FromTime, ToTime);
+        }
+
+        public async Task<List<DataPoint>> FetchData(VariableTime startTime, VariableTime endTime)
+        {
             List<DataPoint> dataPoints = new List<DataPoint>();
-            DateTime fromTime = FromTime.GetTime();
-            DateTime toTime = ToTime.GetTime();
-            //int numPnts = (int)((toTime - fromTime).TotalMilliseconds / TimeResolution.TotalMilliseconds);
-            if (timeShift!=null)
-            {
-                fromTime = TimeShift.DoShifting(fromTime, timeShift);
-                toTime = TimeShift.DoShifting(toTime, timeShift);
-            }
-            DateTime tempTime = FromTime.GetTime();
+            DateTime fromTime = startTime.GetTime();
+            DateTime toTime = endTime.GetTime();
+
+            DateTime tempTime = startTime.GetTime();
             for (int pointIter = 0; tempTime < toTime; pointIter++)
             {
                 double value = Random.NextDouble();
@@ -51,7 +52,7 @@ namespace Dashboard.Measurements.RandomTimeSeriesMeasurement
 
         public IMeasurement Clone()
         {
-            return new RandomTimeSeriesMeasurement { Low = Low, High = High, FromTime = FromTime, ToTime = ToTime, TimeResolution = TimeResolution };
+            return new RandomTimeSeriesMeasurement { Low = Low, High = High, FromTime = FromTime, ToTime = ToTime, TimeResolution = TimeResolution, MaxFetchSize = MaxFetchSize };
         }
     }
 }

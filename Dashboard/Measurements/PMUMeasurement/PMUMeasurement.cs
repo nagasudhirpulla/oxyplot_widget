@@ -18,6 +18,7 @@ namespace Dashboard.Measurements.PMUMeasurement
     {
         public VariableTime StartTime { get; set; } = new VariableTime { AbsoluteTime = DateTime.Now.AddMinutes(-10) };
         public VariableTime EndTime { get; set; } = new VariableTime { AbsoluteTime = DateTime.Now.AddMinutes(-9) };
+        public TimeSpan MaxFetchSize { get; set; } = TimeSpan.FromDays(1);
         public int MeasId { get; set; } = 4924;
         public string MeasName { get; set; } = "Meas name";
         public string TypeName { get; set; } = typeof(PMUMeasurement).Name;
@@ -73,6 +74,36 @@ namespace Dashboard.Measurements.PMUMeasurement
             {
                 // since it is saved in file, do nothing
             }
+        }
+
+        public async Task<List<DataPoint>> FetchData(VariableTime startTime, VariableTime endTime)
+        {
+            // todo complete this
+            List<DataPoint> dataPoints = new List<DataPoint>();
+
+            // using data layer for fetching data
+            ConfigurationManagerJSON configManager = new ConfigurationManagerJSON();
+            configManager.Initialize();
+            HistoryDataAdapter adapter = new HistoryDataAdapter(configManager);
+            List<int> measIds = new List<int> { MeasId };
+            Dictionary<object, List<PMUDataStructure>> res = await adapter.GetDataAsync(startTime.GetTime(), endTime.GetTime(), measIds, true, false, 25);
+
+            // check if result has one key since we queried for only one key
+            if (res.Keys.Count == 1)
+            {
+                // todo check the measId also
+
+                List<PMUDataStructure> dataResults = res.Values.ElementAt(0);
+                for (int resIter = 0; resIter < dataResults.Count; resIter++)
+                {
+                    DateTime dataTime = dataResults[resIter].TimeStamp;
+                    // convert the time from utc to local
+                    dataTime = DateTime.SpecifyKind((TimeZoneInfo.ConvertTime(dataTime, TimeZoneInfo.Utc, TimeZoneInfo.Local)), DateTimeKind.Local);
+                    DataPoint dataPoint = new DataPoint(DateTimeAxis.ToDouble(dataTime), dataResults[resIter].Value[0]);
+                    dataPoints.Add(dataPoint);
+                }
+            }
+            return dataPoints;
         }
     }
 }

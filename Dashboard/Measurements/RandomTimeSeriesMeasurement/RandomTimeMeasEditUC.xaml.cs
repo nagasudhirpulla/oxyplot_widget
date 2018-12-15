@@ -57,6 +57,8 @@ namespace Dashboard.Measurements.RandomTimeSeriesMeasurement
 
             public TimeSpan TimeResolution { get { return mRandomMeasurement.TimeResolution; } set { mRandomMeasurement.TimeResolution = value; } }
 
+            public TimeSpan MaxFetchSize { get { return mRandomMeasurement.MaxFetchSize; } set { mRandomMeasurement.MaxFetchSize = value; } }
+            
         }
     }
 }

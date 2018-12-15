@@ -1,4 +1,5 @@
 ﻿using Dashboard.Interfaces;
+using Dashboard.UserControls.VariableTimePicker;
 using Dashboard.Widgets.Oxyplot;
 using OxyPlot;
 using System;
@@ -17,6 +18,11 @@ namespace Dashboard.Measurements.RandomMeasurement
         public int NumPnts { get; set; } = 30;
 
         public async Task<List<DataPoint>> FetchData(TimeShift timeShift)
+        {
+            return await FetchData(null, null);
+        }
+
+        public async Task<List<DataPoint>> FetchData(VariableTime startTime, VariableTime endTime)
         {
             List<DataPoint> dataPoints = new List<DataPoint>();
             Random random = new Random();
@@ -38,5 +44,6 @@ namespace Dashboard.Measurements.RandomMeasurement
         {
             return new RandomMeasurement { Low = Low, High = High, NumPnts = NumPnts };
         }
+        
     }
 }
