@@ -19,10 +19,10 @@ namespace Dashboard.Measurements.RandomMeasurement
 
         public async Task<List<DataPoint>> FetchData(TimeShift timeShift)
         {
-            return await FetchData(null, null);
+            return await FetchData(DateTime.Now, DateTime.Now);
         }
 
-        public async Task<List<DataPoint>> FetchData(VariableTime startTime, VariableTime endTime)
+        public async Task<List<DataPoint>> FetchData(DateTime startTime, DateTime endTime)
         {
             List<DataPoint> dataPoints = new List<DataPoint>();
             Random random = new Random();

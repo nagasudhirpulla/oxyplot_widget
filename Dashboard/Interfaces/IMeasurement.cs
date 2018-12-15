@@ -13,7 +13,7 @@ namespace Dashboard.Interfaces
     {
         string TypeName { get; set; }
         Task<List<DataPoint>> FetchData(TimeShift timeShift);
-        Task<List<DataPoint>> FetchData(VariableTime startTime, VariableTime endTime);
+        Task<List<DataPoint>> FetchData(DateTime startTime, DateTime endTime);
         string GetDisplayText();
         IMeasurement Clone();
     }

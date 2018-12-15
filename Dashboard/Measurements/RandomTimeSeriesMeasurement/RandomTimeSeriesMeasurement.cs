@@ -24,24 +24,73 @@ namespace Dashboard.Measurements.RandomTimeSeriesMeasurement
 
         public async Task<List<DataPoint>> FetchData(TimeShift timeShift)
         {
-            return await FetchData(FromTime, ToTime);
+            return await FetchData(FromTime.GetTime(), ToTime.GetTime());
         }
 
-        public async Task<List<DataPoint>> FetchData(VariableTime startTime, VariableTime endTime)
+        public async Task<List<DataPoint>> FetchDataNonBatch(DateTime startTime, DateTime endTime)
         {
+            await Task.Yield();
             List<DataPoint> dataPoints = new List<DataPoint>();
-            DateTime fromTime = startTime.GetTime();
-            DateTime toTime = endTime.GetTime();
+            DateTime fromTime = startTime;
+            DateTime toTime = endTime;
 
-            DateTime tempTime = startTime.GetTime();
+            DateTime tempTime = startTime;
             for (int pointIter = 0; tempTime < toTime; pointIter++)
             {
-                double value = Random.NextDouble();
-                value = Low + value * (High - Low);
-                DataPoint dataPoint = new DataPoint(DateTimeAxis.ToDouble(tempTime), value);
+                DataPoint dataPoint = new DataPoint(DateTimeAxis.ToDouble(tempTime), GenerateRandomValue());
                 dataPoints.Add(dataPoint);
                 tempTime = tempTime + TimeResolution;
             }
+
+            if (dataPoints.Count > 0 && dataPoints.Last().X != DateTimeAxis.ToDouble(toTime))
+            {
+                // If toTime is missing, add it add to the results
+                dataPoints.Add(new DataPoint(DateTimeAxis.ToDouble(toTime), GenerateRandomValue()));
+            }
+            return dataPoints;
+        }
+
+        double GenerateRandomValue()
+        {
+            double value = Random.NextDouble();
+            value = Low + value * (High - Low);
+            return value;
+        }
+
+        public async Task<List<DataPoint>> FetchData(DateTime fromTime, DateTime toTime)
+        {
+            List<DataPoint> dataPoints = new List<DataPoint>();
+            DateTime fetchStartTime = fromTime;
+            DateTime fetchEndTime = fromTime;
+            do
+            {
+                // derive fetch start and fetch end times
+                fetchStartTime = fetchEndTime;
+                fetchEndTime = fetchStartTime + MaxFetchSize;
+
+                if (fetchStartTime.Equals(fetchEndTime))
+                {
+                    // When batch interval is zero, we will get data in a single fetch
+                    fetchEndTime = toTime;
+                }
+                if (fetchEndTime > toTime)
+                {
+                    // Do not fetch above toTime
+                    fetchEndTime = toTime;
+                }
+
+                // get the data batch
+                List<DataPoint> tempDataPoints = await FetchDataNonBatch(fetchStartTime, fetchEndTime);
+                
+                // if this iteration is not the first iteration, remove the first sample from this data point list, since it was the last sample of the previous data point list
+                if (fetchStartTime > fromTime)
+                {
+                    tempDataPoints.RemoveAt(0);
+                }
+
+                // add the batch result to the final result
+                dataPoints.AddRange(tempDataPoints);
+            } while (fetchEndTime < toTime);
             return dataPoints;
         }
 

@@ -25,35 +25,7 @@ namespace Dashboard.Measurements.PMUMeasurement
 
         public async Task<List<DataPoint>> FetchData(TimeShift timeShift)
         {
-            List<DataPoint> dataPoints = new List<DataPoint>();
-
-            // using data layer for fetching data
-            ConfigurationManagerJSON configManager = new ConfigurationManagerJSON();
-            configManager.Initialize();
-            HistoryDataAdapter adapter = new HistoryDataAdapter(configManager);
-            List<int> measIds = new List<int> { MeasId };
-            Dictionary<object, List<PMUDataStructure>> res = await adapter.GetDataAsync(StartTime.GetTime(), EndTime.GetTime(), measIds, true, false, 25);
-
-            // check if result has one key since we queried for only one key
-            if (res.Keys.Count == 1)
-            {
-                // todo check the measId also
-
-                List<PMUDataStructure> dataResults = res.Values.ElementAt(0);
-                for (int resIter = 0; resIter < dataResults.Count; resIter++)
-                {
-                    DateTime dataTime = dataResults[resIter].TimeStamp;
-                    // convert the time from utc to local
-                    dataTime = DateTime.SpecifyKind((TimeZoneInfo.ConvertTime(dataTime, TimeZoneInfo.Utc, TimeZoneInfo.Local)), DateTimeKind.Local);
-                    if (timeShift != null)
-                    {
-                        dataTime = TimeShift.DoShifting(dataTime, timeShift);
-                    }
-                    DataPoint dataPoint = new DataPoint(DateTimeAxis.ToDouble(dataTime), dataResults[resIter].Value[0]);
-                    dataPoints.Add(dataPoint);
-                }
-            }
-            return dataPoints;
+            return await FetchData(StartTime.GetTime(), EndTime.GetTime());
         }
 
         public string GetDisplayText()
@@ -76,7 +48,7 @@ namespace Dashboard.Measurements.PMUMeasurement
             }
         }
 
-        public async Task<List<DataPoint>> FetchData(VariableTime startTime, VariableTime endTime)
+        public async Task<List<DataPoint>> FetchData(DateTime startTime, DateTime endTime)
         {
             // todo complete this
             List<DataPoint> dataPoints = new List<DataPoint>();
@@ -86,7 +58,7 @@ namespace Dashboard.Measurements.PMUMeasurement
             configManager.Initialize();
             HistoryDataAdapter adapter = new HistoryDataAdapter(configManager);
             List<int> measIds = new List<int> { MeasId };
-            Dictionary<object, List<PMUDataStructure>> res = await adapter.GetDataAsync(startTime.GetTime(), endTime.GetTime(), measIds, true, false, 25);
+            Dictionary<object, List<PMUDataStructure>> res = await adapter.GetDataAsync(startTime, endTime, measIds, true, false, 25);
 
             // check if result has one key since we queried for only one key
             if (res.Keys.Count == 1)

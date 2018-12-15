@@ -42,28 +42,13 @@ namespace Dashboard.Measurements.ScadaMeasurement
 
         public async Task<List<DataPoint>> FetchData(TimeShift timeShift)
         {
-            List<DataPoint> dataPoints = new List<DataPoint>();
-            List<ScadaPointResult> dataResults = FetchHistoricalPointData(StartTime.GetTime(), EndTime.GetTime());
-            if (dataResults != null)
-            {
-                for (int resIter = 0; resIter < dataResults.Count; resIter++)
-                {
-                    DateTime dataTime = dataResults[resIter].ResultTime_;
-                    if (timeShift != null)
-                    {
-                        dataTime = TimeShift.DoShifting(dataTime, timeShift);
-                    }
-                    DataPoint dataPoint = new DataPoint(DateTimeAxis.ToDouble(dataTime), dataResults[resIter].Val_);
-                    dataPoints.Add(dataPoint);
-                }
-            }
-            return dataPoints;
+            return await FetchData(StartTime.GetTime(), EndTime.GetTime());
         }
 
-        public async Task<List<DataPoint>> FetchData(VariableTime startTime, VariableTime endTime)
+        public async Task<List<DataPoint>> FetchData(DateTime startTime, DateTime endTime)
         {
             List<DataPoint> dataPoints = new List<DataPoint>();
-            List<ScadaPointResult> dataResults = FetchHistoricalPointData(startTime.GetTime(), endTime.GetTime());
+            List<ScadaPointResult> dataResults = FetchHistoricalPointData(startTime, endTime);
             if (dataResults != null)
             {
                 for (int resIter = 0; resIter < dataResults.Count; resIter++)
