@@ -48,6 +48,11 @@ namespace Dashboard.Helpers
 
         public static List<DataPoint> GetDataPointsWithGivenMaxSampleInterval(List<DataPoint> pnts, TimeSpan maxRes)
         {
+            if (maxRes.TotalDays == 0 || pnts.Count == 0)
+            {
+                return pnts;
+            }
+
             List<DataPoint> dataPoints = new List<DataPoint>();
 
             // get max sample interval as numeric
@@ -76,10 +81,10 @@ namespace Dashboard.Helpers
                     {
                         // do nothing
                     }
-                    
+
                     // Add the value to the final list
                     dataPoints.Add(new DataPoint(sampleBoundaryStart, bucketValue));
-                    
+
                     // Update the sample Boundaries
                     sampleBoundaryStart = sampleBoundaryEnd;
                     sampleBoundaryEnd += maxResNumeric;
