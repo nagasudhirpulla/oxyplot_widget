@@ -70,29 +70,8 @@ namespace Dashboard.Helpers
                 }
                 else
                 {
-                    // Aggregate the sample bucket as per sampling strategy
-                    double bucketValue = 0;
-                    try
-                    {
-                        // for now lets assume the data sampling strategy is average
-                        double numValidSamples = 0;
-                        foreach (double sampleVal in sampleBucket)
-                        {
-                            if (!Double.IsNaN(sampleVal))
-                            {
-                                bucketValue += sampleVal;
-                                numValidSamples += 1;
-                            }
-                        }
-                        bucketValue = bucketValue / numValidSamples;
-                    }
-                    catch (Exception)
-                    {
-                        // do nothing
-                    }
-
                     // Add the value to the final list
-                    dataPoints.Add(new DataPoint(sampleBoundaryStart, bucketValue));
+                    dataPoints.Add(new DataPoint(sampleBoundaryStart, GetBucketAggregate(sampleBucket)));
 
                     // Update the sample Boundaries
                     sampleBoundaryStart = sampleBoundaryEnd;
@@ -100,10 +79,44 @@ namespace Dashboard.Helpers
 
                     // Empty the bucket
                     sampleBucket.Clear();
+
+                    // Add current sample to the new bucket
+                    sampleBucket.Add(pnts[pntIter].Y);
                 }
             }
 
+            if (sampleBucket.Count > 0)
+            {
+                // handle the last bucket
+                dataPoints.Add(new DataPoint(sampleBoundaryStart, GetBucketAggregate(sampleBucket)));
+            }
+
             return dataPoints;
+        }
+
+        public static double GetBucketAggregate(List<double> sampleBucket)
+        {
+            // Aggregate the sample bucket as per sampling strategy
+            double bucketValue = 0;
+            try
+            {
+                // for now lets assume the data sampling strategy is average
+                double numValidSamples = 0;
+                foreach (double sampleVal in sampleBucket)
+                {
+                    if (!Double.IsNaN(sampleVal))
+                    {
+                        bucketValue += sampleVal;
+                        numValidSamples += 1;
+                    }
+                }
+                bucketValue = bucketValue / numValidSamples;
+            }
+            catch (Exception)
+            {
+                // do nothing
+            }
+            return bucketValue;
         }
     }
 }
