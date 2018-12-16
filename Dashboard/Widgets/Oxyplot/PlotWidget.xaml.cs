@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
@@ -151,13 +152,13 @@ namespace Dashboard.Widgets.Oxyplot
 
         private async void ExportExcel_Click(object sender, RoutedEventArgs e)
         {
+            await Task.Yield();
             DataTable dt = PlotViewModel.GetPlotDataTable();
-            
+
             Microsoft.Office.Interop.Excel.Application excel = null;
             Microsoft.Office.Interop.Excel.Workbook wb = null;
             object missing = Type.Missing;
             Microsoft.Office.Interop.Excel.Worksheet ws = null;
-            //Microsoft.Office.Interop.Excel.Range rng = null;
             try
             {
                 excel = new Microsoft.Office.Interop.Excel.Application();
@@ -167,12 +168,22 @@ namespace Dashboard.Widgets.Oxyplot
                 {
                     ws.Range["A1"].Offset[0, Idx].Value = dt.Columns[Idx].ColumnName;
                 }
+                /*
                 for (int Idx = 0; Idx < dt.Rows.Count; Idx++)
-                {   
-                   // Add the whole row at once
+                {
+                    // Add the whole row at once
                     ws.Range["A2"].Offset[Idx].Resize[1, dt.Columns.Count].Value =
                     dt.Rows[Idx].ItemArray;
                 }
+                */
+                Microsoft.Office.Interop.Excel.Range top = ws.Cells[2, 1];
+                Microsoft.Office.Interop.Excel.Range bottom = ws.Cells[dt.Rows.Count, dt.Columns.Count];
+                Microsoft.Office.Interop.Excel.Range all = ws.get_Range(top, bottom);
+                object[,] arrayDT = new object[dt.Rows.Count, dt.Columns.Count];
+                for (int i = 0; i < dt.Rows.Count; i++)
+                    for (int j = 0; j < dt.Columns.Count; j++)
+                        arrayDT[i, j] = dt.Rows[i][j];
+                all.Value2 = arrayDT;
                 excel.Visible = true;
                 wb.Activate();
             }

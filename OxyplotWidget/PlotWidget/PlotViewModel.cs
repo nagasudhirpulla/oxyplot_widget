@@ -326,11 +326,24 @@ namespace OxyplotWidget.PlotWidget
             workCol.AllowDBNull = false;
             workCol.Unique = true;
 
+            // Make sure the column names of datatable are unique
+            List<string> colNames = new List<string>();
+            foreach (Series series in _linePlotModel.Series)
+            {
+                string colName = series.Title;
+                for (int i = 1; colNames.IndexOf(colName) != -1; i++)
+                {
+                    colName = $"{colName}_{i}";
+
+                }
+                colNames.Add(colName);
+            }
+
             for (int iter = 0; iter < _linePlotModel.Series.Count; iter++)
             {
                 // Create the Series Columns of the data table
-                string seriesTitle = _linePlotModel.Series[iter].Title;
-                plotDataTable.Columns.Add(_linePlotModel.Series[iter].Title, typeof(Double));
+                string seriesLabel = colNames[iter];
+                plotDataTable.Columns.Add(seriesLabel, typeof(Double));
 
                 DataPointSeries plotSeries = (DataPointSeries)_linePlotModel.Series[iter];
 
@@ -355,12 +368,12 @@ namespace OxyplotWidget.PlotWidget
                     {
                         DataRow searchedRow = searchedRows.ElementAt(0);
                         //int RowIndex = plotDataTable.Rows.IndexOf(searchedRow);
-                        searchedRow[seriesTitle] = seriesPoint.Y;
+                        searchedRow[seriesLabel] = seriesPoint.Y;
                     }
                     else
                     {
                         DataRow dataPointRow = plotDataTable.NewRow();
-                        dataPointRow[seriesTitle] = seriesPoint.Y;
+                        dataPointRow[seriesLabel] = seriesPoint.Y;
                         if (isXAxisDateTime)
                         {
                             dataPointRow[xAxisCol] = DateTimeAxis.ToDateTime(seriesPoint.X);
