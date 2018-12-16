@@ -126,6 +126,11 @@ namespace Dashboard.Helpers
                             numValidSamples += 1;
                         }
                     }
+                    if (numValidSamples == 0)
+                    {
+                        // since we did not find a valid sample in the bucket, return NaN
+                        return double.NaN;
+                    }
                     if (samplingStrategy == SamplingStrategy.Average)
                     {
                         bucketResult = bucketResult / numValidSamples;

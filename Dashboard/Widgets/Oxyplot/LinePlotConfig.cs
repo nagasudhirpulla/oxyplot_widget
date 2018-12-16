@@ -127,7 +127,7 @@ namespace Dashboard.Widgets.Oxyplot
 
     public class LineSeriesAppearance
     {
-        public Color Color { get; set; } = Color.FromRgb(0, 0, 255);
+        public Color Color { get; set; } = Color.FromRgb(255,255,0);
 
         public LineSeriesAppearance Clone()
         {
