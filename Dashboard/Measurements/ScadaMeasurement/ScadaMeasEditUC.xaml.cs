@@ -1,4 +1,5 @@
 ﻿using Dashboard.UserControls.VariableTimePicker;
+using InStep.eDNA.EzDNAApiNet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,26 @@ namespace Dashboard.Measurements.ScadaMeasurement
             InitializeComponent();
             editorVM = new ScadaMeasEditUCVM(meas);
             DataContext = editorVM;
+        }
+
+        private void ShowScadaMeasPicker_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string pointName;
+                int iRet = Configuration.DnaSelectPoint(out pointName);
+                if (iRet == 0)
+                {
+                    // Set MeasId from here
+                    MessageBox.Show($"Selected {pointName}");
+                    editorVM.MeasId = pointName;
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Unable to show picker...");
+            }
+            
         }
     }
 

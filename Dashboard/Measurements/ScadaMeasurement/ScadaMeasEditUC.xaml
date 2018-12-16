@@ -32,7 +32,14 @@
         <Label Content="Fetch Periodicity (secs)" Grid.Row="3"></Label>
         <Label Content="Start Time" Grid.Row="4"></Label>
         <Label Content="End Time" Grid.Row="5"></Label>
-        <TextBox Grid.Column="1" Text="{Binding MeasId}"/>
+        <Grid Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBox Text="{Binding MeasId}" DockPanel.Dock="Left"/>
+            <Button Click="ShowScadaMeasPicker_Click" Grid.Column="1" Padding="5">...</Button>
+        </Grid>
         <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding MeasName}"/>
         <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding FetchStrategy}"/>
         <xctk:IntegerUpDown Grid.Row="3" Grid.Column="1" Value="{Binding FetchPeriodicitySecs}"/>
