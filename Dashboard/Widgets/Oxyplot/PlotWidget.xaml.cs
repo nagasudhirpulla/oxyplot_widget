@@ -177,7 +177,7 @@ namespace Dashboard.Widgets.Oxyplot
                 }
                 */
                 Microsoft.Office.Interop.Excel.Range top = ws.Cells[2, 1];
-                Microsoft.Office.Interop.Excel.Range bottom = ws.Cells[dt.Rows.Count, dt.Columns.Count];
+                Microsoft.Office.Interop.Excel.Range bottom = ws.Cells[dt.Rows.Count + 1, dt.Columns.Count];
                 Microsoft.Office.Interop.Excel.Range all = ws.get_Range(top, bottom);
                 object[,] arrayDT = new object[dt.Rows.Count, dt.Columns.Count];
                 for (int i = 0; i < dt.Rows.Count; i++)

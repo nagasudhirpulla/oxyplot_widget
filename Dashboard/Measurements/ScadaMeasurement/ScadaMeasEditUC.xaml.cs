@@ -2,6 +2,7 @@
 using InStep.eDNA.EzDNAApiNet;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,12 +48,20 @@ namespace Dashboard.Measurements.ScadaMeasurement
             {
                 MessageBox.Show("Unable to show picker...");
             }
-            
+
         }
     }
 
-    public class ScadaMeasEditUCVM
+    public class ScadaMeasEditUCVM : INotifyPropertyChanged
     {
+        // Declare the event
+        public event PropertyChangedEventHandler PropertyChanged;
+        // Create the OnPropertyChanged method to raise the event
+        protected void OnPropertyChanged(string name)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
         public ScadaMeasurement mPMUMeasurement;
 
         public ScadaMeasEditUCVM(ScadaMeasurement meas)
@@ -60,7 +69,7 @@ namespace Dashboard.Measurements.ScadaMeasurement
             mPMUMeasurement = meas;
         }
 
-        public string MeasId { get { return mPMUMeasurement.MeasId; } set { mPMUMeasurement.MeasId = value; } }
+        public string MeasId { get { return mPMUMeasurement.MeasId; } set { mPMUMeasurement.MeasId = value; OnPropertyChanged("MeasId"); } }
 
         public string MeasName { get { return mPMUMeasurement.MeasName; } set { mPMUMeasurement.MeasName = value; } }
 
