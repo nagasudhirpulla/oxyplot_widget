@@ -40,7 +40,7 @@ namespace Dashboard.Measurements.ScadaMeasurement
                 if (iRet == 0)
                 {
                     // Set MeasId from here
-                    MessageBox.Show($"Selected {pointName}");
+                    // MessageBox.Show($"Selected {pointName}");
                     editorVM.MeasId = pointName;
                 }
             }
