@@ -100,7 +100,7 @@ namespace Dashboard.Helpers
             double bucketResult = 0;
             if (sampleBucket.Count == 0)
             {
-                return bucketResult;
+                return double.NaN;
             }
             try
             {
