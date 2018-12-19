@@ -12,6 +12,10 @@ namespace Dashboard.Helpers
         public static async Task<List<DataPoint>> FetchData(DateTime fromTime, DateTime toTime, TimeSpan MaxFetchSize, Func<DateTime, DateTime, Task<List<DataPoint>>> FetchDataNonBatch)
         {
             List<DataPoint> dataPoints = new List<DataPoint>();
+
+            // just initializing to fail for first iteration
+            double LastIterEndTime = -1;
+
             DateTime fetchStartTime = fromTime;
             DateTime fetchEndTime = fromTime;
             do
@@ -35,10 +39,13 @@ namespace Dashboard.Helpers
                 List<DataPoint> tempDataPoints = await FetchDataNonBatch(fetchStartTime, fetchEndTime);
 
                 // if this iteration is not the first iteration, remove the first sample from this data point list, since it was the last sample of the previous data point list
-                if (fetchStartTime > fromTime)
+                if (tempDataPoints[0].X == LastIterEndTime)
                 {
                     tempDataPoints.RemoveAt(0);
                 }
+                
+                // Update the LastIterEndTime variable for this iteration
+                LastIterEndTime = tempDataPoints.Last().X;
 
                 // add the batch result to the final result
                 dataPoints.AddRange(tempDataPoints);
