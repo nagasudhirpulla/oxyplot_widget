@@ -7,41 +7,43 @@
         xmlns:local="clr-namespace:Dashboard.EditorWindows"
         mc:Ignorable="d"
         Title="Widget Position Editor" Height="450" Width="800">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <Label Content="Edit Widget Position" Grid.ColumnSpan="2"></Label>
-        <Label Content="Row" Grid.Row="1"></Label>
-        <xctk:IntegerUpDown Grid.Row="1" Grid.Column="1" Value="{Binding Row}" Increment="1" Maximum="200000" Minimum="0"/>
-        <Label Content="Column" Grid.Row="2"></Label>
-        <xctk:IntegerUpDown Grid.Row="2" Grid.Column="1" Value="{Binding Column}" Increment="1" Maximum="200000" Minimum="0"/>
-        <Label Content="Column Span" Grid.Row="3"></Label>
-        <xctk:IntegerUpDown Grid.Row="3" Grid.Column="1" Value="{Binding ColSpan}" Increment="1" Maximum="200000" Minimum="0"/>
-        <Label Content="Row Span" Grid.Row="4"></Label>
-        <xctk:IntegerUpDown Grid.Row="4" Grid.Column="1" Value="{Binding RowSpan}" Increment="1" Maximum="200000" Minimum="0"/>
-        <Label Content="Min Height" Grid.Row="5"></Label>
-        <xctk:IntegerUpDown Grid.Row="5" Grid.Column="1" Value="{Binding MinHeight}" Increment="1" Maximum="200000" Minimum="0"/>
-        <Label Content="Min Width" Grid.Row="6"></Label>
-        <xctk:IntegerUpDown Grid.Row="6" Grid.Column="1" Value="{Binding MinWidth}" Increment="1" Maximum="200000" Minimum="0"/>
-        <Grid Grid.Row="7">
+    <ScrollViewer Margin="0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Content="Cancel" Margin="10" Padding="10" Click="Cancel_Click"></Button>
-            <Button Content="OK" Margin="10" Padding="10" Grid.Column="1" Click="OK_Click"></Button>
+            <Label Content="Edit Widget Position" Grid.ColumnSpan="2"></Label>
+            <Label Content="Row" Grid.Row="1"></Label>
+            <xctk:IntegerUpDown Grid.Row="1" Grid.Column="1" Value="{Binding Row}" Increment="1" Maximum="200000" Minimum="0"/>
+            <Label Content="Column" Grid.Row="2"></Label>
+            <xctk:IntegerUpDown Grid.Row="2" Grid.Column="1" Value="{Binding Column}" Increment="1" Maximum="200000" Minimum="0"/>
+            <Label Content="Column Span" Grid.Row="3"></Label>
+            <xctk:IntegerUpDown Grid.Row="3" Grid.Column="1" Value="{Binding ColSpan}" Increment="1" Maximum="200000" Minimum="0"/>
+            <Label Content="Row Span" Grid.Row="4"></Label>
+            <xctk:IntegerUpDown Grid.Row="4" Grid.Column="1" Value="{Binding RowSpan}" Increment="1" Maximum="200000" Minimum="0"/>
+            <Label Content="Min Height" Grid.Row="5"></Label>
+            <xctk:IntegerUpDown Grid.Row="5" Grid.Column="1" Value="{Binding MinHeight}" Increment="1" Maximum="200000" Minimum="0"/>
+            <Label Content="Min Width" Grid.Row="6"></Label>
+            <xctk:IntegerUpDown Grid.Row="6" Grid.Column="1" Value="{Binding MinWidth}" Increment="1" Maximum="200000" Minimum="0"/>
+            <Grid Grid.Row="7">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button Content="Cancel" Margin="10" Padding="10" Click="Cancel_Click"></Button>
+                <Button Content="OK" Margin="10" Padding="10" Grid.Column="1" Click="OK_Click"></Button>
+            </Grid>
         </Grid>
-    </Grid>
+    </ScrollViewer>
 </Window>

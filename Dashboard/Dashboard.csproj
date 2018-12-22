@@ -170,7 +170,6 @@
     <Compile Include="States\DashboardState.cs" />
     <Compile Include="States\OxyPlotWidgetState.cs" />
     <Compile Include="States\WidgetFrameState.cs" />
-    <Compile Include="UserControls\Converters\ColorBrushConverter.cs" />
     <Compile Include="UserControls\Dashboard\Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>
     </Compile>
