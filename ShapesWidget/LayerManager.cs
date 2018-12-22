@@ -1,10 +1,12 @@
-﻿using ShapesWidget.States;
+﻿using ShapesWidget.Interfaces;
+using ShapesWidget.States;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Shapes;
 
 namespace ShapesWidget
@@ -38,13 +40,22 @@ namespace ShapesWidget
 
             LayerState = layerState;
 
-            // Add all the layer state shapes to the canvas and bind the shape states to layerstate
+            // Add all the layer state shapes to the canvas
             for (int shapeIter = 0; shapeIter < LayerState.ShapeStates.Count; shapeIter++)
             {
-
-
+                IShapeState shapeState = LayerState.ShapeStates[shapeIter];
+                Shape shape = CreateShape(shapeState);
+                Shapes.Add(shape);
             }
         }
 
+        private Shape CreateShape(IShapeState shapeState)
+        {
+            // using data binding programmatically - https://docs.microsoft.com/en-us/dotnet/framework/wpf/data/how-to-create-a-binding-in-code
+            
+            // todo bind the shape states to shape
+
+            return new Ellipse();
+        }
     }
 }
