@@ -1,8 +1,9 @@
-﻿using ShapesWidget.States;
+﻿using ShapeLayersWidget.States;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,7 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ShapesWidget
+namespace ShapeLayersWidget
 {
     /// <summary>
     /// Interaction logic for ShapesWidget.xaml
@@ -50,7 +51,7 @@ namespace ShapesWidget
         // Declare the event
         public event PropertyChangedEventHandler PropertyChanged;
         // Create the OnPropertyChanged method to raise the event
-        protected void OnPropertyChanged(string name)
+        protected void OnPropertyChanged([CallerMemberName]string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
@@ -62,6 +63,6 @@ namespace ShapesWidget
             WidgetState_ = state;
         }
 
-        public Color BackgroundColor { get { return WidgetState_.BackgroundColor; } set { WidgetState_.BackgroundColor = value; OnPropertyChanged("SeriesConfigListItems"); } }
+        public Color BackgroundColor { get { return WidgetState_.BackgroundColor; } set { WidgetState_.BackgroundColor = value; OnPropertyChanged(); } }
     }
 }

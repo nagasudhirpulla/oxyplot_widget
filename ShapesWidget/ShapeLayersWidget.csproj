@@ -55,7 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\PolyPointsConverter.cs" />
     <Compile Include="Interfaces\IShapeState.cs" />
+    <Compile Include="LayerManager.cs" />
     <Compile Include="ShapesWidget.xaml.cs">
       <DependentUpon>ShapesWidget.xaml</DependentUpon>
     </Compile>

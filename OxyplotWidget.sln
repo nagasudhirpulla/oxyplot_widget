@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dashboard", "Dashboard\Dash
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "OxyDashboardSetup", "OxyDashboardSetup\OxyDashboardSetup.vdproj", "{DBF5B0C1-B06B-43EC-91DA-4C2E49F3B04A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShapesWidget", "ShapesWidget\ShapesWidget.csproj", "{46B1E074-78B8-45C2-9656-3279BA8B9D0A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShapeLayersWidget", "ShapesWidget\ShapeLayersWidget.csproj", "{46B1E074-78B8-45C2-9656-3279BA8B9D0A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

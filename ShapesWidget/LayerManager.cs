@@ -1,15 +1,17 @@
-﻿using ShapesWidget.Interfaces;
-using ShapesWidget.States;
+﻿using ShapeLayersWidget.Converters;
+using ShapeLayersWidget.Interfaces;
+using ShapeLayersWidget.States;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Shapes;
 
-namespace ShapesWidget
+namespace ShapeLayersWidget
 {
     public class LayerManager
     {
@@ -36,7 +38,7 @@ namespace ShapesWidget
         public void SetState(LayerState layerState)
         {
             // Clear all the current shapes
-            Shapes.Clear();
+            LayerCanvas.Children.Clear();
 
             LayerState = layerState;
 
@@ -44,18 +46,16 @@ namespace ShapesWidget
             for (int shapeIter = 0; shapeIter < LayerState.ShapeStates.Count; shapeIter++)
             {
                 IShapeState shapeState = LayerState.ShapeStates[shapeIter];
-                Shape shape = CreateShape(shapeState);
-                Shapes.Add(shape);
+                AddShape(shapeState);
             }
+
         }
 
-        private Shape CreateShape(IShapeState shapeState)
+        public void AddShape(IShapeState shapeState)
         {
-            // using data binding programmatically - https://docs.microsoft.com/en-us/dotnet/framework/wpf/data/how-to-create-a-binding-in-code
-            
-            // todo bind the shape states to shape
-
-            return new Ellipse();
+            Shape shape = shapeState.CreateShape(shapeState);
+            LayerCanvas.Children.Add(shape);
         }
+        
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShapesWidget.States
+namespace ShapeLayersWidget.States
 {
     public class PointState
     {
