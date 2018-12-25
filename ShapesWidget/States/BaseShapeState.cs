@@ -2,6 +2,7 @@
 using ShapeLayersWidget.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,8 +14,16 @@ using System.Windows.Shapes;
 
 namespace ShapeLayersWidget.States
 {
-    public class BaseShapeState
+    public class BaseShapeState : INotifyPropertyChanged
     {
+        // Declare the event
+        public event PropertyChangedEventHandler PropertyChanged;
+        // Create the OnPropertyChanged method to raise the event
+        public void OnPropertyChanged(string name)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
         public void SetShapeProperties(Shape shape, IShapeState shapeState)
         {
             BindingOperations.SetBinding(shape, Canvas.LeftProperty, new Binding { Source = shapeState.Left.X });
@@ -40,6 +49,7 @@ namespace ShapeLayersWidget.States
             }
             shape.MouseEnter += MouseChangeAction;
             shape.MouseLeave += MouseChangeAction;
+            shape.DataContext = shapeState;
         }
     }
 }

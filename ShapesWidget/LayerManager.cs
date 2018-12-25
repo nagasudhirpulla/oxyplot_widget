@@ -27,7 +27,7 @@ namespace ShapeLayersWidget
         public LayerManager(Canvas canvas, LayerState layerState)
         {
             SetCanvas(canvas);
-            SetState(layerState);
+            InflateState(layerState);
         }
 
         public void SetCanvas(Canvas canvas)
@@ -35,7 +35,7 @@ namespace ShapeLayersWidget
             LayerCanvas = canvas;
         }
 
-        public void SetState(LayerState layerState)
+        public void InflateState(LayerState layerState)
         {
             // Clear all the current shapes
             LayerCanvas.Children.Clear();
@@ -45,20 +45,59 @@ namespace ShapeLayersWidget
             // Add all the layer state shapes to the canvas
             for (int shapeIter = 0; shapeIter < LayerState.ShapeStates.Count; shapeIter++)
             {
-                IShapeState shapeState = LayerState.ShapeStates[shapeIter];
-                AddShape(shapeState);
+                InflateShapeState(LayerState.ShapeStates[shapeIter]);
             }
 
         }
 
-        public void AddShape(IShapeState shapeState)
+        public void InflateShapeState(IShapeState shapeState)
         {
             Shape shape = shapeState.CreateShape(shapeState);
-            if (shape!=null)
+            if (shape != null)
             {
                 LayerCanvas.Children.Add(shape);
             }
         }
-        
+
+        public IShapeState GetShape(int shapeIndex)
+        {
+            if (shapeIndex >= 0 && shapeIndex < LayerState.ShapeStates.Count)
+            {
+                // todo remove the shape also
+                return LayerState.ShapeStates[shapeIndex];
+            }
+            return null;
+        }
+
+        public void AddShape(IShapeState shapeState)
+        {
+            LayerState.ShapeStates.Add(shapeState);
+            InflateShapeState(shapeState);
+        }
+
+        public void InvalidateShape(int shapeIndex)
+        {
+            if (shapeIndex >= 0 && shapeIndex < LayerState.ShapeStates.Count)
+            {
+                ((BaseShapeState)LayerState.ShapeStates[shapeIndex]).OnPropertyChanged(String.Empty);
+            }
+        }
+
+        public void RemoveShape(IShapeState shapeState)
+        {
+            int shapeIndex = LayerState.ShapeStates.IndexOf(shapeState);
+            RemoveShape(shapeIndex);
+        }
+
+        public void RemoveShape(int shapeIndex)
+        {
+            if (shapeIndex >= 0 && shapeIndex < LayerState.ShapeStates.Count)
+            {
+                // todo remove the shape also
+                LayerState.ShapeStates[shapeIndex] = null;
+                LayerState.ShapeStates.RemoveAt(shapeIndex);
+            }
+        }
+
     }
 }

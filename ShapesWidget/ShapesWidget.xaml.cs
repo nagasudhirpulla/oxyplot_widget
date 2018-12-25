@@ -1,4 +1,5 @@
-﻿using ShapeLayersWidget.States;
+﻿using ShapeLayersWidget.Interfaces;
+using ShapeLayersWidget.States;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -42,6 +43,31 @@ namespace ShapeLayersWidget
             InitializeComponent();
             DataContext = WidgetModel;
             InflateWidgetState();
+        }
+
+        public void RemoveShape(int layerIndex, int shapeIndex)
+        {
+            if (layerIndex>=0 && layerIndex<LayerManagers.Count)
+            {
+                LayerManagers[layerIndex].RemoveShape(shapeIndex);
+            }
+        }
+
+        public IShapeState GetShape(int layerIndex, int shapeIndex)
+        {
+            if (layerIndex >= 0 && layerIndex < LayerManagers.Count)
+            {
+                return LayerManagers[layerIndex].GetShape(shapeIndex);
+            }
+            return null;
+        }
+
+        public void InvalidateShape(int layerIndex, int shapeIndex)
+        {
+            if (layerIndex >= 0 && layerIndex < LayerManagers.Count)
+            {
+                LayerManagers[layerIndex].InvalidateShape(shapeIndex);
+            }
         }
 
         /// <summary>

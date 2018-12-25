@@ -1,6 +1,7 @@
 ﻿using ShapeLayersWidget.States;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace ShapeLayersWidget.Interfaces
 {
     public interface IShapeState
     {
+        event PropertyChangedEventHandler PropertyChanged;
         string TypeName { get; set; }
         string Name { get; set; }
         PointState Left { get; set; }

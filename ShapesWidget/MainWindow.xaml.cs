@@ -1,4 +1,5 @@
-﻿using ShapeLayersWidget.States;
+﻿using ShapeLayersWidget.Interfaces;
+using ShapeLayersWidget.States;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace ShapeLayersWidget
     /// </summary>
     public partial class MainWindow : Window
     {
+        public ShapesWidget shapesWidget;
         public MainWindow()
         {
             InitializeComponent();
@@ -31,8 +33,10 @@ namespace ShapeLayersWidget
         {
             WidgetState widgetState = CreateTestWidgetState();
             WidgetViewModel model = new WidgetViewModel(widgetState);
-            ShapesWidget shapesWidget = new ShapesWidget(model);
+            shapesWidget = new ShapesWidget(model);
             MapContainer.Children.Add(shapesWidget);
+            
+            //shapesWidget.RemoveShape(0,0);
         }
 
         private WidgetState CreateTestWidgetState()
@@ -60,6 +64,14 @@ namespace ShapeLayersWidget
             widgetState.LayerStates.Add(layerState);
 
             return widgetState;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            IShapeState shapeState = shapesWidget.GetShape(0, 0);
+            shapeState.Left = new PointState { X = 700, Y = 0 };
+            shapeState.FillColor = Color.FromRgb(0,255,255);
+            shapesWidget.InvalidateShape(0, 0);
         }
     }
 }
