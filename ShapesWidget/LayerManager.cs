@@ -54,7 +54,10 @@ namespace ShapeLayersWidget
         public void AddShape(IShapeState shapeState)
         {
             Shape shape = shapeState.CreateShape(shapeState);
-            LayerCanvas.Children.Add(shape);
+            if (shape!=null)
+            {
+                LayerCanvas.Children.Add(shape);
+            }
         }
         
     }

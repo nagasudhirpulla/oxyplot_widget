@@ -1,4 +1,5 @@
-﻿using ShapeLayersWidget.Interfaces;
+﻿using ShapeLayersWidget.Converters;
+using ShapeLayersWidget.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +8,12 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace ShapeLayersWidget.States
 {
-    class RectangleState : IShapeState
+    class RectangleState : BaseShapeState, IShapeState
     {
         public string TypeName { get; set; } = typeof(RectangleState).Name;
 
@@ -22,6 +24,14 @@ namespace ShapeLayersWidget.States
         public double LengthX { get; set; } = 1;
 
         public double LengthY { get; set; } = 1;
+
+        public Color FillColor { get; set; } = Color.FromRgb(100,100,100);
+
+        public Color HoverFillColor { get; set; } = Color.FromRgb(100,0,0);
+
+        public Color StrokeColor { get; set; }
+
+        public Color HoverStrokeColor { get; set; }
 
         public Shape CreateShape(IShapeState shapeState)
         {
@@ -34,8 +44,7 @@ namespace ShapeLayersWidget.States
             }
             if (shape != null)
             {
-                BindingOperations.SetBinding(shape, Canvas.LeftProperty, new Binding { Source = shapeState.Left.X });
-                BindingOperations.SetBinding(shape, Canvas.TopProperty, new Binding { Source = shapeState.Left.Y });
+                SetShapeProperties(shape, shapeState);
             }
             return shape;
         }

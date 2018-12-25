@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Media;
 
 namespace ShapeLayersWidget.Converters
 {
@@ -13,7 +14,7 @@ namespace ShapeLayersWidget.Converters
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            List<Point> points = new List<Point>();
+            PointCollection points = new PointCollection();
             if (value is List<PointState> pointStates)
             {
                 for (int pntIter = 0; pntIter < pointStates.Count; pntIter++)

@@ -1,4 +1,5 @@
-﻿using ShapeLayersWidget.Interfaces;
+﻿using ShapeLayersWidget.Converters;
+using ShapeLayersWidget.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +8,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace ShapeLayersWidget.States
 {
-    public class CircleState : IShapeState
+    public class CircleState : BaseShapeState, IShapeState
     {
         public string TypeName { get; set; } = typeof(CircleState).Name;
 
@@ -20,6 +23,14 @@ namespace ShapeLayersWidget.States
         public PointState Center { get; set; } = new PointState();
 
         public double Radius { get; set; } = 1;
+
+        public Color FillColor { get; set; } = Color.FromRgb(100, 100, 100);
+
+        public Color HoverFillColor { get; set; } = Color.FromRgb(100, 0, 0);
+
+        public Color StrokeColor { get; set; }
+
+        public Color HoverStrokeColor { get; set; }
 
         public PointState Left
         {
@@ -41,8 +52,7 @@ namespace ShapeLayersWidget.States
             }
             if (shape != null)
             {
-                BindingOperations.SetBinding(shape, Canvas.LeftProperty, new Binding { Source = shapeState.Left.X });
-                BindingOperations.SetBinding(shape, Canvas.TopProperty, new Binding { Source = shapeState.Left.Y });
+                SetShapeProperties(shape, shapeState);
             }
             return shape;
         }

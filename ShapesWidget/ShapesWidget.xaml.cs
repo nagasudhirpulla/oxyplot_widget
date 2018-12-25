@@ -28,6 +28,17 @@ namespace ShapeLayersWidget
 
         public ShapesWidget()
         {
+            DoInitStuff();
+        }
+
+        public ShapesWidget(WidgetViewModel model)
+        {
+            WidgetModel = model;
+            DoInitStuff();
+        }
+
+        public void DoInitStuff()
+        {
             InitializeComponent();
             DataContext = WidgetModel;
             InflateWidgetState();
