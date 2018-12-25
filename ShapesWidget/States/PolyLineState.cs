@@ -35,7 +35,7 @@ namespace ShapeLayersWidget.States
             if (shapeState is PolyLineState polyLineState)
             {
                 shape = new Polyline();
-                BindingOperations.SetBinding(shape, Polyline.PointsProperty, new Binding { Source = polyLineState.Points, Converter = new PolyPointsConverter() });
+                BindingOperations.SetBinding(shape, Polyline.PointsProperty, new Binding("Points") { Source = polyLineState, Converter = new PolyPointsConverter() });
             }
             if (shape != null)
             {

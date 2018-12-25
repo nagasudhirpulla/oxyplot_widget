@@ -71,6 +71,8 @@ namespace ShapeLayersWidget
             IShapeState shapeState = shapesWidget.GetShape(0, 0);
             shapeState.Left = new PointState { X = 700, Y = 0 };
             shapeState.FillColor = Color.FromRgb(0,255,255);
+            ((CircleState)shapeState).Diameter = 40;
+
             shapesWidget.InvalidateShape(0, 0);
         }
     }

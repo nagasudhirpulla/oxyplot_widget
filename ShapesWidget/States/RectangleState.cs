@@ -39,8 +39,8 @@ namespace ShapeLayersWidget.States
             if (shapeState is RectangleState rectState)
             {
                 shape = new Rectangle();
-                BindingOperations.SetBinding(shape, FrameworkElement.WidthProperty, new Binding { Source = rectState.LengthX });
-                BindingOperations.SetBinding(shape, FrameworkElement.HeightProperty, new Binding { Source = rectState.LengthY });
+                BindingOperations.SetBinding(shape, FrameworkElement.WidthProperty, new Binding("LengthX") { Source = rectState });
+                BindingOperations.SetBinding(shape, FrameworkElement.HeightProperty, new Binding("LengthY") { Source = rectState });
             }
             if (shape != null)
             {

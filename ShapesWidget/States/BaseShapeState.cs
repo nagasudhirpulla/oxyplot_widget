@@ -26,10 +26,10 @@ namespace ShapeLayersWidget.States
 
         public void SetShapeProperties(Shape shape, IShapeState shapeState)
         {
-            BindingOperations.SetBinding(shape, Canvas.LeftProperty, new Binding { Source = shapeState.Left.X });
-            BindingOperations.SetBinding(shape, Canvas.TopProperty, new Binding { Source = shapeState.Left.Y });
-            BindingOperations.SetBinding(shape, Shape.FillProperty, new Binding { Source = shapeState.FillColor, Converter = new ColorToBrushConverter() });
-            BindingOperations.SetBinding(shape, Shape.StrokeProperty, new Binding { Source = shapeState.StrokeColor, Converter = new ColorToBrushConverter() });
+            BindingOperations.SetBinding(shape, Canvas.LeftProperty, new Binding("Left.X") { Source = shapeState });
+            BindingOperations.SetBinding(shape, Canvas.TopProperty, new Binding("Left.Y") { Source = shapeState });
+            BindingOperations.SetBinding(shape, Shape.FillProperty, new Binding("FillColor") { Source = shapeState, Converter = new ColorToBrushConverter() });
+            BindingOperations.SetBinding(shape, Shape.StrokeProperty, new Binding("StrokeColor") { Source = shapeState, Converter = new ColorToBrushConverter() });
 
             void MouseChangeAction(object sender, MouseEventArgs e)
             {
@@ -37,13 +37,13 @@ namespace ShapeLayersWidget.States
                 {
                     if (shapeObj.IsMouseOver)
                     {
-                        BindingOperations.SetBinding(shape, Shape.FillProperty, new Binding { Source = shapeState.HoverFillColor, Converter = new ColorToBrushConverter() });
-                        BindingOperations.SetBinding(shape, Shape.StrokeProperty, new Binding { Source = shapeState.HoverStrokeColor, Converter = new ColorToBrushConverter() });
+                        BindingOperations.SetBinding(shape, Shape.FillProperty, new Binding("HoverFillColor") { Source = shapeState, Converter = new ColorToBrushConverter() });
+                        BindingOperations.SetBinding(shape, Shape.StrokeProperty, new Binding("HoverStrokeColor") { Source = shapeState, Converter = new ColorToBrushConverter() });
                     }
                     else
                     {
-                        BindingOperations.SetBinding(shape, Shape.FillProperty, new Binding { Source = shapeState.FillColor, Converter = new ColorToBrushConverter() });
-                        BindingOperations.SetBinding(shape, Shape.StrokeProperty, new Binding { Source = shapeState.StrokeColor, Converter = new ColorToBrushConverter() });
+                        BindingOperations.SetBinding(shape, Shape.FillProperty, new Binding("FillColor") { Source = shapeState, Converter = new ColorToBrushConverter() });
+                        BindingOperations.SetBinding(shape, Shape.StrokeProperty, new Binding("StrokeColor") { Source = shapeState, Converter = new ColorToBrushConverter() });
                     }
                 }
             }

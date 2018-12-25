@@ -36,7 +36,7 @@ namespace ShapeLayersWidget.States
             if (shapeState is PolygonState polygonState)
             {
                 shape = new Polygon();
-                BindingOperations.SetBinding(shape, Polygon.PointsProperty, new Binding { Source = polygonState.Points, Converter = new PolyPointsConverter() });
+                BindingOperations.SetBinding(shape, Polygon.PointsProperty, new Binding("Points") { Source = polygonState, Converter = new PolyPointsConverter() });
             }
             if (shape != null)
             {

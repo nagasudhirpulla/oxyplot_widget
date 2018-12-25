@@ -39,6 +39,7 @@ namespace ShapeLayersWidget.States
         }
 
         public double Diameter { get { return 2 * Radius; } set { Radius = 0.5 * value; } }
+        public string DiameterVariableName = "Diameter";
 
         public Shape CreateShape(IShapeState shapeState)
         {
@@ -46,7 +47,9 @@ namespace ShapeLayersWidget.States
             if (shapeState is CircleState circleState)
             {
                 shape = new Ellipse();
-                Binding diameterBinding = new Binding { Source = circleState.Diameter };
+                //Binding diameterBinding = new Binding { Source = circleState, Path = new PropertyPath("Diameter") };
+                Binding diameterBinding = new Binding(DiameterVariableName) { Source = circleState };
+                //Binding diameterBinding = new Binding { Source = circleState.Diameter };
                 BindingOperations.SetBinding(shape, FrameworkElement.HeightProperty, diameterBinding);
                 BindingOperations.SetBinding(shape, FrameworkElement.WidthProperty, diameterBinding);
             }
