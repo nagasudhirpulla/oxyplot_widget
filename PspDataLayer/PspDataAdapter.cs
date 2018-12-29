@@ -17,9 +17,6 @@ namespace PspDataLayer
 
         public async Task<Dictionary<string, List<DataPoint>>> GetDataAsync(DateTime startTime, DateTime endTime, string measLabel)
         {
-            //http://localhost:7001/api/psp?label=gujarat_thermal_mu&from_time=20181201&to_time=20181205
-            //{"tableColNames":["DATE_KEY","THERMAL"],"tableColTypes":["Decimal","Decimal"],"tableRows":[[20181201.0,180.30],[20181202.0,186.70],[20181203.0,192.6890],[20181204.0,191.0920],[20181205.0,191.30]]}
-
             // Initialize the results
             Dictionary<string, List<DataPoint>> results = new Dictionary<string, List<DataPoint>>();
             results[measLabel] = new List<DataPoint>();
@@ -81,3 +78,11 @@ namespace PspDataLayer
         public List<List<object>> TableRows { get; set; } = new List<List<object>>();
     }
 }
+
+/*
+     Using Uri builder to build query strings  - https://stackoverflow.com/questions/17096201/build-query-string-for-system-net-httpclient-get
+     Using HttpClient to do http get requests - https://blog.jayway.com/2012/03/13/httpclient-makes-get-and-post-very-simple/
+     
+     http://localhost:7001/api/psp?label=gujarat_thermal_mu&from_time=20181201&to_time=20181205
+     {"tableColNames":["DATE_KEY","THERMAL"],"tableColTypes":["Decimal","Decimal"],"tableRows":[[20181201.0,180.30],[20181202.0,186.70],[20181203.0,192.6890],[20181204.0,191.0920],[20181205.0,191.30]]}
+*/

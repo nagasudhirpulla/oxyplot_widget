@@ -4,16 +4,16 @@ using Dashboard.UserControls.VariableTimePicker;
 using Dashboard.Widgets.Oxyplot;
 using Mono.Web;
 using OxyPlot;
+using OxyPlot.Axes;
+using PspDataLayer;
+using PspDataLayer.Config;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataPoint = OxyPlot.DataPoint;
 
-/*
- Using Uri builder to build query strings  - https://stackoverflow.com/questions/17096201/build-query-string-for-system-net-httpclient-get
- Using HttpClient to do http get requests - https://blog.jayway.com/2012/03/13/httpclient-makes-get-and-post-very-simple/
-     */
 namespace Dashboard.Measurements.PspMeasurement
 {
     public class PspMeasurement : IMeasurement
@@ -40,17 +40,33 @@ namespace Dashboard.Measurements.PspMeasurement
 
         public async Task<List<DataPoint>> FetchData(DateTime startTime, DateTime endTime)
         {
-            var builder = new UriBuilder("http://10.2.100.56")
+            List<DataPoint> dataPoints = new List<DataPoint>();
+
+            // using data layer for fetching data
+            ConfigurationManagerJSON configManager = new ConfigurationManagerJSON();
+            configManager.Initialize();
+            PspDataAdapter adapter = new PspDataAdapter { ConfigurationManager = configManager };
+            Dictionary<string, List<PspDataLayer.DataPoint>> res = await adapter.GetDataAsync(startTime, endTime, MeasLabel);
+
+            // check if result has one key since we queried for only one key
+            if (res.Keys.Count == 1)
             {
-                Port = 7001
-            };
-            var query = HttpUtility.ParseQueryString(builder.Query);
-            query["label"] = MeasLabel;
-            query["from_time"] = StartTime.GetTime().ToString("yyyyMMdd");
-            query["to_time"] = "yyyyMMdd";
-            builder.Query = query.ToString();
-            string url = builder.ToString();
-            return new List<DataPoint>();
+                // todo check the measId also
+
+                List<PspDataLayer.DataPoint> dataResults = res.Values.ElementAt(0);
+                for (int resIter = 0; resIter < dataResults.Count; resIter++)
+                {
+                    DateTime dataTime = dataResults[resIter].Time;
+                    // convert the time from utc to local
+                    //dataTime = DateTime.SpecifyKind((TimeZoneInfo.ConvertTime(dataTime, TimeZoneInfo.Utc, TimeZoneInfo.Local)), DateTimeKind.Local);
+                    DataPoint dataPoint = new DataPoint(DateTimeAxis.ToDouble(dataTime), dataResults[resIter].Value);
+                    dataPoints.Add(dataPoint);
+                }
+
+                // Create dataPoints based on the fetch strategy and max Resolution
+                dataPoints = FetchHelper.GetDataPointsWithGivenMaxSampleInterval(dataPoints, MaxResolution, SamplingStrategy);
+            }
+            return dataPoints;
         }
 
         public string GetDisplayText()

@@ -122,7 +122,13 @@
       <DependentUpon>WidgetContainerAutoFetchEditWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\FetchHelper.cs" />
+    <Compile Include="Measurements\PspMeasurement\PspMeasEditUC.xaml.cs">
+      <DependentUpon>PspMeasEditUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Measurements\PspMeasurement\PspMeasurement.cs" />
+    <Compile Include="Measurements\PspMeasurement\PspSettingsEditWindow.xaml.cs">
+      <DependentUpon>PspSettingsEditWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Scheduler\SchedulerStateEditUC.xaml.cs">
       <DependentUpon>SchedulerStateEditUC.xaml</DependentUpon>
     </Compile>
@@ -218,6 +224,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EditorWindows\WidgetContainerAutoFetchEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Measurements\PspMeasurement\PspMeasEditUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Measurements\PspMeasurement\PspSettingsEditWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -333,6 +347,10 @@
     <ProjectReference Include="..\PMUDataLayer\PMUDataLayer.csproj">
       <Project>{d3f08b11-f661-4cf6-8ac9-ebe04c68ef75}</Project>
       <Name>PMUDataLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PspDataLayer\PspDataLayer.csproj">
+      <Project>{2B62DDA2-8853-40CD-B22A-4D6ED858C111}</Project>
+      <Name>PspDataLayer</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
