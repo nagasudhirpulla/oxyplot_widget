@@ -125,6 +125,9 @@
     <Compile Include="Measurements\PspMeasurement\PspMeasEditUC.xaml.cs">
       <DependentUpon>PspMeasEditUC.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Measurements\PspMeasurement\PspMeasPickerWindow.xaml.cs">
+      <DependentUpon>PspMeasPickerWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Measurements\PspMeasurement\PspMeasurement.cs" />
     <Compile Include="Measurements\PspMeasurement\PspSettingsEditWindow.xaml.cs">
       <DependentUpon>PspSettingsEditWindow.xaml</DependentUpon>
@@ -228,6 +231,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Measurements\PspMeasurement\PspMeasEditUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Measurements\PspMeasurement\PspMeasPickerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

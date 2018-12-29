@@ -2,6 +2,7 @@
 using Dashboard.UserControls.VariableTimePicker;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,10 +30,30 @@ namespace Dashboard.Measurements.PspMeasurement
             editorVM = new PspMeasEditUCVM(meas);
             DataContext = editorVM;
         }
+
+        private void ShowPspMeasPicker_Click(object sender, RoutedEventArgs e)
+        {
+            PspMeasPickerWindow pspMeasPicker = new PspMeasPickerWindow();
+            pspMeasPicker.ShowDialog();
+            if (pspMeasPicker.DialogResult == true)
+            {
+                // set the measurement label and fields
+                editorVM.MeasLabel = pspMeasPicker.SelectedLabel;
+                editorVM.MeasName = pspMeasPicker.SelectedLabel;
+            }
+        }
     }
 
-    public class PspMeasEditUCVM
+    public class PspMeasEditUCVM : INotifyPropertyChanged
     {
+        // Declare the event
+        public event PropertyChangedEventHandler PropertyChanged;
+        // Create the OnPropertyChanged method to raise the event
+        protected void OnPropertyChanged(string name)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
         public PspMeasurement mPspMeasurement;
 
         public PspMeasEditUCVM(PspMeasurement meas)
@@ -40,9 +61,9 @@ namespace Dashboard.Measurements.PspMeasurement
             mPspMeasurement = meas;
         }
 
-        public string MeasLabel { get { return mPspMeasurement.MeasLabel; } set { mPspMeasurement.MeasLabel = value; } }
+        public string MeasLabel { get { return mPspMeasurement.MeasLabel; } set { mPspMeasurement.MeasLabel = value; OnPropertyChanged("MeasLabel"); } }
 
-        public string MeasName { get { return mPspMeasurement.MeasName; } set { mPspMeasurement.MeasName = value; } }
+        public string MeasName { get { return mPspMeasurement.MeasName; } set { mPspMeasurement.MeasName = value; OnPropertyChanged("MeasName"); } }
 
         public VariableTime StartTime { get { return mPspMeasurement.StartTime; } set { mPspMeasurement.StartTime = value; } }
 

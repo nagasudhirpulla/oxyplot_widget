@@ -63,6 +63,35 @@ namespace PspDataLayer
             }
             return results;
         }
+
+        public async Task<List<PspLabelApiItem>> GetMeasurementLabelsAsync()
+        {
+            // Initialize the results
+            List<PspLabelApiItem> results = new List<PspLabelApiItem>();
+            
+            // Do a get request to get the data from the api
+            var builder = new UriBuilder(ConfigurationManager.Host)
+            {
+                Port = ConfigurationManager.Port,
+                Path = ConfigurationManager.LabelsPath
+            };
+            NameValueCollection query = HttpUtility.ParseQueryString(builder.Query);
+            builder.Query = query.ToString();
+            string url = builder.ToString();
+            HttpClient httpClient = new HttpClient();
+            try
+            {
+                string content = await httpClient.GetStringAsync(url);
+
+                // Parse the api result content to get the results
+                results = await Task.Run(() => JsonConvert.DeserializeObject<List<PspLabelApiItem>>(content));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error occured while fetching labels data from psp api\n{e.Message}");
+            }
+            return results;
+        }
     }
 
     public class DataPoint
@@ -76,6 +105,12 @@ namespace PspDataLayer
         public List<string> TableColNames { get; set; } = new List<string>();
         public List<string> TableColTypes { get; set; } = new List<string>();
         public List<List<object>> TableRows { get; set; } = new List<List<object>>();
+    }
+
+    public class PspLabelApiItem
+    {
+        public string Label { get; set; }
+        public int Id { get; set; }
     }
 }
 

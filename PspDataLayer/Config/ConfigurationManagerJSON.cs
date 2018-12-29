@@ -13,6 +13,7 @@ namespace PspDataLayer.Config
         public string Host { get; set; } = "10.2.100.56";
         public int Port { get; set; } = 7001;
         public string Path { get; set; } = "api/psp";
+        public string LabelsPath { get; set; } = "api/psp/labels";
         public string configFilename = "pspApiConfig.json";
 
         public void Initialize()
@@ -46,6 +47,7 @@ namespace PspDataLayer.Config
             Host = configuration.Host;
             Port = configuration.Port;
             Path = configuration.Path;
+            LabelsPath = configuration.LabelsPath;
         }
     }
 }

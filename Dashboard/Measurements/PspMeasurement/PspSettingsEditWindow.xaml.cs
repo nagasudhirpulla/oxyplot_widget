@@ -65,6 +65,7 @@ namespace Dashboard.Measurements.PspMeasurement
 
         public string Host { get { return ConfigurationManager.Host; } set { ConfigurationManager.Host = value; } }
         public string Path { get { return ConfigurationManager.Path; } set { ConfigurationManager.Path = value; } }
+        public string LabelsPath { get { return ConfigurationManager.LabelsPath; } set { ConfigurationManager.LabelsPath = value; } }
         public int Port { get { return ConfigurationManager.Port; } set { ConfigurationManager.Port = value; } }
     }
 }

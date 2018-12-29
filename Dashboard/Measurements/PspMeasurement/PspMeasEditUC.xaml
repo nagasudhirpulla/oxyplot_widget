@@ -43,7 +43,14 @@
         <Label Content="Maximum Data Resolution (days.hours:mins:secs)" Margin="0 0 10 0" Grid.Row="5"/>
         <Label Content="Sampling Strategy" Margin="0 0 10 0" Grid.Row="6"/>
 
-        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding MeasLabel}"/>
+        <Grid Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBox Text="{Binding MeasLabel}" DockPanel.Dock="Left"/>
+            <Button Click="ShowPspMeasPicker_Click" Grid.Column="1" Padding="5">...</Button>
+        </Grid>
         <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding MeasName}"/>
         <controls:VariableTimePicker x:Name="StartTimePicker" VariableTimeObj="{Binding StartTime}" Grid.Row="2" Grid.Column="1"/>
         <controls:VariableTimePicker x:Name="EndTimePicker" VariableTimeObj="{Binding EndTime}" Grid.Row="3" Grid.Column="1"/>
