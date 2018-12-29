@@ -12,7 +12,7 @@ namespace Dashboard.Interfaces
     public interface IMeasurement
     {
         string TypeName { get; set; }
-        Task<List<DataPoint>> FetchData(TimeShift timeShift);
+        Task<List<DataPoint>> FetchDataAsync(TimeShift timeShift);
         Task<List<DataPoint>> FetchData(DateTime startTime, DateTime endTime);
         string GetDisplayText();
         IMeasurement Clone();

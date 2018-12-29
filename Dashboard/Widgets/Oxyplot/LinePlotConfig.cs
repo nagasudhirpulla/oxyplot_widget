@@ -68,7 +68,7 @@ namespace Dashboard.Widgets.Oxyplot
             TimeShift timeShift = null;
             if (applyTimeShift && DisplayTimeShift.IsTimeShiftZero() == false) { timeShift = DisplayTimeShift; }
 
-            dataPoints = await Measurement.FetchData(null);
+            dataPoints = await Measurement.FetchDataAsync(null);
 
             // Handling timeshift here instead of the measurement to achieve modularity
             if (timeShift != null)

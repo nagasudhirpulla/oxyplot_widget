@@ -23,7 +23,7 @@ namespace Dashboard.Measurements.RandomTimeSeriesMeasurement
         public TimeSpan TimeResolution { get; set; } = TimeSpan.FromMinutes(1);
         public static Random Random { get; set; } = new Random();
 
-        public async Task<List<DataPoint>> FetchData(TimeShift timeShift)
+        public async Task<List<DataPoint>> FetchDataAsync(TimeShift timeShift)
         {
             return await FetchData(FromTime.GetTime(), ToTime.GetTime());
         }

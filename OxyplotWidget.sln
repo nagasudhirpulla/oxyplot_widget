@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dashboard", "Dashboard\Dash
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "OxyDashboardSetup", "OxyDashboardSetup\OxyDashboardSetup.vdproj", "{DBF5B0C1-B06B-43EC-91DA-4C2E49F3B04A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PspDataLayer", "PspDataLayer\PspDataLayer.csproj", "{2B62DDA2-8853-40CD-B22A-4D6ED858C111}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PspDataLayerTests", "PspDataLayerTests\PspDataLayerTests.csproj", "{002CDF0B-47AC-42CE-A999-E823A655EE27}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +41,14 @@ Global
 		{42E8A7C2-4A98-47B1-B777-F73AA852595A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DBF5B0C1-B06B-43EC-91DA-4C2E49F3B04A}.Debug|Any CPU.ActiveCfg = Debug
 		{DBF5B0C1-B06B-43EC-91DA-4C2E49F3B04A}.Release|Any CPU.ActiveCfg = Release
+		{2B62DDA2-8853-40CD-B22A-4D6ED858C111}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B62DDA2-8853-40CD-B22A-4D6ED858C111}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B62DDA2-8853-40CD-B22A-4D6ED858C111}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B62DDA2-8853-40CD-B22A-4D6ED858C111}.Release|Any CPU.Build.0 = Release|Any CPU
+		{002CDF0B-47AC-42CE-A999-E823A655EE27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{002CDF0B-47AC-42CE-A999-E823A655EE27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{002CDF0B-47AC-42CE-A999-E823A655EE27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{002CDF0B-47AC-42CE-A999-E823A655EE27}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

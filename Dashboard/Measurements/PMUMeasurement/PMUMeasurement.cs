@@ -27,7 +27,7 @@ namespace Dashboard.Measurements.PMUMeasurement
         public SamplingStrategy SamplingStrategy { get; set; } = SamplingStrategy.Average;
         public string TypeName { get; set; } = typeof(PMUMeasurement).Name;
 
-        public async Task<List<DataPoint>> FetchData(TimeShift timeShift)
+        public async Task<List<DataPoint>> FetchDataAsync(TimeShift timeShift)
         {
             return await FetchHelper.FetchData(StartTime.GetTime(), EndTime.GetTime(), MaxFetchSize, FetchData);
             //return await FetchData(StartTime.GetTime(), EndTime.GetTime());

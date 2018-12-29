@@ -40,7 +40,7 @@ namespace Dashboard.Measurements.ScadaMeasurement
             return new ScadaMeasurement { StartTime = StartTime, EndTime = EndTime, MeasId = MeasId, MeasName = MeasName, FetchStrategy = FetchStrategy, FetchPeriodicitySecs = FetchPeriodicitySecs };
         }
 
-        public async Task<List<DataPoint>> FetchData(TimeShift timeShift)
+        public async Task<List<DataPoint>> FetchDataAsync(TimeShift timeShift)
         {
             return await FetchData(StartTime.GetTime(), EndTime.GetTime());
         }

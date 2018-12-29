@@ -17,7 +17,7 @@ namespace Dashboard.Measurements.RandomMeasurement
         public double High { get; set; } = 10;
         public int NumPnts { get; set; } = 30;
 
-        public async Task<List<DataPoint>> FetchData(TimeShift timeShift)
+        public async Task<List<DataPoint>> FetchDataAsync(TimeShift timeShift)
         {
             return await FetchData(DateTime.Now, DateTime.Now);
         }
