@@ -33,6 +33,16 @@ namespace Dashboard.Measurements.PspMeasurement
             return new PspMeasurement { StartTime = StartTime, EndTime = EndTime, MeasLabel = MeasLabel, MeasName = MeasName, MaxFetchSize = MaxFetchSize, MaxResolution = MaxResolution, SamplingStrategy = SamplingStrategy };
         }
 
+        public static void OpenSettingsWindow()
+        {
+            PspSettingsEditWindow pspSettingsEditor = new PspSettingsEditWindow();
+            pspSettingsEditor.ShowDialog();
+            if (pspSettingsEditor.DialogResult == true)
+            {
+                // since it is saved in file, do nothing
+            }
+        }
+
         public async Task<List<DataPoint>> FetchDataAsync(TimeShift timeShift)
         {
             return await FetchHelper.FetchData(StartTime.GetTime(), EndTime.GetTime(), MaxFetchSize, FetchData);

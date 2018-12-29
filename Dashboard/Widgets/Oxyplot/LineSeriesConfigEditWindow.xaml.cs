@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using Dashboard.Interfaces;
 using Dashboard.JsonConverters;
 using Dashboard.Measurements.PMUMeasurement;
+using Dashboard.Measurements.PspMeasurement;
 using Dashboard.Measurements.RandomMeasurement;
 using Dashboard.Measurements.RandomTimeSeriesMeasurement;
 using Dashboard.Measurements.ScadaMeasurement;
@@ -60,6 +61,10 @@ namespace Dashboard.Widgets.Oxyplot
             else if (measurement is ScadaMeasurement)
             {
                 MeasEditContainer.Children.Add(new ScadaMeasEditUC((ScadaMeasurement)measurement));
+            }
+            else if (measurement is PspMeasurement)
+            {
+                MeasEditContainer.Children.Add(new PspMeasEditUC((PspMeasurement)measurement));
             }
         }
 

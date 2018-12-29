@@ -29,6 +29,7 @@
                 <MenuItem Header="Settings" >
                     <MenuItem Header="Dashboard" Click="DashboardSettings_Click"/>
                     <MenuItem Header="PMU" Click="PMUSettings_Click"/>
+                    <MenuItem Header="PSP" Click="PspSettings_Click"/>
                 </MenuItem>
                 <MenuItem Header="Add">
                     <MenuItem Header="Plot Widget" Click="AddPlotWidget_Click"/>

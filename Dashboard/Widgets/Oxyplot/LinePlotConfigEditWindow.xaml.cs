@@ -1,5 +1,6 @@
 ﻿using Dashboard.Interfaces;
 using Dashboard.Measurements.PMUMeasurement;
+using Dashboard.Measurements.PspMeasurement;
 using Dashboard.Measurements.RandomMeasurement;
 using Dashboard.Measurements.RandomTimeSeriesMeasurement;
 using Dashboard.Measurements.ScadaMeasurement;
@@ -28,6 +29,7 @@ namespace Dashboard.Widgets.Oxyplot
     {
         public const string PMUMeasOption = "PMU_Measurement";
         public const string ScadaMeasOption = "Scada_Measurement";
+        public const string PspMeasOption = "PSP_Measurement";
         public const string RandomTimeSeriesMeasOption = "Random_TimeSeries_Measurement";
         public const string RandomMeasOption = "Random_Measurement";
 
@@ -39,7 +41,7 @@ namespace Dashboard.Widgets.Oxyplot
             editorVM = new LinePlotConfigEditorVM(config);
             DataContext = editorVM;
             ConfigItemsContainer.ItemsSource = editorVM.SeriesConfigListItems;
-            string[] comboItemStrings = new string[] { PMUMeasOption, ScadaMeasOption, RandomTimeSeriesMeasOption, RandomMeasOption };
+            string[] comboItemStrings = new string[] { PMUMeasOption, ScadaMeasOption, PspMeasOption, RandomTimeSeriesMeasOption, RandomMeasOption };
             MeasOptionComboBox.ItemsSource = comboItemStrings;
             MeasOptionComboBox.SelectedIndex = 0;
         }
@@ -119,6 +121,15 @@ namespace Dashboard.Widgets.Oxyplot
             editorVM.DeleteSeriesConfigAt(seriesIndex);
         }
 
+        private void DuplicateSeriesBtnClick(object sender, RoutedEventArgs e)
+        {
+            // a button on list view has been clicked
+            Button button = sender as Button;
+            // get the series config list item index
+            int seriesIndex = GetSeriesConfigListItemIndexFromButton(button);
+            editorVM.DuplicateSeriesConfigAt(seriesIndex);
+        }
+
         private void OkBtnClick(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("Save Changes ?", "Save Changes", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
@@ -136,7 +147,7 @@ namespace Dashboard.Widgets.Oxyplot
         {
             DialogResult = false;
             this.Close();
-        }
+        }        
     }
 
     public class LinePlotConfigEditorVM : INotifyPropertyChanged
@@ -193,6 +204,21 @@ namespace Dashboard.Widgets.Oxyplot
                 if (seriesIndex <= SeriesConfigListItems.Count)
                 {
                     mLinePlotConfig.SeriesConfigs.RemoveAt(seriesIndex);
+                }
+                SyncSeriesConfigListItemsWithConfig();
+            }
+        }
+
+        public void DuplicateSeriesConfigAt(int seriesIndex)
+        {
+            //check if index is in config bounds
+            if (seriesIndex >= 0 && seriesIndex < mLinePlotConfig.SeriesConfigs.Count)
+            {
+                // check if seriesIndex is in the display series List item bounds
+                if (seriesIndex <= SeriesConfigListItems.Count)
+                {
+                    LineSeriesConfig duplicatedConfig = mLinePlotConfig.SeriesConfigs[seriesIndex].Clone();
+                    mLinePlotConfig.SeriesConfigs.Insert(seriesIndex, duplicatedConfig);
                 }
                 SyncSeriesConfigListItemsWithConfig();
             }
@@ -293,6 +319,10 @@ namespace Dashboard.Widgets.Oxyplot
             else if (measType == LinePlotConfigEditWindow.ScadaMeasOption)
             {
                 lineSeriesConfig.Measurement = new ScadaMeasurement();
+            }
+            else if (measType == LinePlotConfigEditWindow.PspMeasOption)
+            {
+                lineSeriesConfig.Measurement = new PspMeasurement();
             }
             mLinePlotConfig.SeriesConfigs.Add(lineSeriesConfig);
             SyncSeriesConfigListItemsWithConfig();

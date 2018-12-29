@@ -1,5 +1,6 @@
 ﻿using Dashboard.Interfaces;
 using Dashboard.Measurements.PMUMeasurement;
+using Dashboard.Measurements.PspMeasurement;
 using Dashboard.Measurements.RandomMeasurement;
 using Dashboard.Measurements.RandomTimeSeriesMeasurement;
 using Dashboard.Measurements.ScadaMeasurement;
@@ -51,7 +52,10 @@ namespace Dashboard.JsonConverters
             {
                 measurement = new ScadaMeasurement();
             }
-
+            else if (objectTypeName == typeof(PspMeasurement).Name)
+            {
+                measurement = new PspMeasurement();
+            }
             if (measurement != null)
             {
                 serializer.Populate(jsonObject.CreateReader(), measurement);

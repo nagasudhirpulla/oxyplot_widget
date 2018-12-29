@@ -15,6 +15,7 @@ using System.IO;
 using Microsoft.Win32;
 using Dashboard.Measurements.PMUMeasurement;
 using Dashboard.Scheduler;
+using Dashboard.Measurements.PspMeasurement;
 
 namespace Dashboard.UserControls.Dashboard
 {
@@ -378,6 +379,11 @@ namespace Dashboard.UserControls.Dashboard
             PMUMeasurement.OpenSettingsWindow();
         }
 
+        private void PspSettings_Click(object sender, RoutedEventArgs e)
+        {
+            PspMeasurement.OpenSettingsWindow();
+        }
+
         private void DashboardSettings_Click(object sender, RoutedEventArgs e)
         {
             DashboardSettingsWindow editor = new DashboardSettingsWindow(DashboardState);
@@ -436,6 +442,6 @@ namespace Dashboard.UserControls.Dashboard
                 UpdateDashboardAutoFetchState(state);
             }
         }
-
+        
     }
 }
