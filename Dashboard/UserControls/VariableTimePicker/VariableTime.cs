@@ -48,6 +48,9 @@ namespace Dashboard.UserControls.VariableTimePicker
         {
             DateTime time = AbsoluteTime;
             DateTime nowTime = DateTime.Now;
+            // make millisecond component as zero for the absolute time and now time
+            time = time.AddMilliseconds(-1*time.Millisecond);
+            nowTime = nowTime.AddMilliseconds(-1 * nowTime.Millisecond);
             if (IsYearsVariable)
             {
                 time = time.AddYears(nowTime.AddYears(YearsOffset).Year - time.Year);
