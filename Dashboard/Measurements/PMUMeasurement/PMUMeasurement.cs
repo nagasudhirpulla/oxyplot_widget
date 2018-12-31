@@ -80,7 +80,7 @@ namespace Dashboard.Measurements.PMUMeasurement
                 }
 
                 // Create dataPoints based on the fetch strategy and max Resolution
-                dataPoints = FetchHelper.GetDataPointsWithGivenMaxSampleInterval(dataPoints, MaxResolution, SamplingStrategy);
+                dataPoints = FetchHelper.GetDataPointsWithGivenMaxSampleInterval(dataPoints, MaxResolution, SamplingStrategy, DateTimeAxis.ToDouble(startTime));
             }
             return dataPoints;
         }

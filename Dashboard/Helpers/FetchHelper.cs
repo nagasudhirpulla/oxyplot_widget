@@ -43,7 +43,7 @@ namespace Dashboard.Helpers
                 {
                     tempDataPoints.RemoveAt(0);
                 }
-                
+
                 // Update the LastIterEndTime variable for this iteration
                 LastIterEndTime = tempDataPoints.Last().X;
 
@@ -53,7 +53,7 @@ namespace Dashboard.Helpers
             return dataPoints;
         }
 
-        public static List<DataPoint> GetDataPointsWithGivenMaxSampleInterval(List<DataPoint> pnts, TimeSpan maxRes, SamplingStrategy samplingStrategy)
+        public static List<DataPoint> GetDataPointsWithGivenMaxSampleInterval(List<DataPoint> pnts, TimeSpan maxRes, SamplingStrategy samplingStrategy, double? desiredFirstSample)
         {
             if (samplingStrategy == SamplingStrategy.Raw || maxRes.TotalDays == 0 || pnts.Count == 0)
             {
@@ -64,8 +64,11 @@ namespace Dashboard.Helpers
 
             // get max sample interval as numeric
             double maxResNumeric = maxRes.TotalDays;
-
             double sampleBoundaryStart = pnts[0].X;
+            if (desiredFirstSample!=null)
+            {
+                sampleBoundaryStart = desiredFirstSample.Value;
+            }
             double sampleBoundaryEnd = sampleBoundaryStart + maxResNumeric;
             List<double> sampleBucket = new List<double>();
             for (int pntIter = 0; pntIter < pnts.Count; pntIter++)
