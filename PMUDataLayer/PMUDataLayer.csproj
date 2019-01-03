@@ -59,6 +59,7 @@
     <Compile Include="DataExchangeClasses\PhasorPointBinaryDataParser.cs" />
     <Compile Include="DataExchangeClasses\PhasorPointEndpointBehavior.cs" />
     <Compile Include="DataExchangeClasses\PhasorPointMessageInspector.cs" />
+    <Compile Include="DiscoverMeasurement.cs" />
     <Compile Include="HistoryDataAdapter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

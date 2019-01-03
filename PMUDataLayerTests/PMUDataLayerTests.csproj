@@ -57,6 +57,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Config\ConfigurationManagerJSONTests.cs" />
+    <Compile Include="DiscoverMeasurementTests.cs" />
     <Compile Include="HistoryDataAdapterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
