@@ -1,5 +1,6 @@
 ﻿using Dashboard.Interfaces;
 using Dashboard.States;
+using Microsoft.Win32;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
@@ -8,8 +9,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -194,6 +197,62 @@ namespace Dashboard.Widgets.Oxyplot
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.ToString());
+            }
+        }
+
+        private async void ExportText_Click(object sender, RoutedEventArgs e)
+        {
+            // get the filepath
+            string filename = $"plotdata_{DateTime.Now.ToString("dd_MMM_yy_HH_mm_ss")}.csv";
+            SaveFileDialog savefileDialog = new SaveFileDialog
+            {
+                // set a default file name
+                FileName = filename,
+                // set filters - this can be done in properties as well
+                Filter = "csv Files (*.csv)|*.csv|All files (*.*)|*.*"
+            };
+            if (savefileDialog.ShowDialog() == true)
+            {
+                await Task.Yield();
+                DataTable dt = PlotViewModel.GetPlotDataTable();
+                string seperator = ",";
+                try
+                {
+                    StringBuilder sb = new StringBuilder();
+                    // create the headers line
+                    for (int i = 0; i < dt.Columns.Count; i++)
+                    {
+                        sb.Append(dt.Columns[i]);
+                        if (i < dt.Columns.Count - 1)
+                            sb.Append(seperator);
+                    }
+                    sb.AppendLine();
+                    // create the data string
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        for (int i = 0; i < dt.Columns.Count; i++)
+                        {
+                            if (dr[i].GetType() == typeof(DateTime))
+                            {
+                                sb.Append(((DateTime)dr[i]).ToString("yyyy-MM-dd HH:mm:ss.fff"));
+                            }
+                            else
+                            {
+                                sb.Append(dr[i].ToString());
+                            }
+
+                            if (i < dt.Columns.Count - 1)
+                                sb.Append(seperator);
+                        }
+                        sb.AppendLine();
+                    }
+                    File.WriteAllText(savefileDialog.FileName, sb.ToString());
+                    MessageBox.Show("Saved the updated Plot data!!!");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.ToString());
+                }
             }
         }
     }
