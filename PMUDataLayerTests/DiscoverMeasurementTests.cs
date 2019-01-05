@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace PMUDataLayer.Tests
 {
@@ -15,7 +16,7 @@ namespace PMUDataLayer.Tests
         public void GetMeasTreeTest()
         {
             DiscoverMeasurement discoverMeasurement = new DiscoverMeasurement();
-            string res = discoverMeasurement.GetMeasTree("pdcAdmin", "p@ssw0rd");
+            XDocument res = discoverMeasurement.GetMeasTree("pdcAdmin", "p@ssw0rd");
         }
     }
 }

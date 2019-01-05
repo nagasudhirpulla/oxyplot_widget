@@ -7,6 +7,7 @@ using System.Net;
 using System.Text;  // for class Encoding
 using System.IO;    // for StreamReader
 using System.Security.Cryptography;
+using System.Xml.Linq;
 
 namespace PMUDataLayer
 {
@@ -16,9 +17,10 @@ namespace PMUDataLayer
      * **/
     public class DiscoverMeasurement
     {
-        public string GetMeasTree(string username, string password)
+        public XDocument GetMeasTree(string username, string password)
         {
             string res = "";
+            XDocument doc = new XDocument();
             string securityHeaderStr = GetSecurityHeader(username, password);
             string bodyStr = "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\" xmlns:dat=\"http://www.eterra.com/public/services/data/dataTypes\">" +
      $"<soap:Header>{securityHeaderStr}</soap:Header>" +
@@ -40,9 +42,18 @@ namespace PMUDataLayer
 
             var response = (HttpWebResponse)request.GetResponse();
 
-            var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-            Console.WriteLine(responseString);
-            return res;
+            res = new StreamReader(response.GetResponseStream()).ReadToEnd();
+            //Console.WriteLine(res);
+            try {
+                // extract xml from the 6th line in the response text
+                res = res.Split('\n')[5];
+                doc = XDocument.Parse(res);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error in xml parsing. {e.Message}");
+            }
+            return doc;
         }
 
         public string GetSecurityHeader(string userName, string password)
