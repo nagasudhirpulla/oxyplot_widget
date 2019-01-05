@@ -53,19 +53,18 @@ namespace Dashboard.Measurements.PMUMeasurement
             TreeViewItem item = new TreeViewItem();
             if (o is XElement xEl)
             {
-                if (xEl.HasElements == true)
-                {
-                    item.Tag = o;
-                    item.Header = xEl.Name.LocalName;
-                    item.Items.Add("Loading...");
-                }
-                else
-                {
-                    // show values directly to save levels
-                    item.Header = xEl.Value.ToString();
-                }
+                item.Tag = o;
+                item.Header = xEl.Name.LocalName;
+                item.Items.Add("Loading...");
             }
             return item;
+        }
+
+        private void SelectMeasId(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is TreeViewItem item)
+            {
+            }
         }
 
         public void TreeViewItem_Expanded(object sender, RoutedEventArgs e)
@@ -85,6 +84,10 @@ namespace Dashboard.Measurements.PMUMeasurement
                             {
                                 item.Items.Add(CreateTreeItem(xElItem));
                             }
+                        }
+                        else
+                        {
+                            item.Items.Add(new TreeViewItem { Header = xEl.Value.ToString() });
                         }
                     }
                 }
