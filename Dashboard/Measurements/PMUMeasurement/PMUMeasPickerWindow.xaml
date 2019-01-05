@@ -8,32 +8,6 @@
         Title="Pick PMU Measurement" Height="300" Width="300">
     <ScrollViewer Margin="0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
         <Grid Margin="8">
-            <Grid.Resources>
-                <SolidColorBrush x:Key="xmlValueBrush" Color="Blue" />
-                <SolidColorBrush x:Key="xmAttributeBrush" Color="Red" />
-                <SolidColorBrush x:Key="xmlTagBrush" Color="DarkMagenta" />
-                <SolidColorBrush x:Key="xmlMarkBrush" Color="Blue" />
-                
-                <HierarchicalDataTemplate x:Key="NodeTemplate">
-                    <StackPanel Orientation="Horizontal" Focusable="False">
-                        <TextBlock x:Name="tbName" Text="Root" FontFamily="Consolas" FontSize="8pt" />
-                    </StackPanel>
-                    <HierarchicalDataTemplate.ItemsSource>
-                        <Binding Path="Descendants" />
-                    </HierarchicalDataTemplate.ItemsSource>
-                    <HierarchicalDataTemplate.Triggers>
-                        <DataTrigger Binding="{Binding Path=NodeType}" Value="Text">
-                            <Setter TargetName="tbName" Property="Text" Value="{Binding Path=Value}" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Path=NodeType}" Value="Element">
-                            <Setter TargetName="tbName" Property="Text" Value="{Binding Path=Name.LocalName}" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Path=HasElements}" Value="False">
-                            <Setter TargetName="tbName" Property="Text" Value="{Binding Path=Value}" />
-                        </DataTrigger>
-                    </HierarchicalDataTemplate.Triggers>
-                </HierarchicalDataTemplate>
-            </Grid.Resources>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -46,10 +20,7 @@
                 <Button Content="Refresh" Click="RefreshBtn_Click"></Button>
                 <Button Content="Test" Click="TestBtn_Click"></Button>
             </StackPanel>
-            <TreeView Grid.Row="1" Name="MeasTree" 
-                      ItemsSource="{Binding Path=Root.Elements, UpdateSourceTrigger=PropertyChanged}" 
-                      ItemTemplate="{StaticResource NodeTemplate}" 
-                      Margin="10" Height="500"/>
+            <TreeView Grid.Row="1" Name="MeasTree" Margin="10" Height="500" TreeViewItem.Expanded="TreeViewItem_Expanded"/>
             <StackPanel Grid.Row="2" Orientation="Horizontal">
                 <Button Content="OK" Click="OK_Click" Padding="8" Margin="8"></Button>
                 <Button Content="Cancel" Click="Cancel_Click" Padding="8" Margin="8"></Button>
