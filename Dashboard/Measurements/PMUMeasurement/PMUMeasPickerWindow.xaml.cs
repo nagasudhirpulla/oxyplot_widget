@@ -38,6 +38,15 @@ namespace Dashboard.Measurements.PMUMeasurement
             measXml = adapter.GetMeasXml();
             // Bind the tree view with xml
             MeasTree.DataContext = measXml;
+            SetTreeViewElements(measXml);
+        }
+
+        private void SetTreeViewElements(XDocument measXml)
+        {
+            for (int nodeIter = 0; nodeIter < measXml.Nodes().Count(); nodeIter++)
+            {
+
+            }
         }
 
         private void RefreshBtn_Click(object sender, RoutedEventArgs e)
