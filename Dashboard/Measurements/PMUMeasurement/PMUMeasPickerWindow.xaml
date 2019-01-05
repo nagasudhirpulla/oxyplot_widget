@@ -13,26 +13,10 @@
                 <SolidColorBrush x:Key="xmAttributeBrush" Color="Red" />
                 <SolidColorBrush x:Key="xmlTagBrush" Color="DarkMagenta" />
                 <SolidColorBrush x:Key="xmlMarkBrush" Color="Blue" />
-
-                <DataTemplate x:Key="AttributeTemplate">
-                    <StackPanel Orientation="Horizontal" Margin="3,0,0,0" HorizontalAlignment="Center">
-                        <TextBlock Text="{Binding Path=Name}" Foreground="{StaticResource xmAttributeBrush}" FontFamily="Consolas" FontSize="8pt" />
-                        <TextBlock Text="=&quot;" Foreground="{StaticResource xmlMarkBrush}" FontFamily="Consolas" FontSize="8pt" />
-                        <TextBlock Text="{Binding Path=Value, Mode=TwoWay}" Foreground="{StaticResource xmlValueBrush}" FontFamily="Consolas" FontSize="8pt" />
-                        <TextBlock Text="&quot;" Foreground="{StaticResource xmlMarkBrush}" FontFamily="Consolas" FontSize="8pt" />
-                    </StackPanel>
-                </DataTemplate>
-
+                
                 <HierarchicalDataTemplate x:Key="NodeTemplate">
                     <StackPanel Orientation="Horizontal" Focusable="False">
                         <TextBlock x:Name="tbName" Text="Root" FontFamily="Consolas" FontSize="8pt" />
-                        <ItemsControl ItemTemplate="{StaticResource AttributeTemplate}" HorizontalAlignment="Center" ItemsSource="{Binding Path=Attributes}">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Horizontal" />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                        </ItemsControl>
                     </StackPanel>
                     <HierarchicalDataTemplate.ItemsSource>
                         <Binding Path="Descendants" />
