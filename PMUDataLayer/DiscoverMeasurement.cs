@@ -8,6 +8,7 @@ using System.Text;  // for class Encoding
 using System.IO;    // for StreamReader
 using System.Security.Cryptography;
 using System.Xml.Linq;
+using PMUDataLayer.Config;
 
 namespace PMUDataLayer
 {
@@ -17,18 +18,18 @@ namespace PMUDataLayer
      * **/
     public class DiscoverMeasurement
     {
-        public XDocument GetMeasTree(string username, string password)
+        public XDocument GetMeasTree(ConfigurationManagerJSON config)
         {
             string res = "";
             XDocument doc = new XDocument();
-            string securityHeaderStr = GetSecurityHeader(username, password);
+            string securityHeaderStr = GetSecurityHeader(config);
             string bodyStr = "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\" xmlns:dat=\"http://www.eterra.com/public/services/data/dataTypes\">" +
      $"<soap:Header>{securityHeaderStr}</soap:Header>" +
       "<soap:Body>" +
           "<dat:DiscoverServerRequest>?</dat:DiscoverServerRequest>" +
         "</soap:Body>" +
       "</soap:Envelope>";
-            var request = (HttpWebRequest)WebRequest.Create("https://172.16.183.131:24721/eterra-ws/HistoricalDataProvider");
+            var request = (HttpWebRequest)WebRequest.Create($"https://{config.Host}:{config.Port}/eterra-ws/HistoricalDataProvider");
             request.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
             var data = Encoding.ASCII.GetBytes(bodyStr);
             request.Method = "POST";
@@ -56,7 +57,7 @@ namespace PMUDataLayer
             return doc;
         }
 
-        public string GetSecurityHeader(string userName, string password)
+        public string GetSecurityHeader(ConfigurationManagerJSON config)
         {
             Random r = new Random();
             DateTime created = DateTime.Now;
@@ -64,8 +65,8 @@ namespace PMUDataLayer
             string nonce = Convert.ToBase64String(Encoding.ASCII.GetBytes(SHA1Encrypt(created + r.Next().ToString())));
             string securityHeaderStr = "<wsse:Security xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\" xmlns:wsu=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd\">" +
         $"<wsse:UsernameToken wsu:Id = \"UsernameToken-329D41BF01D5F8E66114867472731424\">" +
-        $"<wsse:Username>{userName}</wsse:Username>" +
-        $"<wsse:Password Type = \"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText\">{password}</wsse:Password>" +
+        $"<wsse:Username>{config.UserName}</wsse:Username>" +
+        $"<wsse:Password Type = \"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText\">{config.Password}</wsse:Password>" +
         $"<wsse:Nonce EncodingType = \"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary\">{nonce}</wsse:Nonce>" +
         $"<wsu:Created>{createdStr}</wsu:Created>" +
         "</wsse:UsernameToken>" +

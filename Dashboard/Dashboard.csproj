@@ -122,6 +122,9 @@
       <DependentUpon>WidgetContainerAutoFetchEditWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\FetchHelper.cs" />
+    <Compile Include="Measurements\PMUMeasurement\PMUMeasPickerWindow.xaml.cs">
+      <DependentUpon>PMUMeasPickerWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Measurements\PspMeasurement\PspMeasEditUC.xaml.cs">
       <DependentUpon>PspMeasEditUC.xaml</DependentUpon>
     </Compile>
@@ -227,6 +230,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EditorWindows\WidgetContainerAutoFetchEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Measurements\PMUMeasurement\PMUMeasPickerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

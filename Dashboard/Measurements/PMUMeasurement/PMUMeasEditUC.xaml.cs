@@ -29,6 +29,16 @@ namespace Dashboard.Measurements.PMUMeasurement
             editorVM = new PMUMeasEditUCVM(meas);
             DataContext = editorVM;
         }
+
+        private void ShowPmuMeasPicker_Click(object sender, RoutedEventArgs e)
+        {
+            PMUMeasPickerWindow pmuMeasPicker = new PMUMeasPickerWindow();
+            pmuMeasPicker.ShowDialog();
+            if (pmuMeasPicker.DialogResult == true)
+            {
+                // todo set the measurement label and fields
+            }
+        }
     }
 
     public class PMUMeasEditUCVM

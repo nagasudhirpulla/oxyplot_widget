@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Xml.Linq;
 
 namespace PMUDataLayer
 {
@@ -246,6 +247,12 @@ namespace PMUDataLayer
                 measIDs.Add(measID);
             }
             return measIDs;
+        }
+
+        public XDocument GetMeasXml()
+        {
+            DiscoverMeasurement discover = new DiscoverMeasurement();
+            return discover.GetMeasTree(_Configuration);
         }
     }
 }

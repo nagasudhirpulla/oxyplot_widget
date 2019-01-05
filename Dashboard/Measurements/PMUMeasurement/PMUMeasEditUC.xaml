@@ -35,7 +35,7 @@
             <ColumnDefinition Width="Auto"></ColumnDefinition>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Label Content="Measurement Id"></Label>
+        <Label Content="Measurement Id"></Label>        
         <Label Content="Measurement Name" Grid.Row="1"></Label>
         <Label Content="Start Time" Grid.Row="2"></Label>
         <Label Content="End Time" Grid.Row="3"></Label>
@@ -43,7 +43,14 @@
         <Label Content="Maximum Data Resolution (days.hours:mins:secs)" Margin="0 0 10 0" Grid.Row="5"/>
         <Label Content="Sampling Strategy" Margin="0 0 10 0" Grid.Row="6"/>
 
-        <xctk:IntegerUpDown Grid.Column="1" Value="{Binding MeasId}" Increment="1" Maximum="200000" Minimum="0"/>
+        <Grid Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <xctk:IntegerUpDown Value="{Binding MeasId}" Increment="1" Maximum="200000" Minimum="0"/>
+            <Button Click="ShowPmuMeasPicker_Click" Grid.Column="1" Padding="5">...</Button>
+        </Grid>
         <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding MeasName}"/>
         <controls:VariableTimePicker x:Name="StartTimePicker" VariableTimeObj="{Binding StartTime}" Grid.Row="2" Grid.Column="1"/>
         <controls:VariableTimePicker x:Name="EndTimePicker" VariableTimeObj="{Binding EndTime}" Grid.Row="3" Grid.Column="1"/>
