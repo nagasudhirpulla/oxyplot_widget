@@ -30,7 +30,7 @@ namespace Dashboard.Measurements.PspMeasurement
 
         public IMeasurement Clone()
         {
-            return new PspMeasurement { StartTime = StartTime, EndTime = EndTime, MeasLabel = MeasLabel, MeasName = MeasName, MaxFetchSize = MaxFetchSize, MaxResolution = MaxResolution, SamplingStrategy = SamplingStrategy };
+            return new PspMeasurement { StartTime = StartTime.Clone(), EndTime = EndTime.Clone(), MeasLabel = MeasLabel, MeasName = MeasName, MaxFetchSize = MaxFetchSize, MaxResolution = MaxResolution, SamplingStrategy = SamplingStrategy };
         }
 
         public static void OpenSettingsWindow()

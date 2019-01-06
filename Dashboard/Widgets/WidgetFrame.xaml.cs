@@ -1,6 +1,7 @@
 ﻿using Dashboard.Interfaces;
 using Dashboard.States;
 using Dashboard.WidgetLayout;
+using Dashboard.Widgets.DataExport;
 using Dashboard.Widgets.Oxyplot;
 using System;
 using System.Collections.Generic;
@@ -273,6 +274,10 @@ namespace Dashboard.Widgets
                 else if (frameState.WidgetState is OxyPlotWidgetState)
                 {
                     widget = new PlotWidget();
+                }
+                else if (frameState.WidgetState is DataExportWidgetState)
+                {
+                    widget = new DataExportWidget();
                 }
                 else
                 {

@@ -40,7 +40,7 @@ namespace Dashboard.Measurements.PMUMeasurement
 
         public IMeasurement Clone()
         {
-            return new PMUMeasurement { StartTime = StartTime, EndTime = EndTime, MeasId = MeasId, MeasName = MeasName, MaxFetchSize = MaxFetchSize, MaxResolution = MaxResolution, SamplingStrategy = SamplingStrategy };
+            return new PMUMeasurement { StartTime = StartTime.Clone(), EndTime = EndTime.Clone(), MeasId = MeasId, MeasName = MeasName, MaxFetchSize = MaxFetchSize, MaxResolution = MaxResolution, SamplingStrategy = SamplingStrategy };
         }
 
         public static void OpenSettingsWindow()

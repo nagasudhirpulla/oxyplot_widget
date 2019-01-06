@@ -108,7 +108,7 @@ namespace Dashboard.Measurements.RandomTimeSeriesMeasurement
 
         public IMeasurement Clone()
         {
-            return new RandomTimeSeriesMeasurement { Low = Low, High = High, FromTime = FromTime, ToTime = ToTime, TimeResolution = TimeResolution, MaxFetchSize = MaxFetchSize };
+            return new RandomTimeSeriesMeasurement { Low = Low, High = High, FromTime = FromTime.Clone(), ToTime = ToTime.Clone(), TimeResolution = TimeResolution, MaxFetchSize = MaxFetchSize };
         }
     }
 }

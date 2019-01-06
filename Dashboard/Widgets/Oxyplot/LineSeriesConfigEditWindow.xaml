@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Dashboard.Widgets.Oxyplot"
         mc:Ignorable="d"
-        Title="LineSeriesConfigEditWindow" Height="600" Width="800">
+        Title="Edit Line Series Config" Height="600" Width="800">
     <ScrollViewer Margin="0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
         <Grid>
             <Grid.RowDefinitions>

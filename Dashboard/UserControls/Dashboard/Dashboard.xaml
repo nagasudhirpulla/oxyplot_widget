@@ -33,6 +33,7 @@
                 </MenuItem>
                 <MenuItem Header="Add">
                     <MenuItem Header="Plot Widget" Click="AddPlotWidget_Click"/>
+                    <MenuItem Header="Data Widget" Click="AddDataWidget_Click"/>
                     <MenuItem Header="Blank Widget" Click="AddBlankWidget_Click"/>
                 </MenuItem>
                 <MenuItem Header="Data Fetch">

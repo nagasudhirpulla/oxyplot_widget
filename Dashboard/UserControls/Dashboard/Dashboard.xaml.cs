@@ -16,6 +16,7 @@ using Microsoft.Win32;
 using Dashboard.Measurements.PMUMeasurement;
 using Dashboard.Scheduler;
 using Dashboard.Measurements.PspMeasurement;
+using Dashboard.Widgets.DataExport;
 
 namespace Dashboard.UserControls.Dashboard
 {
@@ -138,6 +139,16 @@ namespace Dashboard.UserControls.Dashboard
                 Position = LayoutManager.GetNewWidgetPositon(CellsContainer)
             };
             widgetFrame.SetWidget(new PlotWidget());
+            LayoutManager.AddDashboardWidgetToContainer(CellsContainer, widgetFrame, Changed);
+        }
+
+        public void AddNewDataWidget()
+        {
+            WidgetFrame widgetFrame = new WidgetFrame
+            {
+                Position = LayoutManager.GetNewWidgetPositon(CellsContainer)
+            };
+            widgetFrame.SetWidget(new DataExportWidget());
             LayoutManager.AddDashboardWidgetToContainer(CellsContainer, widgetFrame, Changed);
         }
 
@@ -372,6 +383,11 @@ namespace Dashboard.UserControls.Dashboard
         private void AddPlotWidget_Click(object sender, RoutedEventArgs e)
         {
             AddNewPlotWidget();
+        }
+
+        private void AddDataWidget_Click(object sender, RoutedEventArgs e)
+        {
+            AddNewDataWidget();
         }
 
         private void PMUSettings_Click(object sender, RoutedEventArgs e)

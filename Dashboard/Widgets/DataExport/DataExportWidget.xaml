@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="Dashboard.Widgets.DataExport.DataExportWidget"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Dashboard.Widgets.DataExport"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style x:Key="OverlayBtnStyle" TargetType="Button">
+            <Setter Property="Background" Value="WhiteSmoke" />
+            <Setter Property="Opacity" Value="0.5" />
+            <Setter Property="FontSize" Value="10" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Margin" Value="2,0,2,0" />
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <DataGrid MaxHeight="1000" x:Name="DataExportView" CanUserAddRows="False" CanUserResizeColumns="True" CanUserSortColumns="True" IsReadOnly="True" Width="Auto" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <StackPanel Orientation="Horizontal">
+            <Button Click="ExportText_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Content="csv" Style="{StaticResource OverlayBtnStyle}"></Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

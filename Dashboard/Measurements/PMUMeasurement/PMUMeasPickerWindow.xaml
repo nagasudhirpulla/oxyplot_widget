@@ -33,7 +33,7 @@
                 <TextBox x:Name="VoltFilter" MinWidth="40" TextChanged="FilterTxt_Changed"></TextBox>
                 <Button Content="Filter" Click="FilterTxt_Changed" Margin="20 0 0 0"></Button>
             </StackPanel>
-            <DataGrid x:Name="MeasListView" Grid.Row="2" MaxHeight="400"/>
+            <DataGrid x:Name="MeasListView" CanUserAddRows="False" CanUserResizeColumns="True" CanUserSortColumns="True" IsReadOnly="True" Grid.Row="2" MaxHeight="400"/>
             <StackPanel Grid.Row="3" Orientation="Horizontal">
                 <Button Content="OK" Click="OK_Click" Padding="8" Margin="8"></Button>
                 <Button Content="Cancel" Click="Cancel_Click" Padding="8" Margin="8"></Button>

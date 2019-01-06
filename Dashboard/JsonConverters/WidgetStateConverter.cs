@@ -37,6 +37,10 @@ namespace Dashboard.JsonConverters
             {
                 WidgetState = new OxyPlotWidgetState();
             }
+            else if (objectTypeName == typeof(DataExportWidgetState).Name)
+            {
+                WidgetState = new DataExportWidgetState();
+            }
 
             if (WidgetState!=null)
             {
