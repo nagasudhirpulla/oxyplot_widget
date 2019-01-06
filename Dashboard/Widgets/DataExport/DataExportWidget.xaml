@@ -16,7 +16,7 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <DataGrid MaxHeight="1000" x:Name="DataExportView" CanUserAddRows="False" CanUserResizeColumns="True" CanUserSortColumns="True" IsReadOnly="True" Width="Auto" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <DataGrid MaxHeight="500" x:Name="DataExportView" CanUserAddRows="False" CanUserResizeColumns="True" CanUserSortColumns="True" IsReadOnly="True" Width="Auto" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <StackPanel Orientation="Horizontal">
             <Button Click="ExportText_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Content="csv" Style="{StaticResource OverlayBtnStyle}"></Button>
         </StackPanel>
