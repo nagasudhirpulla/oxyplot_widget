@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Dashboard.Measurements.PMUMeasurement"
         mc:Ignorable="d"
-        Title="Pick PMU Measurement" Height="300" Width="300">
+        Title="Pick PMU Measurement" Height="600" Width="800">
     <ScrollViewer Margin="0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
         <Grid Margin="8">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -18,10 +19,22 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Row="0" Orientation="Horizontal">
                 <Button Content="Refresh" Click="RefreshBtn_Click"></Button>
-                <Button Content="Test" Click="TestBtn_Click"></Button>
+                <!--<Button Content="Test" Click="TestBtn_Click"></Button>-->
             </StackPanel>
-            <TreeView Grid.Row="1" Name="MeasTree" Margin="10" Height="500" TreeViewItem.Expanded="TreeViewItem_Expanded"/>
-            <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <!--<TreeView Grid.Row="1" Name="MeasTree" Margin="10" TreeViewItem.Expanded="TreeViewItem_Expanded"/>-->
+            <StackPanel Orientation="Horizontal" Grid.Row="1">
+                <Label Content="DeviceType"></Label>
+                <TextBox x:Name="DevTypeFilter" MinWidth="40" TextChanged="FilterTxt_Changed"></TextBox>
+                <Label Content="Station" Margin="20 0 0 0"></Label>
+                <TextBox x:Name="StationFilter" MinWidth="40" TextChanged="FilterTxt_Changed"></TextBox>
+                <Label Content="PointType" Margin="20 0 0 0"></Label>
+                <TextBox x:Name="PntNameFilter" MinWidth="40" TextChanged="FilterTxt_Changed"></TextBox>
+                <Label Content="Voltage" Margin="20 0 0 0"></Label>
+                <TextBox x:Name="VoltFilter" MinWidth="40" TextChanged="FilterTxt_Changed"></TextBox>
+                <Button Content="Filter" Click="FilterTxt_Changed" Margin="20 0 0 0"></Button>
+            </StackPanel>
+            <DataGrid x:Name="MeasListView" Grid.Row="2" MaxHeight="400"/>
+            <StackPanel Grid.Row="3" Orientation="Horizontal">
                 <Button Content="OK" Click="OK_Click" Padding="8" Margin="8"></Button>
                 <Button Content="Cancel" Click="Cancel_Click" Padding="8" Margin="8"></Button>
             </StackPanel>

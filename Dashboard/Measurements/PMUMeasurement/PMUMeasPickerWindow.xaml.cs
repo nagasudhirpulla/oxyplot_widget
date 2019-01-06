@@ -28,12 +28,16 @@ namespace Dashboard.Measurements.PMUMeasurement
         public PMUMeasPickerWindow()
         {
             InitializeComponent();
-            //PopulatePMUMeasurements();
             string path = Environment.CurrentDirectory;
             string configFilename = "meas.xml";
             xmlPath = path + "\\" + configFilename;
             PopulateFromStoredXml();
         }
+
+        private XDocument measXml;
+        private string xmlPath;
+        private List<PmuXmlMeasurement> XmlMeasurements_ = new List<PmuXmlMeasurement>();
+        public PmuXmlMeasurement SelectedMeas_ { get; set; }
 
         private void PopulateFromStoredXml()
         {
@@ -42,7 +46,8 @@ namespace Dashboard.Measurements.PMUMeasurement
                 try
                 {
                     measXml = XDocument.Load(xmlPath);
-                    SetTreeViewElements(measXml);
+                    //SetTreeViewElements(measXml);
+                    SetMeasDataTable();
                 }
                 catch (Exception e)
                 {
@@ -51,10 +56,7 @@ namespace Dashboard.Measurements.PMUMeasurement
             }
         }
 
-        private XDocument measXml;
-        private string xmlPath;
-
-        private void PopulatePMUMeasurements()
+        private void FetchAndPopulatePMUMeasurements()
         {
             // get the label objects from psp data layer
             ConfigurationManagerJSON configManager = new ConfigurationManagerJSON();
@@ -62,7 +64,8 @@ namespace Dashboard.Measurements.PMUMeasurement
             HistoryDataAdapter adapter = new HistoryDataAdapter(configManager);
             measXml = adapter.GetMeasXml();
             // Bind the tree view with xml
-            SetTreeViewElements(measXml);
+            //SetTreeViewElements(measXml);
+            SetMeasDataTable();
             SaveMeasXml();
         }
 
@@ -80,8 +83,8 @@ namespace Dashboard.Measurements.PMUMeasurement
 
         private void SetTreeViewElements(XDocument measXml)
         {
-            MeasTree.Items.Clear();
-            MeasTree.Items.Add(CreateTreeItem(measXml.Root));
+            //MeasTree.Items.Clear();
+            //MeasTree.Items.Add(CreateTreeItem(measXml.Root));
         }
 
         private TreeViewItem CreateTreeItem(object o)
@@ -98,9 +101,7 @@ namespace Dashboard.Measurements.PMUMeasurement
 
         private void SelectMeasId(object sender, MouseButtonEventArgs e)
         {
-            if (sender is TreeViewItem item)
-            {
-            }
+
         }
 
         public void TreeViewItem_Expanded(object sender, RoutedEventArgs e)
@@ -131,9 +132,57 @@ namespace Dashboard.Measurements.PMUMeasurement
             }
         }
 
+        private void SetMeasDataTable()
+        {
+            // Traverse the Xml Doc to get the device elements
+            CreateMeasTableList(measXml.Root);
+        }
+
+        private void CreateMeasTableList(XElement xEl)
+        {
+            foreach (XElement xElItem in measXml.Descendants())
+            {
+                if (xElItem.Name.LocalName == "device")
+                {
+                    CreateMeasDataFromDevice(xElItem);
+                }
+            }
+            //https://stackoverflow.com/questions/8911026/multicolumn-listbox-in-wpf
+            MeasListView.ItemsSource = XmlMeasurements_;
+        }
+
+        private void CreateMeasDataFromDevice(XElement xEl)
+        {
+            string volt = xEl.Element("voltageLevel").Value.ToString();
+            foreach (XElement measXmlEl in xEl.Element("measurements").Elements())
+            {
+                try
+                {
+                    if (measXmlEl.Element("measurementSource").Attributes().First().Value == "ns2:DoubleDigitalMeasurementSource")
+                    {
+                        continue;
+                    }
+                    PmuXmlMeasurement meas = new PmuXmlMeasurement();
+                    meas.DevVolt = volt;
+                    meas.MeasId = int.Parse(measXmlEl.Element("measurementID").Value.ToString());
+                    meas.ScadaStationName = measXmlEl.Element("scadaId").Element("stationName").Value.ToString();
+                    meas.DevType = measXmlEl.Element("scadaId").Element("deviceType").Value.ToString();
+                    meas.ScadaDevName = measXmlEl.Element("scadaId").Element("deviceName").Value.ToString();
+                    meas.ScadaPntName = measXmlEl.Element("scadaId").Element("pointName").Value.ToString();
+                    meas.PmuId = int.Parse(measXmlEl.Element("measurementSource").Element("pmuId").Value.ToString());
+                    meas.PmuStationName = measXmlEl.Element("measurementSource").Element("stationName").Value.ToString();
+                    XmlMeasurements_.Add(meas.Clone());
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Error reading measurement xml element. {e.Message}");
+                }
+            }
+        }
+
         private void RefreshBtn_Click(object sender, RoutedEventArgs e)
         {
-            PopulatePMUMeasurements();
+            FetchAndPopulatePMUMeasurements();
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -144,6 +193,11 @@ namespace Dashboard.Measurements.PMUMeasurement
 
         private void OK_Click(object sender, RoutedEventArgs e)
         {
+            int selectedIndex = MeasListView.SelectedIndex;
+            if (selectedIndex > -1)
+            {
+                SelectedMeas_ = (PmuXmlMeasurement)MeasListView.SelectedItems[0];
+            }
             DialogResult = true;
         }
 
@@ -153,6 +207,54 @@ namespace Dashboard.Measurements.PMUMeasurement
             measXml = XDocument.Parse(testXml);
             SetTreeViewElements(measXml);
             SaveMeasXml();
+        }
+
+        private void FilterTxt_Changed(object sender, RoutedEventArgs e)
+        {
+            List<PmuXmlMeasurement> xmlMeasurements = XmlMeasurements_;
+            if (!string.IsNullOrEmpty(StationFilter.Text))
+            {
+                xmlMeasurements = xmlMeasurements.Where(item => item.ScadaStationName.StartsWith(StationFilter.Text)).ToList();
+            }
+            if (!string.IsNullOrEmpty(DevTypeFilter.Text))
+            {
+                xmlMeasurements = xmlMeasurements.Where(item => item.DevType.StartsWith(DevTypeFilter.Text)).ToList();
+            }
+            if (!string.IsNullOrEmpty(PntNameFilter.Text))
+            {
+                xmlMeasurements = xmlMeasurements.Where(item => item.ScadaPntName.StartsWith(PntNameFilter.Text)).ToList();
+            }
+            if (!string.IsNullOrEmpty(VoltFilter.Text))
+            {
+                xmlMeasurements = xmlMeasurements.Where(item => item.DevVolt.StartsWith(VoltFilter.Text)).ToList();
+            }
+            MeasListView.ItemsSource = xmlMeasurements;
+        }
+    }
+
+    public class PmuXmlMeasurement
+    {
+        public int PmuId { get; set; }
+        public string DevVolt { get; set; }
+        public int MeasId { get; set; }
+        public string ScadaStationName { get; set; }
+        public string DevType { get; set; }
+        public string ScadaDevName { get; set; }
+        public string ScadaPntName { get; set; }
+        public string PmuStationName { get; set; }
+        public PmuXmlMeasurement Clone()
+        {
+            return new PmuXmlMeasurement
+            {
+                PmuId = PmuId,
+                DevVolt = DevVolt,
+                MeasId = MeasId,
+                ScadaStationName = ScadaStationName,
+                DevType = DevType,
+                ScadaDevName = ScadaDevName,
+                ScadaPntName = ScadaPntName,
+                PmuStationName = PmuStationName,
+            };
         }
     }
 }

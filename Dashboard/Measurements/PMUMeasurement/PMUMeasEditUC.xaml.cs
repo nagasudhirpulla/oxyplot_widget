@@ -2,6 +2,7 @@
 using Dashboard.UserControls.VariableTimePicker;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,12 +38,24 @@ namespace Dashboard.Measurements.PMUMeasurement
             if (pmuMeasPicker.DialogResult == true)
             {
                 // todo set the measurement label and fields
+                if (pmuMeasPicker.SelectedMeas_ != null)
+                {
+                    editorVM.MeasId = pmuMeasPicker.SelectedMeas_.MeasId;
+                    editorVM.MeasName = $"{pmuMeasPicker.SelectedMeas_.ScadaStationName}_{pmuMeasPicker.SelectedMeas_.ScadaDevName}_{pmuMeasPicker.SelectedMeas_.ScadaPntName}";
+                }
             }
         }
     }
 
-    public class PMUMeasEditUCVM
+    public class PMUMeasEditUCVM : INotifyPropertyChanged
     {
+        // Declare the event
+        public event PropertyChangedEventHandler PropertyChanged;
+        // Create the OnPropertyChanged method to raise the event
+        protected void OnPropertyChanged(string name)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
         public PMUMeasurement mPMUMeasurement;
 
         public PMUMeasEditUCVM(PMUMeasurement meas)
@@ -50,9 +63,9 @@ namespace Dashboard.Measurements.PMUMeasurement
             mPMUMeasurement = meas;
         }
 
-        public int MeasId { get { return mPMUMeasurement.MeasId; } set { mPMUMeasurement.MeasId = value; } }
+        public int MeasId { get { return mPMUMeasurement.MeasId; } set { mPMUMeasurement.MeasId = value; OnPropertyChanged("MeasId"); } }
 
-        public string MeasName { get { return mPMUMeasurement.MeasName; } set { mPMUMeasurement.MeasName = value; } }
+        public string MeasName { get { return mPMUMeasurement.MeasName; } set { mPMUMeasurement.MeasName = value; OnPropertyChanged("MeasName"); } }
 
         public VariableTime StartTime { get { return mPMUMeasurement.StartTime; } set { mPMUMeasurement.StartTime = value; } }
 
