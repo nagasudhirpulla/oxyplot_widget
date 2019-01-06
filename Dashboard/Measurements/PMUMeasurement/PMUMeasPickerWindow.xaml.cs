@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,8 +29,30 @@ namespace Dashboard.Measurements.PMUMeasurement
         {
             InitializeComponent();
             //PopulatePMUMeasurements();
+            string path = Environment.CurrentDirectory;
+            string configFilename = "meas.xml";
+            xmlPath = path + "\\" + configFilename;
+            PopulateFromStoredXml();
         }
+
+        private void PopulateFromStoredXml()
+        {
+            if (File.Exists(xmlPath))
+            {
+                try
+                {
+                    measXml = XDocument.Load(xmlPath);
+                    SetTreeViewElements(measXml);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Error loading measurements xml file. {e.Message}");
+                }
+            }
+        }
+
         private XDocument measXml;
+        private string xmlPath;
 
         private void PopulatePMUMeasurements()
         {
@@ -40,6 +63,19 @@ namespace Dashboard.Measurements.PMUMeasurement
             measXml = adapter.GetMeasXml();
             // Bind the tree view with xml
             SetTreeViewElements(measXml);
+            SaveMeasXml();
+        }
+
+        private void SaveMeasXml()
+        {
+            try
+            {
+                measXml.Save(xmlPath);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error saving measurements xml file. {e.Message}");
+            }
         }
 
         private void SetTreeViewElements(XDocument measXml)
@@ -114,7 +150,9 @@ namespace Dashboard.Measurements.PMUMeasurement
         private void TestBtn_Click(object sender, RoutedEventArgs e)
         {
             string testXml = "<guestbook><guest><fname>Terje</fname><lname>Beck</lname></guest><guest><fname>Jan</fname><lname>Refsnes</lname></guest><guest><fname>Torleif</fname><lname>Rasmussen</lname></guest><guest><fname>anton</fname><lname>chek</lname></guest><guest><fname>stale</fname><lname>refsnes</lname></guest><guest><fname>hari</fname><lname>prawin</lname></guest><guest><fname>Hege</fname><lname>Refsnes</lname></guest></guestbook>";
-            SetTreeViewElements(XDocument.Parse(testXml));
+            measXml = XDocument.Parse(testXml);
+            SetTreeViewElements(measXml);
+            SaveMeasXml();
         }
     }
 }
