@@ -46,35 +46,92 @@ namespace Dashboard.UserControls.VariableTimePicker
 
         public DateTime GetTime()
         {
-            DateTime time = AbsoluteTime;
+            DateTime absTime = AbsoluteTime;
             DateTime nowTime = DateTime.Now;
-            // make millisecond component as zero for the absolute time and now time
-            time = time.AddMilliseconds(-1*time.Millisecond);
+            
+            // Make millisecond component as zero for the absolute time and now time
+            absTime = absTime.AddMilliseconds(-1 * absTime.Millisecond);
             nowTime = nowTime.AddMilliseconds(-1 * nowTime.Millisecond);
+            DateTime resultTime = nowTime;
+            
+            /*
             if (IsYearsVariable)
             {
-                time = time.AddYears(nowTime.AddYears(YearsOffset).Year - time.Year);
+                absTime = absTime.AddYears(nowTime.AddYears(YearsOffset).Year - absTime.Year);
             }
             if (IsMonthsVariable)
             {
-                time = time.AddMonths(nowTime.AddMonths(MonthsOffset).Month - time.Month);
+                absTime = absTime.AddMonths(nowTime.AddMonths(MonthsOffset).Month - absTime.Month);
             }
             if (IsDaysVariable)
             {
-                time = time.AddDays(nowTime.AddDays(DaysOffset).Day - time.Day);
+                absTime = absTime.AddDays(nowTime.AddDays(DaysOffset).Day - absTime.Day);
             }
             if (IsHoursVariable)
             {
-                time = time.AddHours(nowTime.AddHours(HoursOffset).Hour - time.Hour);
+                absTime = absTime.AddHours(nowTime.AddHours(HoursOffset).Hour - absTime.Hour);
             }
             if (IsMinutesVariable)
             {
-                time = time.AddMinutes(nowTime.AddMinutes(MinutesOffset).Minute - time.Minute);
+                absTime = absTime.AddMinutes(nowTime.AddMinutes(MinutesOffset).Minute - absTime.Minute);
             }
             if (IsSecondsVariable) {
-                time = time.AddSeconds(nowTime.AddSeconds(SecondsOffset).Second - time.Second);
+                absTime = absTime.AddSeconds(nowTime.AddSeconds(SecondsOffset).Second - absTime.Second);
             }
-            return time;
+            */
+            
+            // Add offsets to current time as per the settings
+            if (IsYearsVariable)
+            {
+                resultTime = resultTime.AddYears(YearsOffset);
+            }
+            if (IsMonthsVariable)
+            {
+                resultTime = resultTime.AddMonths(MonthsOffset);
+            }
+            if (IsDaysVariable)
+            {
+                resultTime = resultTime.AddDays(DaysOffset);
+            }
+            if (IsHoursVariable)
+            {
+                resultTime = resultTime.AddHours(HoursOffset);
+            }
+            if (IsMinutesVariable)
+            {
+                resultTime = resultTime.AddMinutes(MinutesOffset);
+            }
+            if (IsSecondsVariable)
+            {
+                resultTime = resultTime.AddSeconds(SecondsOffset);
+            }
+
+            // Set absolute time settings to the result time
+            if (!IsYearsVariable)
+            {
+                resultTime = resultTime.AddYears(absTime.Year - resultTime.Year);
+            }
+            if (!IsMonthsVariable)
+            {
+                resultTime = resultTime.AddMonths(absTime.Month - resultTime.Month);
+            }
+            if (!IsDaysVariable)
+            {
+                resultTime = resultTime.AddDays(absTime.Day - resultTime.Day);
+            }
+            if (!IsHoursVariable)
+            {
+                resultTime = resultTime.AddHours(absTime.Hour - resultTime.Hour);
+            }
+            if (!IsMinutesVariable)
+            {
+                resultTime = resultTime.AddMinutes(absTime.Minute - resultTime.Minute);
+            }
+            if (!IsSecondsVariable)
+            {
+                resultTime = resultTime.AddSeconds(absTime.Second - resultTime.Second);
+            }
+            return resultTime;
         }
     }
 }
