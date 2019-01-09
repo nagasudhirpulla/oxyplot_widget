@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
-using System.Text;  // for class Encoding
 using System.IO;    // for StreamReader
 using System.Security.Cryptography;
 using System.Xml.Linq;

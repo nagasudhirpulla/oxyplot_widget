@@ -356,7 +356,7 @@ namespace OxyplotWidget.PlotWidget
                     if (isXAxisDateTime)
                     {
                         DateTime xDateTime = DateTimeAxis.ToDateTime(seriesPoint.X);
-                        searchedRows = plotDataTable.Select($"{xAxisCol} = '{xDateTime}'");
+                        searchedRows = plotDataTable.Select($"{xAxisCol} = '{xDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff")}'");
                     }
                     else
                     {
