@@ -37,7 +37,7 @@ namespace Dashboard.Measurements.ScadaMeasurement
 
         public IMeasurement Clone()
         {
-            return new ScadaMeasurement { StartTime = StartTime, EndTime = EndTime, MeasId = MeasId, MeasName = MeasName, FetchStrategy = FetchStrategy, FetchPeriodicitySecs = FetchPeriodicitySecs };
+            return new ScadaMeasurement { StartTime = StartTime.Clone(), EndTime = EndTime.Clone(), MeasId = MeasId, MeasName = MeasName, FetchStrategy = FetchStrategy, FetchPeriodicitySecs = FetchPeriodicitySecs };
         }
 
         public async Task<List<DataPoint>> FetchDataAsync(TimeShift timeShift)
