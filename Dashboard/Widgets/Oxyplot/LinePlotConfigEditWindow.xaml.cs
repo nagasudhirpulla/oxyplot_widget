@@ -1,9 +1,11 @@
-﻿using Dashboard.Interfaces;
+﻿using Dashboard.Helpers;
+using Dashboard.Interfaces;
 using Dashboard.Measurements.PMUMeasurement;
 using Dashboard.Measurements.PspMeasurement;
 using Dashboard.Measurements.RandomMeasurement;
 using Dashboard.Measurements.RandomTimeSeriesMeasurement;
 using Dashboard.Measurements.ScadaMeasurement;
+using Dashboard.UserControls.VariableTimePicker;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -130,6 +132,19 @@ namespace Dashboard.Widgets.Oxyplot
             editorVM.DuplicateSeriesConfigAt(seriesIndex);
         }
 
+        private void ImposeTimeBtnClick(object sender, RoutedEventArgs e)
+        {
+            // a button on list view has been clicked
+            Button button = sender as Button;
+            int seriesIndex = (int)((Button)sender).Tag;
+            // get the series config list item index
+            if (seriesIndex >= 0 && seriesIndex < editorVM.mLinePlotConfig.SeriesConfigs.Count)
+            {
+
+                editorVM.OverwriteAllSeriesTimeWith(seriesIndex);
+            }
+        }
+
         private void OkBtnClick(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("Save Changes ?", "Save Changes", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
@@ -147,7 +162,7 @@ namespace Dashboard.Widgets.Oxyplot
         {
             DialogResult = false;
             this.Close();
-        }        
+        }
     }
 
     public class LinePlotConfigEditorVM : INotifyPropertyChanged
@@ -176,7 +191,7 @@ namespace Dashboard.Widgets.Oxyplot
             //create a list of config list items based on LineSeriesConfig items
             for (int configIter = 0; configIter < mLinePlotConfig.SeriesConfigs.Count; configIter++)
             {
-                SeriesConfigListItems.Add(new SeriesConfigListItem(mLinePlotConfig.SeriesConfigs[configIter]));
+                SeriesConfigListItems.Add(new SeriesConfigListItem(mLinePlotConfig.SeriesConfigs[configIter], configIter));
             }
             OnPropertyChanged("SeriesConfigListItems");
         }
@@ -219,6 +234,50 @@ namespace Dashboard.Widgets.Oxyplot
                 {
                     LineSeriesConfig duplicatedConfig = mLinePlotConfig.SeriesConfigs[seriesIndex].Clone();
                     mLinePlotConfig.SeriesConfigs.Insert(seriesIndex, duplicatedConfig);
+                }
+                SyncSeriesConfigListItemsWithConfig();
+            }
+        }
+
+        public void OverwriteAllSeriesTimeWith(int seriesIndex)
+        {
+            //check if index is in config bounds
+            if (seriesIndex >= 0 && seriesIndex < mLinePlotConfig.SeriesConfigs.Count)
+            {
+                // check if seriesIndex is in the display series List item bounds
+                if (seriesIndex <= SeriesConfigListItems.Count)
+                {
+                    StartEndVarTime time = MeasurementHelper.GetStartEndTimes(mLinePlotConfig.SeriesConfigs[seriesIndex].Measurement);
+                    // check if we got valid times for overwriting from the measurement
+                    if (time != null)
+                    {
+                        VariableTime fromTime = time.StartTime;
+                        VariableTime toTime = time.EndTime;
+                        for (int configIter = 0; configIter < mLinePlotConfig.SeriesConfigs.Count; configIter++)
+                        {
+                            IMeasurement seriesMeas = mLinePlotConfig.SeriesConfigs[configIter].Measurement;
+                            if (seriesMeas is RandomTimeSeriesMeasurement randomMeas)
+                            {
+                                randomMeas.FromTime = fromTime.Clone();
+                                randomMeas.ToTime = toTime.Clone();
+                            }
+                            else if (seriesMeas is ScadaMeasurement scadaMeas)
+                            {
+                                scadaMeas.StartTime = fromTime.Clone();
+                                scadaMeas.EndTime = toTime.Clone();
+                            }
+                            else if (seriesMeas is PMUMeasurement pmuMeas)
+                            {
+                                pmuMeas.StartTime = fromTime.Clone();
+                                pmuMeas.EndTime = toTime.Clone();
+                            }
+                            else if (seriesMeas is PspMeasurement pspMeas)
+                            {
+                                pspMeas.StartTime = fromTime.Clone();
+                                pspMeas.EndTime = toTime.Clone();
+                            }
+                        }
+                    }
                 }
                 SyncSeriesConfigListItemsWithConfig();
             }
@@ -331,6 +390,8 @@ namespace Dashboard.Widgets.Oxyplot
 
     public class SeriesConfigListItem
     {
+        public int Index { get; set; } = 0;
+
         public string SeriesDisplayText { get; set; }
 
         public SeriesConfigListItem() { }
@@ -338,6 +399,12 @@ namespace Dashboard.Widgets.Oxyplot
         public SeriesConfigListItem(LineSeriesConfig config)
         {
             SeriesDisplayText = config.GetDisplayText();
+        }
+
+        public SeriesConfigListItem(LineSeriesConfig config, int index)
+        {
+            SeriesDisplayText = config.GetDisplayText();
+            Index = index;
         }
     }
 }

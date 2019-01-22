@@ -122,6 +122,7 @@
       <DependentUpon>WidgetContainerAutoFetchEditWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\FetchHelper.cs" />
+    <Compile Include="Helpers\MeasurementHelper.cs" />
     <Compile Include="Measurements\PMUMeasurement\PMUMeasPickerWindow.xaml.cs">
       <DependentUpon>PMUMeasPickerWindow.xaml</DependentUpon>
     </Compile>
